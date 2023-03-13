@@ -4,10 +4,12 @@
 entries:
   - title: info
     entries:
-      - title: a (nearly) no-CSS, fast, minimalist Jekyll theme.
-      - title: github repo
-        url: https://github.com/riggraz/no-style-please
-      - title: "used by <a href='https://riggraz.dev'>riggraz.dev</a> and <a href='https://github.com/riggraz/no-style-please/network/dependents'>many others</a>"
+      - title: email
+        url: mailto:joelsschutz@yahoo.com.br
+      - title: linkedin
+        url: https://www.linkedin.com/in/joelschutz/
+      - title: github
+        url: https://github.com/joelschutz
 
   - title: all posts
     post_list:
@@ -17,19 +19,31 @@ entries:
       show_more_url: archive.html
 
   - title: posts by category
-    post_list:
-      category: example2
-      show_more: true
-      show_more_text: See more posts...
-      show_more_url: example2-archive.html
+    entries:
+      - title: devlogs
+        post_list:
+          limit: 3
+          category: devlog
+          show_more: true
+          show_more_text: See more posts...
+          show_more_url: devlog-archive.html
+      - title: tutorials
+        post_list:
+          limit: 3
+          category: tutorials
+          show_more: true
+          show_more_text: See more posts...
+          show_more_url: tutorials-archive.html
+
+  - title: posts by language
+    entries:
+      - title: pt-br
+        url: pt-br-archive.html
+      - title: en-us
+        url: en-us-archive.html
 
   - title: rss
     url: feed.xml
-  
-  - title: another list
-    entries:
-      - title: with subitems
-        entries:
-          - title: with subsubitems
-          - title: example page
-            url: about
+
+  - title: Show the theme creator some love s2
+    url: https://github.com/riggraz/no-style-please
