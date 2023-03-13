@@ -35,3 +35,9 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Local Stuff #
+###############
+.vscode/
+.frontmatter/
+_site/

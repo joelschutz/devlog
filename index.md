@@ -1,5 +1,5 @@
 ---
-title: Welcome to my blog
+layout: home
+title: Joel's Dev Blog
 ---
-
-This is a test post
+![blogging loudly](https://media.giphy.com/media/Vwz4zdntMXrUY/giphy.gif)
