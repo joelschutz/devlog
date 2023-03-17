@@ -34,6 +34,13 @@ entries:
           show_more: true
           show_more_text: See more posts...
           show_more_url: tutorials-archive.html
+      - title: demos
+        post_list:
+          limit: 3
+          category: demo
+          show_more: true
+          show_more_text: See more posts...
+          show_more_url: demos.html
 
   - title: posts by language
     entries:
@@ -41,6 +48,9 @@ entries:
         url: pt-br-archive.html
       - title: en-us
         url: en-us-archive.html
+
+  - title: demos gallery
+    url: demos.html
 
   - title: rss
     url: feed.xml

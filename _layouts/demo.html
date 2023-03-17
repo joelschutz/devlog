@@ -1,0 +1,19 @@
+---
+layout: default
+---
+
+{%-include back_link.html-%}
+
+<article>
+  <p class="post-meta">
+    <time datetime="{{ page.date }}">{{ page.date | date: site.theme_config.date_format }}</time>
+  </p>
+  
+  <p>
+    <iframe frameborder="0" scrolling="no" src="{{site.baseurl}}/{{page.preview}}"width="100%" height="480"></iframe>
+  </p>
+
+  <h1>{{ page.title }}</h1>
+
+  {{ content }}
+</article>
