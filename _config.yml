@@ -2,6 +2,8 @@ title: Joel's Dev Blog
 author: Joel Schutz
 remote_theme: riggraz/no-style-please
 post_search: true
+goat_counter: "joelschutz"
+favicon: "favicon.ico"
 
 theme_config:
   appearance: "dark" # can be "light", "dark" or "auto"
