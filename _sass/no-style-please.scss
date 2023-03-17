@@ -9,6 +9,7 @@
   
       &.ioda { filter: invert(0); }
     }
+    iframe {filter: invert(1);}
   }
   
   body[a="dark"] { @include dark-appearance; }
@@ -80,6 +81,7 @@
     overflow-x: auto;
     white-space: pre-wrap;
     padding: 1rem;
+    tab-size: 1rem;
   }
   
   blockquote {
