@@ -60,5 +60,17 @@
   ],
   "frontMatter.taxonomy.tags": [],
   "frontMatter.taxonomy.categories": [],
-  "frontMatter.dashboard.openOnStart": true
+  "frontMatter.dashboard.openOnStart": true,
+  "frontMatter.content.snippets": {
+    "Agradecimento": {
+      "description": "Para encerrar posts agradecendo o leitor",
+      "body": [
+        "---",
+        "",
+        "Espero que tenha gostado desse material e que tenha sido de ajuda, estou ainda trabalhando nesse site e nas demos para ajudar a quem tem interesse em programar coisas praticas e fora do mundinho web. Caso tenha alguma duvida ou sugestão, por favor entre em contato pelo [GitHub](https://github.com/joelschutz) ou [e-mail](mailto:joelsschutz@yahoo.com.br).",
+        "![thank you!](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif)"
+      ],
+      "fields": []
+    }
+  }
 }
