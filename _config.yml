@@ -1,6 +1,7 @@
 title: Joel's Dev Blog
 author: Joel Schutz
 remote_theme: riggraz/no-style-please
+baseurl: /devlog
 post_search: true
 goat_counter: "joelschutz"
 favicon: "favicon.ico"
