@@ -13,7 +13,25 @@
 {%- if posts.size > 0 -%}
   <ul>
     {%- for post in posts limit: include.limit -%}
-    <p><iframe frameborder="0" scrolling="no" src="{{site.baseurl}}/{{post.preview}}"width="100%" height="320"></iframe></p>
+    <p>
+      <iframe frameborder="0" scrolling="no" src="{{site.baseurl}}/{{post.preview}}" srcdoc="
+      <!DOCTYPE html>
+        <script src=&quot;{{site.baseurl}}/assets/wasm/wasm_exec.js&quot;></script>
+        <script>
+        // Polyfill
+        if (!WebAssembly.instantiateStreaming) {
+            WebAssembly.instantiateStreaming = async (resp, importObject) => {
+                const source = await (await resp).arrayBuffer();
+                return await WebAssembly.instantiate(source, importObject);
+            };
+        }
+        
+        const go = new Go();
+        WebAssembly.instantiateStreaming(fetch(&quot;{{site.baseurl}}/{{post.wasm}}&quot;), go.importObject).then(result => {
+            go.run(result.instance);
+        });
+        </script>" width="100%" height="320"></iframe>
+    </p>
         <li>
           <span>{{- post.date | date: site.theme_config.date_format -}}</span>
           <a href="{{ post.url | relative_url }}">{{ post.title | downcase }}</a>
