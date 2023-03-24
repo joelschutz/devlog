@@ -27,6 +27,11 @@
           "type": "string"
         },
         {
+          "title": "wasm",
+          "name": "wasm",
+          "type": "string"
+        },
+        {
           "title": "tags",
           "name": "tags",
           "type": "tags"
@@ -65,9 +70,22 @@
     "Agradecimento": {
       "description": "Para encerrar posts agradecendo o leitor",
       "body": [
+        "",
         "---",
         "",
         "Espero que tenha gostado desse material e que tenha sido de ajuda, estou ainda trabalhando nesse site e nas demos para ajudar a quem tem interesse em programar coisas praticas e fora do mundinho web. Caso tenha alguma duvida ou sugestão, por favor entre em contato pelo [GitHub](https://github.com/joelschutz) ou [e-mail](mailto:joelsschutz@yahoo.com.br).",
+        "![thank you!](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif)",
+        ""
+      ],
+      "fields": []
+    },
+    "Thanks": {
+      "description": "Thanks the reader",
+      "body": [
+        "",
+        "---",
+        "",
+        "Hope you liked this material and that it was helpful, I'm still working on this website and demos to help people that are interested in programming things beyond the web development niche. If you have any question or suggestion, please contact me through [GitHub](https://github.com/joelschutz) or [e-mail](mailto:joelsschutz@yahoo.com.br).",
         "![thank you!](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif)"
       ],
       "fields": []
