@@ -1,14 +1,15 @@
 ---
-title: Conway Game Of Life
+title: Conway's Game Of Life
 layout: demo
 date: 2023-03-15T03:05:17.910Z
 preview: assets/wasm/GameOfLife/gol.html
+wasm: assets/wasm/GameOfLife/gol.v1.wasm
 tags:
   - gamedev
 categories:
   - demo
   - pt-br
-lastmod: 2023-03-17T17:13:01.965Z
+lastmod: 2023-03-24T01:37:39.153Z
 ---
 Para o Game Of Life, nosso *espaço* será definido como
 um 2d array, isso equivale a uma tela ou plano cartesiano.
@@ -96,3 +97,8 @@ func (gol *GameOfLife) IsAliveOrNil(x, y int) *bool {
 	return &gol.values[x][y]
 }
 ```
+
+---
+
+Espero que tenha gostado desse material e que tenha sido de ajuda, estou ainda trabalhando nesse site e nas demos para ajudar a quem tem interesse em programar coisas praticas e fora do mundinho web. Caso tenha alguma duvida ou sugestão, por favor entre em contato pelo [GitHub](https://github.com/joelschutz) ou [e-mail](mailto:joelsschutz@yahoo.com.br).
+![thank you!](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif)
