@@ -1,5 +1,6 @@
 title: Joel's Dev Blog
 author: Joel Schutz
+repository: joelschutz/devlog
 remote_theme: riggraz/no-style-please
 baseurl: /devlog
 post_search: true
