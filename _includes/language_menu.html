@@ -1,0 +1,13 @@
+<p class="languages">
+    {% for lang in site.languages %}
+        {% if lang == site.lang %}
+    {{ lang }}
+        {% else %}
+            {% if lang == site.default_lang %}
+    <a href="/devlog{{ page.url }}">{{ lang }}</a>
+            {% else %}
+    <a href="/devlog/{{ lang }}{{ page.url }}">{{ lang }}</a>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+    </p>

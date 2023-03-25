@@ -2,7 +2,8 @@
 # https://github.com/riggraz/no-style-please#customize-the-menu
 
 entries:
-  - title: info
+  - title: titles.info
+    title_int: true
     entries:
       - title: email
         url: mailto:joelsschutz@yahoo.com.br
@@ -11,14 +12,16 @@ entries:
       - title: github
         url: https://github.com/joelschutz
 
-  - title: all posts
+  - title: titles.all_posts
+    title_int: true
     post_list:
       limit: 5
       show_more: true
       show_more_text: See archive...
       show_more_url: archive.html
 
-  - title: posts by category
+  - title: titles.posts_by_category
+    title_int: true
     entries:
       - title: devlogs
         post_list:
@@ -41,13 +44,6 @@ entries:
           show_more: true
           show_more_text: See more posts...
           show_more_url: demos.html
-
-  - title: posts by language
-    entries:
-      - title: pt-br
-        url: pt-br-archive.html
-      - title: en-us
-        url: en-us-archive.html
 
   - title: demos gallery
     url: demos.html

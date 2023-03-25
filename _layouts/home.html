@@ -1,0 +1,15 @@
+---
+layout: default
+---
+<header>
+  <h1>{% t titles.main %}</h1>
+  {%-if site.theme_config.show_description-%}
+    <p>{{ site.description }}</p>
+  {%-endif-%}
+</header>
+
+{%-include language_menu.html-%}
+
+{%-include menu_item.html collection=site.data.menu.entries-%}
+
+{{ content }}

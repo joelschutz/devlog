@@ -1,0 +1,19 @@
+<p>
+    <iframe frameborder="0" scrolling="no" src="{{site.baseurl_root}}/{{include.demo.preview}}" srcdoc="
+    <!DOCTYPE html>
+      <script src=&quot;{{site.baseurl_root}}/assets/wasm/wasm_exec.js&quot;></script>
+      <script>
+      // Polyfill
+      if (!WebAssembly.instantiateStreaming) {
+          WebAssembly.instantiateStreaming = async (resp, importObject) => {
+              const source = await (await resp).arrayBuffer();
+              return await WebAssembly.instantiate(source, importObject);
+          };
+      }
+      
+      const go = new Go();
+      WebAssembly.instantiateStreaming(fetch(&quot;{{site.baseurl_root}}/{{include.demo.wasm}}&quot;), go.importObject).then(result => {
+          go.run(result.instance);
+      });
+      </script>" width="100%" height="{{include.size}}"></iframe>
+  </p>
