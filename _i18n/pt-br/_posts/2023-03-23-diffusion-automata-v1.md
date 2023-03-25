@@ -1,5 +1,5 @@
 ---
-title: Diffusion Automata v1[pt-br]
+title: Diffusion Automata v1
 layout: demo
 date: 2023-03-24T01:04:38.048Z
 preview: assets/wasm/Automata/automata.html
@@ -9,7 +9,6 @@ tags:
   - go-terrain
 categories:
   - demo
-  - pt-br
 lastmod: 2023-03-24T01:12:52.141Z
 ---
 A ideia desse Automata é simular a dispersão de um

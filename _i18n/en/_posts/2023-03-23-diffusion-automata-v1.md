@@ -1,5 +1,5 @@
 ---
-title: Diffusion Automata v1[en-us]
+title: Diffusion Automata v1
 layout: demo
 date: 2023-03-24T01:04:38.048Z
 preview: assets/wasm/Automata/automata.html
@@ -7,9 +7,9 @@ wasm: assets/wasm/Automata/automata.v1.wasm
 tags:
   - gamedev
   - go-terrain
+  - new
 categories:
   - demo
-  - en-us
 lastmod: 2023-03-24T01:33:55.077Z
 ---
 The goal for this Automata is to simulate the diffusion of
