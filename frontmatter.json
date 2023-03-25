@@ -53,8 +53,13 @@
   "frontMatter.content.publicFolder": "assets",
   "frontMatter.content.pageFolders": [
     {
-      "title": "_posts",
-      "path": "[[workspace]]/_posts",
+      "title": "_posts pt-br",
+      "path": "[[workspace]]/_i18n/pt-br/_posts",
+      "filePrefix": "yyyy-MM-dd"
+    },
+    {
+      "title": "_posts en",
+      "path": "[[workspace]]/_i18n/en/_posts",
       "filePrefix": "yyyy-MM-dd"
     },
     {
