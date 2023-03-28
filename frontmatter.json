@@ -7,44 +7,41 @@
       "previewPath": null,
       "fields": [
         {
-          "title": "title",
+          "title": "Title",
           "name": "title",
           "type": "string"
         },
         {
-          "title": "layout",
-          "name": "layout",
+          "title": "Description",
+          "name": "description",
           "type": "string"
         },
         {
-          "title": "date",
+          "title": "Publishing date",
           "name": "date",
-          "type": "datetime"
+          "type": "datetime",
+          "default": "{{now}}",
+          "isPublishDate": true
         },
         {
-          "title": "preview",
+          "title": "Content preview",
           "name": "preview",
-          "type": "string"
+          "type": "image"
         },
         {
-          "title": "wasm",
-          "name": "wasm",
-          "type": "string"
+          "title": "Is in draft",
+          "name": "draft",
+          "type": "draft"
         },
         {
-          "title": "tags",
+          "title": "Tags",
           "name": "tags",
           "type": "tags"
         },
         {
-          "title": "categories",
+          "title": "Categories",
           "name": "categories",
           "type": "categories"
-        },
-        {
-          "title": "lastmod",
-          "name": "lastmod",
-          "type": "datetime"
         }
       ]
     }
@@ -78,7 +75,7 @@
         "",
         "---",
         "",
-        "Espero que tenha gostado desse material e que tenha sido de ajuda, estou ainda trabalhando nesse site e nas demos para ajudar a quem tem interesse em programar coisas praticas e fora do mundinho web. Caso tenha alguma duvida ou sugestão, por favor entre em contato pelo [GitHub](https://github.com/joelschutz) ou [e-mail](mailto:joelsschutz@yahoo.com.br).",
+        "Espero que tenha gostado desse material e que tenha sido de ajuda, estou ainda trabalhando nesse site e nas demos para ajudar a quem tem interesse em programar coisas práticas e fora do mundinho web. Caso tenha alguma dúvida ou sugestão, por favor entre em contato pelo [GitHub](https://github.com/joelschutz) ou [e-mail](mailto:joelsschutz@yahoo.com.br).",
         "![thank you!](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif)",
         ""
       ],
