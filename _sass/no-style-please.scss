@@ -99,3 +99,12 @@
     display: block;
     margin: 0 auto;
   }
+  /* Heading Anchor animation */
+
+  a.h-anchor{
+    opacity: .2;
+    font-size: 80%;
+  }
+  a.h-anchor:hover{
+    opacity: 1;
+  }
