@@ -18,7 +18,8 @@ sass:
   style: :compressed
 
 plugins:
-- jekyll-remote-theme
-- jekyll-feed
-- jekyll-seo-tag
-- jekyll-multiple-languages-plugin
+  - jekyll-remote-theme
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-multiple-languages-plugin
+  - jemoji

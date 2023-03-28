@@ -11,6 +11,8 @@ entries:
         url: https://www.linkedin.com/in/joelschutz/
       - title: github
         url: https://github.com/joelschutz
+      - title: itch.io
+        url: https://kam1sama.itch.io/
 
   - title: titles.all_posts
     title_int: true
