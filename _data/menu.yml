@@ -50,6 +50,9 @@ entries:
   - title: demos gallery
     url: demos.html
 
+  - title: links
+    url: links.html
+
   - title: rss
     url: feed.xml
 
