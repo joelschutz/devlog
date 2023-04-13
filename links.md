@@ -19,12 +19,36 @@ layout: page
 
 [Boris the Brave](https://www.boristhebrave.com/)
 
+[Game Programming Patterns](https://gameprogrammingpatterns.com/)
+
 ## Rust
 
 [Compreensive Rust](https://google.github.io/comprehensive-rust/)
 
 [The Rust Book(Interactive)](https://rust-book.cs.brown.edu/)
 
+[Rustup](https://github.com/rust-lang/rustup)
+
+[Rustilings](https://github.com/rust-lang/rustlings)
+
+[Design Patterns in Rust](https://rust-unofficial.github.io/patterns/)
+
+[Awesome Rust](https://github.com/rust-unofficial/awesome-rust)
+
+## Go
+
+[Go by Example](https://gobyexample.com/)
+
+[Learn Go](https://go.dev/learn/)
+
+[Compreensive Go](https://golangbyexample.com/golang-comprehensive-tutorial/)
+
+[Design Patterns in Go](https://golangbyexample.com/all-design-patterns-golang/)
+
+[Awesome Go](https://github.com/avelino/awesome-go)
+
 ## Misc
 
 [Tom's toys](https://toms.toys/)
+
+[Source Making](https://sourcemaking.com/)
