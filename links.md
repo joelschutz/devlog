@@ -11,6 +11,12 @@ layout: page
 
 [MS Clipart Archive](https://archive.org/details/MS_Clipart_Collection_SVG)
 
+[Purr Data](https://agraef.github.io/purr-data-intro/Purr-Data-Intro.html)
+
+[Nature of Code](https://nature-of-code-2nd-edition.netlify.app/)
+
+[The Algorithmic Beauty of Plants](http://algorithmicbotany.org/papers/#abop)
+
 ## Gamedev
 
 [Nick's Blog](https://nickmcd.me/)
