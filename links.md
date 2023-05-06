@@ -17,6 +17,8 @@ layout: page
 
 [The Algorithmic Beauty of Plants](http://algorithmicbotany.org/papers/#abop)
 
+[Awesome Generative Art](https://github.com/kosmos/awesome-generative-art)
+
 ## Gamedev
 
 [Nick's Blog](https://nickmcd.me/)
