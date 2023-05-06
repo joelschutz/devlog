@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="pt-br"><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="https://github.com/devlog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://github.com/devlog/" rel="alternate" type="text/html" hreflang="pt-br" /><updated>2023-05-06T23:23:39+00:00</updated><id>https://github.com/devlog/feed.xml</id><title type="html">Joel’s Dev Blog</title><author><name>Joel Schutz</name></author><entry><title type="html">Goingo Wasm Demo</title><link href="https://github.com/devlog/demo/2023/05/05/goingo-wasm-demo.html" rel="alternate" type="text/html" title="Goingo Wasm Demo" /><published>2023-05-05T10:36:14+00:00</published><updated>2023-05-05T10:36:14+00:00</updated><id>https://github.com/devlog/demo/2023/05/05/goingo-wasm-demo</id><content type="html" xml:base="https://github.com/devlog/demo/2023/05/05/goingo-wasm-demo.html">&lt;ul&gt;
+  &lt;li&gt;Botão Esquerdo do Mouse
+    &lt;ul&gt;
+      &lt;li&gt;No tabuleiro - Coloca pedra&lt;/li&gt;
+      &lt;li&gt;Na pedra - Mostrar grupo, liberdades e inimigos&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Botão Direto do Mouse - Passar o turno&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Joel Schutz</name></author><category term="demo" /><category term="gamedev" /><category term="goingo" /><summary type="html">Botão Esquerdo do Mouse No tabuleiro - Coloca pedra Na pedra - Mostrar grupo, liberdades e inimigos Botão Direto do Mouse - Passar o turno</summary></entry><entry><title type="html">Goingo: Meu primeiro jogo</title><link href="https://github.com/devlog/2023/05/02/goingo-meu-primeiro-jogo.html" rel="alternate" type="text/html" title="Goingo: Meu primeiro jogo" /><published>2023-05-02T21:08:50+00:00</published><updated>2023-05-02T21:08:50+00:00</updated><id>https://github.com/devlog/2023/05/02/goingo-meu-primeiro-jogo</id><content type="html" xml:base="https://github.com/devlog/2023/05/02/goingo-meu-primeiro-jogo.html">&lt;p&gt;Eu já perdi a conta de quantos protótipos eu já criei com Ebiten(ou Ebitengine como me pediram para chamar), muitos foram direto para a lixeira e outros estão perdidos em branches abandonadas em algum repositório. Porém tem ideias que são &lt;del&gt;bobas&lt;/del&gt; boas demais para deixar passar e precisam de um tratamento à altura. Hoje vou falar sobre o primeiro jogo que lancei: &lt;strong&gt;Goingo&lt;/strong&gt;, um uma versão do ancestral jogo de Go feito na totalmente na linguagem Go.&lt;/p&gt;
+
+&lt;h2 id=&quot;porque-go&quot;&gt;Porque Go?&lt;/h2&gt;
+
+&lt;p&gt;A confusão é totalmente intencional, tudo começou porque queria testar uma nova biblioteca e precisava de algo mais complexo que uma demo para ver ele em ação. Mas no fim eu acabei aprendendo bastante sobre ambos e decidi levar o projeto até o lançamento, muito porque já estava tudo ali, só precisava dar aquele pequeno esforço para finalizar.&lt;/p&gt;
+
+&lt;h3 id=&quot;o-jogo-de-tabuleiro&quot;&gt;O jogo de tabuleiro&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.learn-go.net/images/ko.gif&quot; alt=&quot;Ko Loop&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Go é o jogo de tabuleiro mais antigo do mundo ainda jogado segundo a &lt;a href=&quot;https://pt.wikipedia.org/wiki/Go&quot;&gt;Wikipedia&lt;/a&gt;, teria sido criado a 2500 anos atrás na China onde ainda é muito popular. Aqui no ocidente ele ficou mais conhecido depois que o &lt;a href=&quot;https://pt.wikipedia.org/wiki/AlphaGo&quot;&gt;AlphaGO&lt;/a&gt;, uma inteligencia artificial, venceu o campeão mundial em 2016.&lt;/p&gt;
+
+&lt;p&gt;Apesar de ser um jogo complexo e do desafio que é criar uma IA para jogar ele, as regras são extremamente simples. Esse foi o principal motivo de ter criado esse jogo, é um ótimo exemplo de jogo de tabuleiro que pode ser criado com algumas coisas linhas de código. Basicamente em Go:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Cada jogador se alterna colocando uma peça de sua cor no tabuleiro&lt;/li&gt;
+  &lt;li&gt;Peças adjacentes a outras da mesma cor formam grupos&lt;/li&gt;
+  &lt;li&gt;Quando um grupo é certado completamente por peças do adversário esse grupo é captura e retirado do tabuleiro.&lt;/li&gt;
+  &lt;li&gt;Vence quem cercar mais espaços no tabuleiro ao fim da partida&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Claro, a partir dessas regras nascem outras como Ko, Atari, etc, mas para criar a engine essas três são as básicas e definem o game loop. Para criar uma experiencia divertida e interessante é necessário mais funcionalidades, testes para impedir que o jogador faça movimento ilegais e uma método de contar os pontos de cada jogador.&lt;/p&gt;
+
+&lt;p&gt;Essa é uma das coisas que não tenho ainda no jogo, se quiserem saber quem venceu a partida os jogadores precisam contar seus próprios territórios. Parece preguiça da minha parte não adicionar isso ao jogo, mas depois de passar uma noite inteira tentando entender esse &lt;a href=&quot;https://www.oipaz.net/Carta.pdf&quot;&gt;artigo&lt;/a&gt;, eu preferi deixar para uma depois. Eu já comentei que desenvolvi o jogo inteiro em uma semana?&lt;/p&gt;
+
+&lt;h3 id=&quot;a-linguagem-de-programação&quot;&gt;A Linguagem de Programação&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/MariaLetta/free-gophers-pack/master/illustrations/svg/23.svg&quot; alt=&quot;Gophers playing Go&quot; style=&quot;object-fit: cover;height: 300px;&quot; width=&quot;100%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;É obvio que escolhi Go como linguagem porque é a minha favorita, mas quis dedicar essa parte do artigo para contar sobre uma situação que eu provavelmente não teria conseguido resolver se fosse em outra linguagem.&lt;/p&gt;
+
+&lt;p&gt;A biblioteca que eu queria utilizar e que deu inicio a
+esse projeto se chama &lt;a href=&quot;https://github.com/yohamta/donburi&quot;&gt;Donburi&lt;/a&gt;, é um ECS para a &lt;a href=&quot;https://ebitengine.org/&quot;&gt;Ebitengine&lt;/a&gt; que sempre uso por aqui. Eu ainda vou voltar a falar de ECS no futuro, é um tópico muito importante, mas o que me deu problemas foi um gerenciador de eventos que acompanha a biblioteca. Da forma que eu planejei o meu programa o gerenciador entrava em panico e derrubava o programa. Haviam formas de contornar isso, mas se tratava de um bug no código que precisava ser corrigido, não era para ela se comportar daquela forma.&lt;/p&gt;
+
+&lt;p&gt;Pedir uma correção em um projeto open-source é sempre uma aposta, principalmente quando você não tem familiaridade com o projeto e seus desenvolvedores. Alguns podem ser super abertos, outros podem extremamente relutantes quanto a qualquer tipo de mudança. Sem falar que nunca pode contar que alguém vai tirar parte do tempo dela para resolver um problema seu, te forçando a ter que entrar no código, achar o problema, resolver e propor uma pull-request. Ai que eu acredito que o Go entrou como um grande aliado nesse projeto, pela forma que o Go funciona e a sua sintaxe, é muito fácil entrar em um projeto e identificar como ele funciona. Não existem macros, escopos invisíveis, tipagem dinâmica, magicas de qualquer tipo, tudo em Go é explícito ao ponto que em minutos eu já sabia onde estava o problema e em poucas horas já tinha uma solução.&lt;/p&gt;
+
+&lt;p&gt;Contactar os desenvolvedores para incorporar essas mudanças é outra história, mas isso independe da linguagem. Minha pull-request para o &lt;a href=&quot;https://github.com/pkg/browser/pull/52&quot;&gt;pkg/browser&lt;/a&gt; ainda não foi vista até o momento que estou escrevendo esse artigo, por sorte &lt;a href=&quot;https://twitter.com/spaceshooting99&quot;&gt;Yohamta&lt;/a&gt; foi super rápido em aprovar e eu agradeço muito a ele.&lt;/p&gt;
+
+&lt;h2 id=&quot;o-que-fiz-de-diferente&quot;&gt;O que fiz de diferente?&lt;/h2&gt;
+
+&lt;p&gt;Algo que é um defeito meu: começar algo e abandonar no meio do caminho. Desde a escola, eu ficava muito animado com um assunto e pesquisava tudo que conseguia sobre ele mas na hora de escrever o trabalho e amarrar tudo eu ficava com preguiça e abandonava. A experiência de fazer sempre era melhor que a de terminar, hoje ainda tenho mais um agravante que é a ideia de que o resultado não vai valer a pena então porque se dedicar até o fim? Eu venho sempre me sabotando dessa forma e vivo buscando formas de superar, mas o que ainda me prende é ter dificuldade de definir onde é o ponto que posso considerar algo como pronto.&lt;/p&gt;
+
+&lt;p&gt;Finalizar algo é difícil para mim porque não consigo definir claramente o resultado esperado e como chegar nele. A forma que encontrei para lidar com isso é diminuindo o escopo do trabalho e aceitando a incompletude dele, desde que eu fizesse o mínimo para me sentir confortável em mostrar para os outros. Assim o projeto nunca está “pronto”, sempre é possível encontrar algo a melhorar, mas também está organizado a um ponto que não é um experimento pessoal que só você pode entender e aproveitar.&lt;/p&gt;
+
+&lt;p&gt;Para deixar o jogo nesse estado eu decidi que precisava de pelo menos:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Sons: Geralmente negligenciados no desenvolvimento, sons dão uma sensação táctil ao jogo que ajuda muito a polir o jogo. Demorou um pouco até encontrar o som certo, mas também no fim foi apenas 3 samples que eu usei para as movimentações das peças.&lt;/li&gt;
+  &lt;li&gt;Menu: UI é um porre de fazer, mas é totalmente necessária, eu não preciso te convencer disso. É o tipo de coisa que é preciso criar coragem e fazer mesmo que fique feio, sem ela o jogo não é acessível jogador.&lt;/li&gt;
+  &lt;li&gt;Logo: O logo tipo é o rosto do seu produto, é o que identifica ele tanto quanto o seu nome. Eu não sou designer e imagino que também não seja, mesmo assim eu me desafiei a fazer esse desenho porque com ele eu tinha tudo que precisava para mostrar o jogo para o mundo. É cruel pensar nisso, o publico vai ser muito mais impactado por esse desenho que pelas horas de pesquisa e desenvolvimento que eu passei no código.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;No fim desses três eu ainda acabei incluindo mais algumas coisinhas como alguns overlays, diferentes tamanhos de tabuleiro e a opção de jogar com uma IA usando GoGNU.&lt;/p&gt;
+
+&lt;h2 id=&quot;como-jogar&quot;&gt;Como jogar?&lt;/h2&gt;
+
+&lt;p&gt;O jogo está disponível no &lt;a href=&quot;https://kam1sama.itch.io/goingo&quot;&gt;Itch.io&lt;/a&gt; e no &lt;a href=&quot;https://github.com/joelschutz/goingo&quot;&gt;Github&lt;/a&gt;, o código é aberto e caso queira me ajudar pode pagar quanto quiser pelo jogo. Eu não vou falar muito porque acho que vale a pena entrar nas páginas e ver como ficou o resultado. É impressionante o que as IA de hoje em dia conseguem fazer, não se preocupe que aqui nesse post foi tudo escrito por mãos humanas.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusão&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Eu deveria ter escrito esse artigo antes, mas depois de voltar da minha viagem eu fiquei me coçando para escrever código e precisava codar algumas coisas, esse jogo inclusive. Além dele ainda tem uma biblioteca que eu criei e publiquei essa semana que vou escrever um artigo a respeito. Uma coisa que me ajudou bastante para produzir tanto foram algumas ferramentas de IA, eu ainda tenho alguma resistência, mas deu para perceber essa semana o potencial que elas tem. Aqui por exemplo é um espaço que eu não acho justo pedir para o ChatGPT me ajudar, demoro um tanto para escrever esses artigos, acho importante manter essa pessoalidade nesse blog. No README e descrições desses programas eu achei o maximo poder usar a IA, você explica as coisas direto ao ponto e ela enche linguiça para você.&lt;/p&gt;
+
+&lt;p&gt;Um outro ponto que quero começar a usar mais IA é na tradução dos textos desse blog. No momento, a maioria do material está apenas em português e eu gostaria muito de ter ele disponível em inglês para ajudar na divulgação. Meu plano é usar os modelos da &lt;a href=&quot;https://libretranslate.com/&quot;&gt;Libretranslate&lt;/a&gt; para ajudar no processo, se estiver lendo isso em inglês provavelmente o meu plano deu certo.&lt;/p&gt;
+
+&lt;p&gt;Em 2 semanas começam as minhas aulas da faculdade e na semana que vem eu já me mudo em definitivo. Não tenho ideia de como vai ficar meu tempo livre, mas quero continuar publicando por aqui e criando jogos e outros programas legais. Mas se tiver que codar apenas ferramentas de estudo, vou vir aqui contar tudo para vocês. Me desejem sorte nessa nova jornada.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Espero que tenha gostado desse material e que tenha sido de ajuda, estou ainda trabalhando nesse site e nas demos para ajudar a quem tem interesse em programar coisas práticas e fora do mundinho web. Caso tenha alguma dúvida ou sugestão, por favor entre em contato pelo &lt;a href=&quot;https://github.com/joelschutz&quot;&gt;GitHub&lt;/a&gt; ou &lt;a href=&quot;mailto:joelsschutz@yahoo.com.br&quot;&gt;e-mail&lt;/a&gt;.
+&lt;img src=&quot;https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif&quot; alt=&quot;thank you!&quot; /&gt;&lt;/p&gt;</content><author><name>Joel Schutz</name></author><summary type="html">Eu já perdi a conta de quantos protótipos eu já criei com Ebiten(ou Ebitengine como me pediram para chamar), muitos foram direto para a lixeira e outros estão perdidos em branches abandonadas em algum repositório. Porém tem ideias que são bobas boas demais para deixar passar e precisam de um tratamento à altura. Hoje vou falar sobre o primeiro jogo que lancei: Goingo, um uma versão do ancestral jogo de Go feito na totalmente na linguagem Go.</summary></entry><entry><title type="html">Devlog #3 - TileMaps e StateMachines</title><link href="https://github.com/devlog/devlog/2023/04/12/devlog-3.html" rel="alternate" type="text/html" title="Devlog #3 - TileMaps e StateMachines" /><published>2023-04-12T18:56:11+00:00</published><updated>2023-04-12T18:56:11+00:00</updated><id>https://github.com/devlog/devlog/2023/04/12/devlog-3</id><content type="html" xml:base="https://github.com/devlog/devlog/2023/04/12/devlog-3.html">&lt;h2 id=&quot;introdução&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Eu demorei a escrever esse post porque achei que não havia nada de interessante a comentar nas demos que criei essas últimas semanas. Pensei em escrever então sobre porque acho isso e indicar alguns caminhos mais úteis para quem está fazendo algo parecido.&lt;/p&gt;
+
+&lt;h2 id=&quot;tilemaps&quot;&gt;Tilemaps&lt;/h2&gt;
+
+&lt;p&gt;O jogo que estamos criando vai utilizar tilemaps, esse tipo de técnica é tão antiga que até o Super Nintendo já tinha hardware especializado para renderizar esses mapas. Não faltam materiais sobre esse assunto, nessa demo eu apenas fiquei na superfície, mas se quiser uma introdução bacana pode ler essa &lt;a href=&quot;https://www.domestika.org/pt/blog/6985-o-que-e-tileset-e-tilemap-no-desenvolvimento-de-games&quot;&gt;aqui&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Na &lt;a href=&quot;/devlog/demo/2023/04/07/tilemap-v0.html&quot;&gt;demo&lt;/a&gt; eu fiz duas coisas interessantes de se notar:&lt;/p&gt;
+
+&lt;p&gt;Primeiro eu mapiei as células do nosso &lt;a href=&quot;/devlog/demo/2023/03/23/diffusion-automata-v1.html&quot;&gt;Diffusion Automata&lt;/a&gt; com os espaços do tilemap, assim assim eu pude usar a simulação para alterar qual tile deve ser mostrado em cada espaço.&lt;/p&gt;
+
+&lt;p&gt;Além disso, eu utilizei um arquivo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.tmx&lt;/code&gt; do &lt;a href=&quot;https://www.mapeditor.org/&quot;&gt;Tiled&lt;/a&gt; para gerar o estado inicial da simulação. Então essa demo acaba mostrando como extrair dados de tilemaps e como utilizar dados para alterá-los também.&lt;/p&gt;
+
+&lt;h2 id=&quot;statemachines&quot;&gt;StateMachines&lt;/h2&gt;
+
+&lt;p&gt;Diferente dos Autômatos Celulares, não falta material sobre Máquinas de Estado em português. Elas são matéria obrigatória em qualquer curso de Computação, Sistemas e as vezes até Administração. Por esse motivo eu não vou indicar nenhum material, você provavelmente vai encontrar bastante coisa no Google e pode garimpar o que mais lhe faz sentido. Caso esteja com preguiça, o artigo da &lt;a href=&quot;https://pt.wikipedia.org/wiki/M%C3%A1quina_de_estados_finita&quot;&gt;Wikipedia&lt;/a&gt; é uma fonte rápida para se inteirar do assunto.&lt;/p&gt;
+
+&lt;p&gt;Na &lt;a href=&quot;/devlog/demo/2023/04/12/farm-v0.html&quot;&gt;demo&lt;/a&gt; essa máquina foi utilizada para controlar qual o estado de cada hortinha. Quando o fazendeiro cria uma nova ela começa com o estado &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SECA&lt;/code&gt;, assim que ele rega essa horta ela passa para o estado &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MOLHADA&lt;/code&gt;. Uma vez nesse novo estado o fazendeiro não precisa mais interagir com a horta, a cada ciclo de tempo ela vai automaticamente crescer, mudando do &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EM_CRESCIMENTO_1&lt;/code&gt; até &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EM_CRESCIMENTO_4&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Para demonstrar que esse tempo de crescimento é independente para cada hortinha, a cada nova criada o tempo aumenta. Caso interaja com uma horta totalmente crescida o fazendeiro pode colher, o que traz ela de volta para o estado &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SECA&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Não tenho código comentado para essa demo porque ela é baseada em uma biblioteca chamada &lt;a href=&quot;https://github.com/qmuntal/stateless&quot;&gt;stateless&lt;/a&gt;, não vale a pena explicar como ela funciona porque no seu caso pode estar utilizando uma ferramenta diferente. Existem centenas de formas de implementar essa solução, use a que faz mais sentido no seu caso.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusão&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Esse post foi rápido, não tinha muito a dizer mas queria publicar logo antes do fim da semana. Na próxima semana eu não devo trabalhar em nenhuma demo ou no jogo, vou estar viajando para resolver alguns assuntos da minha mudança. Porém assim que voltar eu devo entrar de cabeça no desenvolvimento de novas demos. Em especial quero criar uma UI para navegar pelo mapa e interagir com os sistemas, também estou lendo um pouco sobre alguns &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;design patterns&lt;/code&gt; para me ajudar a sobrepor esses sistemas, que é algo essencial para que tudo funcione em conjunto.&lt;/p&gt;
+
+&lt;p&gt;Deve demorar até meu próximo post, então não se assustem se só ouvirem falar de mim daqui um mês ou dois. Até lá, recomendo darem uma olhada na nova página de &lt;a href=&quot;/devlog/links.html&quot;&gt;links&lt;/a&gt; que adicionei ao site, assim que achar algo interessante eu devo colocar ali.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Espero que tenha gostado desse material e que tenha sido de ajuda, estou ainda trabalhando nesse site e nas demos para ajudar a quem tem interesse em programar coisas práticas e fora do mundinho web. Caso tenha alguma dúvida ou sugestão, por favor entre em contato pelo &lt;a href=&quot;https://github.com/joelschutz&quot;&gt;GitHub&lt;/a&gt; ou &lt;a href=&quot;mailto:joelsschutz@yahoo.com.br&quot;&gt;e-mail&lt;/a&gt;.
+&lt;img src=&quot;https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif&quot; alt=&quot;thank you!&quot; /&gt;&lt;/p&gt;</content><author><name>Joel Schutz</name></author><category term="devlog" /><category term="gamedev" /><category term="go-terrain" /><summary type="html">Introdução</summary></entry><entry><title type="html">Farm Demo v0</title><link href="https://github.com/devlog/demo/2023/04/12/farm-v0.html" rel="alternate" type="text/html" title="Farm Demo v0" /><published>2023-04-12T18:52:03+00:00</published><updated>2023-04-12T18:52:03+00:00</updated><id>https://github.com/devlog/demo/2023/04/12/farm-v0</id><content type="html" xml:base="https://github.com/devlog/demo/2023/04/12/farm-v0.html">&lt;ul&gt;
+  &lt;li&gt;W, A, S, D - Move&lt;/li&gt;
+  &lt;li&gt;I - Interact&lt;/li&gt;
+  &lt;li&gt;Mouse Wheel - Zoom&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Joel Schutz</name></author><category term="demo" /><category term="gamedev" /><category term="go-terrain" /><summary type="html">W, A, S, D - Move I - Interact Mouse Wheel - Zoom</summary></entry><entry><title type="html">TileMap Automata</title><link href="https://github.com/devlog/demo/2023/04/07/tilemap-v0.html" rel="alternate" type="text/html" title="TileMap Automata" /><published>2023-04-07T22:28:10+00:00</published><updated>2023-04-07T22:28:10+00:00</updated><id>https://github.com/devlog/demo/2023/04/07/tilemap-v0</id><content type="html" xml:base="https://github.com/devlog/demo/2023/04/07/tilemap-v0.html">&lt;p&gt;Nessa demo utilizamos o mesmo Automata da demo &lt;a href=&quot;/devlog/demo/2023/03/23/diffusion-automata-v1.html&quot;&gt;diffusion-automata-v1&lt;/a&gt;, mas usamos um mapa do Tiled para renderizar o quadro. Além disso usamos um esquema simples de camera para permitir zoom(mouse wheel) e pan(middle button) do mapa, assim como adicionar(left button) e remover(right button) rochas do mapa.&lt;/p&gt;
+
+&lt;p&gt;Nossa struct então vai ser bastante simples, precisamos apenas do AUtomata e do TileMap:&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TileBoard&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;tMap&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tiled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Map&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;      &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;boards&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;HumidityBoard&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cursor&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Durante o update apenas atualizamos o estado do automata e traduzimos esses estados para o TileMap. Se antes cada célula do nosso espaço correspondia a um pixel, aqui ele corresponde a um tile; uma cor corresponde a um tipo de tile e assim por diante.&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TileBoard&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;// Atualizamos o estado do Automato&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;c&quot;&gt;// Extraímos o novo estado&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;bState&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+	&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;humidity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;impermeability&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Elem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+			&lt;span class=&quot;c&quot;&gt;// Aplicamos o valor da umidade na primeira camada&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Layers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tiles&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tiled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LayerTile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tileset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tilesets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ID&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;uint32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;humidity&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)}&lt;/span&gt;
+			&lt;span class=&quot;c&quot;&gt;// Aplicamos o valor da impermeabilidade na segunda camada&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Layers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tiles&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tiled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LayerTile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tileset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tilesets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ID&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;838&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Nil&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;impermeability&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MaxFloat32&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;c&quot;&gt;// Atualizamos a posição do cursos na terceira camada&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Layers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tiles&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tiled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LayerTile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tileset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tilesets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ID&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;847&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Nil&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cursor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cursor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])}&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Joel Schutz</name></author><category term="demo" /><category term="gamedev" /><summary type="html">Nessa demo utilizamos o mesmo Automata da demo diffusion-automata-v1, mas usamos um mapa do Tiled para renderizar o quadro. Além disso usamos um esquema simples de camera para permitir zoom(mouse wheel) e pan(middle button) do mapa, assim como adicionar(left button) e remover(right button) rochas do mapa.</summary></entry><entry><title type="html">Lecture Timer - Minha primeira extensão do VSCode</title><link href="https://github.com/devlog/devlog/study/2023/04/05/a-vscode-extension.html" rel="alternate" type="text/html" title="Lecture Timer - Minha primeira extensão do VSCode" /><published>2023-04-05T18:14:02+00:00</published><updated>2023-04-05T18:14:02+00:00</updated><id>https://github.com/devlog/devlog/study/2023/04/05/a-vscode-extension</id><content type="html" xml:base="https://github.com/devlog/devlog/study/2023/04/05/a-vscode-extension.html">&lt;h2 id=&quot;introdução&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Depois de um tempo trabalhando com desenvolvimento web, e agora com a esfriada no mercado, eu decidi que é hora de voltar para a faculdade. Quem lê o blog percebe que o que eu mais quero é encontrar algum desafio que me deixe o mais longe possível de dessas tecnologias. Por isso criei uma extensão usando JS+HTML+CSS para o VSCode.&lt;/p&gt;
+
+&lt;p&gt;Essa ironia vai se explicar em breve, em resumo, é o jeito que a Microsoft escolheu para tornar o desenvolvimento de extensões mais “simples” no VSCode. Mas o que isso tem a ver com voltar para a faculdade? Bem deixa eu explicar o problema:&lt;/p&gt;
+
+&lt;h2 id=&quot;minhas-notas-horrendas&quot;&gt;Minhas notas horrendas&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://media.giphy.com/media/3o6MbbwX2g2GA4MUus/giphy.gif&quot; alt=&quot;I don't understand anything&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Já teve a experiencia de estudar para uma prova, voltar para as suas anotações e não fazer ideia do que se tratam? Eu tenho um pouco de dislexia, sou prolixo na hora de me expressar, e para piorar, sou a única pessoa que conheço a ter reprovado nas aulas de caligrafia. Quando me concentrava para anotar, me perdia na aula, quando fazia na pressa, não entendia nada do que escrevi. O resultado era um caderno cheio de notas confusas e feias de uma aula que eu já não lembrava sobre o que era.&lt;/p&gt;
+
+&lt;p&gt;Escutar as gravações das aulas acabava sendo a solução, ainda mais depois da pandemia, esse material virou essencial nos meus estudos já que eu poderia pausar, voltar e dar a atenção necessária para cada parte. Minhas notas ficaram muito mais organizadas e úteis, fui tão bem que consegui aprender a programar, fui empregado na área e acabei deixando a faculdade. Mas tem um aspecto desse processo que eu preciso resolver para ter alguma vida além dos estudos.&lt;/p&gt;
+
+&lt;p&gt;Gravações são ótimas, mas não são fáceis de encontrar o que está procurando. Em um texto você consegue usar o famoso &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ctrl+F&lt;/code&gt; e procurar o que precisa, mesmo em um livro é muito fácil sublinhar e marcar páginas para voltar depois. Em um arquivo de audio ou video não é possível fazer algo assim, o que eu acabava fazendo era anotar a minutagem e uma frase ao lado para tentar me achar depois, quase sempre sem sucesso.&lt;/p&gt;
+
+&lt;p&gt;O problema não era tanto o método, mas o fato de ele ser trabalhoso e ineficiente. Para anotar uma minutagem era necessário pausar e escrever o exata valor, depois para retornar era preciso encontrar o segundo exato na linha. Sem falar que era impossível fazer algo assim durante a gravação de uma aula, coisa que vai ser essencial agora com aulas presenciais. Eu precisava de alguma ferramenta que me ajudasse a usar essa técnica e é isso que a minha extensão faz.&lt;/p&gt;
+
+&lt;h2 id=&quot;anotando-em-tempo-real&quot;&gt;Anotando em tempo real&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://media.giphy.com/media/1Aj491qX7K45qZs6EP/giphy.gif&quot; alt=&quot;Typing while shit burn in front of you&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;A ideia que eu tive é de uma ferramenta que me permitisse:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Anotar minutagens com apenas um click&lt;/li&gt;
+  &lt;li&gt;Navegar rapidamente entre as anotações e o arquivo de video ou audio&lt;/li&gt;
+  &lt;li&gt;Sincronizar anotações feitas em aula com feitas posteriormente&lt;/li&gt;
+  &lt;li&gt;Permitisse marcar e encontrar facilmente os trechos da aula que mais interessam&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Em outras palavras, eu queria alguma forma de rabiscar meus arquivos de audio da mesma forma que um texto ou livro, para isso eu precisava dar uma interface visual para esse audio. Que lugar melhor para começar que pelo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Visual Studio Code&lt;/code&gt;, trocadilhos a parte o que pensei de fazer foi criar um arquivo de texto que pudesse conter toda as minhas anotações. O &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VSCode&lt;/code&gt; entra como uma boa opção de editor, não só pela capacidade de extensão, mas também porque é o editor de texto que uso diariamente e já estou acostumado.&lt;/p&gt;
+
+&lt;p&gt;Escrever a extensão não foi fácil, mas admito que depois de um pouco de esforço a coisa passa a fazer mais sentido. Eu queria poder dizer que a minha falta de experiencia e, em geral, ódio pelo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; foram as causas dos meus problemas, mas nem foi tão esse o caso. O que mais complica é o design adotado pela Microsoft, a API parece uma grande sopa de decisões impulsivas e a documentação exige que você leia tudo com muita calma para não perder nenhum detalhe. De todo o material que usei, os que eu recomendo para quem quiser tentar essa empreitada são a &lt;a href=&quot;https://code.visualstudio.com/api/get-started/your-first-extension&quot;&gt;documentação oficial&lt;/a&gt;, principalmente os exemplos, e &lt;a href=&quot;https://youtu.be/a5DX5pQ9p5M&quot;&gt;esse video&lt;/a&gt; de quase 4 horas. Não se incomode com o comprimento, a melhor parte desse tutorial é que conseguimos acompanhar ele debugando certas coisas que são importantíssimas, mas que raramente aparecem nos outros tutoriais.&lt;/p&gt;
+
+&lt;h2 id=&quot;ok-mas-o-que-essa-extensão-faz&quot;&gt;Ok, mas o que essa extensão faz?&lt;/h2&gt;
+
+&lt;p&gt;Antes de tudo, vamos precisar de um arquivo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.md&lt;/code&gt; com um &lt;a href=&quot;https://daily-dev-tips.com/posts/what-exactly-is-frontmatter/&quot;&gt;frontmatter&lt;/a&gt; preenchido com alguns dados, a extensão já vem com um snippet chamado &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lecture-timer.initTimer&lt;/code&gt; que vai criar algo assim:&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;lecture&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;My&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Title&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;example.mp3&quot;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# Opcional&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;duration&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;120&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;# Opcional&lt;/span&gt;
+&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Isso é tudo que precisamos para começar, o campo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file&lt;/code&gt; é opcional e caso fique em branco a extensão funcionará como um timer simples. Alternativamente você pode utilizar um campo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;duration&lt;/code&gt; para especificar o limite de tempo do seu timer. Clique no ícone da extensão na barra lateral para abrir o painel.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/devlog/assets/lt-0.png&quot; alt=&quot;Lecture Timer Panel&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Os controles na parte superior funcionam como você espera: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tocar&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pausar&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;parar&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;avançar&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;retroceder&lt;/code&gt;, etc. Eles servem tanto para operar os timers quanto navegar pelo audio. Na parte inferior temos os timestamps(ou minutagens) registradas no nosso arquivo, clicando em cada um ou usando as botões conseguimos navegar por eles no texto. Adicionamos novos usando os seguintes marcadores no texto:&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- Marcador vazio --&amp;gt;&lt;/span&gt;
+:lec-timer{time=&quot;3.774&quot; preview=&quot;00:00:03&quot; type=&quot;alone&quot;}
+
+&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- Marcador com conteúdo inline --&amp;gt;&lt;/span&gt;
+:lec-timer[content]{time=&quot;3.774&quot; preview=&quot;00:00:03&quot; type=&quot;inline&quot;}
+
+&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- Marcador de bloco --&amp;gt;&lt;/span&gt;
+:::lec-timer{time=&quot;3.774&quot; preview=&quot;00:00:03&quot; type=&quot;block&quot;}
+multi
+line
+content
+:::
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Não é necessário saber digitar esses marcadores inteiros, a extensão adiciona um novo comando para isso, basta utilizar &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ctrl+Shift+P&lt;/code&gt; para abrir a palheta comandos e procurar por &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lecture-timer.stampMarker&lt;/code&gt;. Com ele você consegue adicionar a minutagem e caso tenha algum texto selecionado ele já formata corretamente o seu conteúdo dentro do marcador. Uma dica que eu dou é definir um atalho do teclado para esse comando que até mais fácil de usar.&lt;/p&gt;
+
+&lt;p&gt;A syntax desses marcadores também é proposital, eles respeitam a proposta de &lt;a href=&quot;https://talk.commonmark.org/t/generic-directives-plugins-syntax/444&quot;&gt;Generic Directives&lt;/a&gt; e podem facilmente ser parceados para html utilizando um plugin como &lt;a href=&quot;https://github.com/hilookas/markdown-it-directive&quot;&gt;markdown-it-directive&lt;/a&gt;. Inclusive é esse o plugin que utilizei para renderizar os marcadores no preview do markdown:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/devlog/assets/lt-1.png&quot; alt=&quot;Lecture Timer Preview&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Essas são as funcionalidades até agora, não são muitas mas já é o suficiente para começar a utilizar.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusão&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Eu devo continuar a adicionar funcionalidades e remover bugs no futuro, ainda quero dar suporte a arquivos de video e conteúdo online. Além disso ainda tem algumas coisas de qualidade de vida que eu acredito serem necessárias, mas ainda quero testar mais na prática para ter certeza.&lt;/p&gt;
+
+&lt;p&gt;Caso esteja interessado, já pode instalar a versão em &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=joelschutz.lecture-timer&quot;&gt;pre-release&lt;/a&gt; no seu VSCode. Sugestões e bugs podem ser enviados para o &lt;a href=&quot;https://github.com/joelschutz/lecture-timer&quot;&gt;repositório&lt;/a&gt;, assim como contribuições caso queira dar uma força.&lt;/p&gt;
+
+&lt;p&gt;Esse era um dos projetos que me desafiei a terminar antes do começo das aulas da UFRGS em Maio, já vou riscar esse da lista. O outro era uma ferramenta para extrair comentários do código Go, essa já existe e funciona, mas preciso fazer um post como esse aqui no blog para dar como encerrado também e o tempo está acabando.&lt;/p&gt;
+
+&lt;p&gt;Depois disso devo voltar ao regime normal de posts sobre gamedev, já tenho uma demo nova e estou animado para começar a dar forma ao nosso jogo. Porém eu tenho certeza que vamos ter um hiato em breve para eu poder dar conta da minha mudança de cidade e me aclimatar na nova rotina. Não tenho também muita certeza de quanto tempo livre vou ter para me dedicar a projetos como estes, sobre isso só o futuro dirá.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Espero que tenha gostado desse material e que tenha sido de ajuda, estou ainda trabalhando nesse site e nas demos para ajudar a quem tem interesse em programar coisas práticas e fora do mundinho web. Caso tenha alguma dúvida ou sugestão, por favor entre em contato pelo &lt;a href=&quot;https://github.com/joelschutz&quot;&gt;GitHub&lt;/a&gt; ou &lt;a href=&quot;mailto:joelsschutz@yahoo.com.br&quot;&gt;e-mail&lt;/a&gt;.
+&lt;img src=&quot;https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif&quot; alt=&quot;thank you!&quot; /&gt;&lt;/p&gt;</content><author><name>Joel Schutz</name></author><category term="devlog" /><category term="study" /><category term="markdown" /><category term="vscode" /><category term="web" /><summary type="html">Introdução</summary></entry><entry><title type="html">Diffusion Automata v1</title><link href="https://github.com/devlog/demo/2023/03/24/diffusion-automata-v1.html" rel="alternate" type="text/html" title="Diffusion Automata v1" /><published>2023-03-24T01:04:38+00:00</published><updated>2023-03-24T01:04:38+00:00</updated><id>https://github.com/devlog/demo/2023/03/24/diffusion-automata-v1</id><content type="html" xml:base="https://github.com/devlog/demo/2023/03/24/diffusion-automata-v1.html">&lt;p&gt;A ideia desse Automata é simular a dispersão de um
+liquido em um meio solido permeável, como solo, areia, etc.
+Ele foi criado como protótipo de um sistema de dispersão de
+água subterrânea para meu jogo.&lt;/p&gt;
+
+&lt;p&gt;Como vai perceber, não existe muita complexidade nesse código,
+essa é a magica desse tipo de algoritmo, com regras simples é
+possível construir comportamentos complexos. Aqui, simulamos
+a interação entre líquidos e sólidos no tempo e espaço usando apenas
+aritmética básica.&lt;/p&gt;
+
+&lt;p&gt;Nosso espaço será representado como um 2d array de vetores, mas
+no nosso caso eles servem apenas como uma forma conveniente de
+agrupar nossos dois valores relevantes:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Umidade
+    &lt;ul&gt;
+      &lt;li&gt;A quantidade de liquido contido naquela célula&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Impermeabilidade
+    &lt;ul&gt;
+      &lt;li&gt;A resistência que o material daquela célula apresenta ao movimento de liquido&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Os campos &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Rocks&lt;/code&gt; e &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Rain&lt;/code&gt; servem para demonstrar, respectivamente,
+células totalmente impermeáveis e células que sao fontes de umidade.&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HumidityBoard&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;      &lt;span class=&quot;p&quot;&gt;[][]&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mgl32&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Vec2&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;// [humidity, impermeability]&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;Rocks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Rain&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[][]&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;hvrX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hvrY&lt;/span&gt;  &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;A lógica para determinar a umidade de uma célula é bastante simples,
+entendendo que ao longo do tempo o liquido tende a se espalhar uniformemente
+pelo espaço, assumimos que o nosso valor de umidade da célula é a média aritmética
+entre o seu valor atual e a das suas vizinhas. Por simplicidade assumimos apenas
+4 vizinhos conforme esse diagrama onde &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v0&lt;/code&gt; é a célula atual:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;v3&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;v1&lt;/td&gt;
+      &lt;td&gt;v0&lt;/td&gt;
+      &lt;td&gt;v2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;v4&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Para considerar a permeabilidade, utilizamos uma média ponderada onde
+o peso de cada termo é definido pelo valor de impermeabilidade daquela célula.
+O detalhe é que consideramos o reciproco(1/valor) como peso das células vizinhas,
+dessa forma conseguimos o efeito de que uma célula altamente impermeável tende
+a não perder umidade ao mesmo tempo que resiste à absorção de mais liquido. Além
+disso, verificamos se a célula excede o nosso limite de 1024 e ajustamos então o valor para esse limite.&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ba&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;HumidityBoard&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;// Armazenamos o estado inicial do espaço para servir de referencia&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;m0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;make&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([][]&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mgl32&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Vec2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ba&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+	&lt;span class=&quot;nb&quot;&gt;copy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ba&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;range&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ba&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;range&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;c&quot;&gt;// Pulamos o calculo de fontes de umidade e células com alto impermeabilidade&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ba&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Rain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MaxFloat32&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;k&quot;&gt;continue&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+			&lt;span class=&quot;c&quot;&gt;// Assumimos que as bordas são células secas e impermeáveis&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mgl32&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Vec2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MaxFloat32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mgl32&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Vec2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MaxFloat32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;v3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mgl32&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Vec2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MaxFloat32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;v4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mgl32&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Vec2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MaxFloat32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+			&lt;span class=&quot;c&quot;&gt;// Verificamos se o vizinho existe e aplicamos os valores corretos&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;v3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;v4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+			&lt;span class=&quot;c&quot;&gt;// Calculamos a média aritmética ponderada&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+
+			&lt;span class=&quot;c&quot;&gt;// Limitamos os valores a um máximo de 1024&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1024&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1024&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+			&lt;span class=&quot;c&quot;&gt;// Atualizamos espaço com novo valor de umidade&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;ba&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;O resultado no fim não é perfeito, há parâmetros que não são levados em consideração como
+velocidade e densidade do liquido, mas para o nosso caso já é suficiente. Outra limitação
+é quanto a conservação de massa do sistema. Aos poucos o volume total de umidade cai e isso
+causa o efeito de umidade desaparecendo espontaneamente, que é fisicamente impossível.&lt;/p&gt;
+
+&lt;p&gt;Como dito, esse é um protótipo e limitações como essa não são necessariamente problemas
+para aplicação em jogos. Vale lembrar que esse algoritmo foi escrito de forma síncrona,
+mas é totalmente possível adapta-lo para operar de forma paralelizada.&lt;/p&gt;</content><author><name>Joel Schutz</name></author><category term="demo" /><category term="gamedev" /><category term="go-terrain" /><summary type="html">A ideia desse Automata é simular a dispersão de um liquido em um meio solido permeável, como solo, areia, etc. Ele foi criado como protótipo de um sistema de dispersão de água subterrânea para meu jogo.</summary></entry><entry><title type="html">Diffusion Automata v0</title><link href="https://github.com/devlog/demo/2023/03/17/diffusion-automata.html" rel="alternate" type="text/html" title="Diffusion Automata v0" /><published>2023-03-17T11:20:19+00:00</published><updated>2023-03-17T11:20:19+00:00</updated><id>https://github.com/devlog/demo/2023/03/17/diffusion-automata</id><content type="html" xml:base="https://github.com/devlog/demo/2023/03/17/diffusion-automata.html"></content><author><name>Joel Schutz</name></author><category term="demo" /><category term="gamedev" /><category term="go-terrain" /><summary type="html"></summary></entry><entry><title type="html">Conway’s Game Of Life</title><link href="https://github.com/devlog/demo/2023/03/15/game-of-life.html" rel="alternate" type="text/html" title="Conway’s Game Of Life" /><published>2023-03-15T03:05:17+00:00</published><updated>2023-03-15T03:05:17+00:00</updated><id>https://github.com/devlog/demo/2023/03/15/game-of-life</id><content type="html" xml:base="https://github.com/devlog/demo/2023/03/15/game-of-life.html">&lt;p&gt;Para o Game Of Life, nosso &lt;em&gt;espaço&lt;/em&gt; será definido como
+um 2d array, isso equivale a uma tela ou plano cartesiano.
+O &lt;em&gt;estado&lt;/em&gt; será um simples booliano, porque nesse
+Autômato o estado varia apenas entre dois valores. Temos
+assim o seguinte struct para armazenar nossos estados.&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GameOfLife&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+ &lt;span class=&quot;n&quot;&gt;values&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[][]&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;O comportamento do nosso Autômato é definido nesse método Update. Nele cada elemento do nosso array é comparado aos seus vizinhos, isso determina qual o novo estado daquela célula.&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gol&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GameOfLife&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+ &lt;span class=&quot;c&quot;&gt;// Primeiro criamos uma cópia do estado original, garantindo assim que não haverá conflitos&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;m0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;make&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([][]&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gol&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+	&lt;span class=&quot;nb&quot;&gt;copy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gol&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;range&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gol&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;range&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;c&quot;&gt;// Cell names&lt;/span&gt;
+			&lt;span class=&quot;c&quot;&gt;// |v1|v2|v3|&lt;/span&gt;
+			&lt;span class=&quot;c&quot;&gt;// |v4|v0|v5|&lt;/span&gt;
+			&lt;span class=&quot;c&quot;&gt;// |v6|v7|v8|&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alive&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;uint&lt;/span&gt;
+
+			&lt;span class=&quot;c&quot;&gt;// Aqui contamos quantos vizinhos com estado verdadeiro essa célula possui&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gol&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IsAliveOrNil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;alive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gol&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IsAliveOrNil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;alive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gol&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IsAliveOrNil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v3&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;alive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gol&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IsAliveOrNil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v4&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;alive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gol&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IsAliveOrNil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v5&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;alive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v6&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gol&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IsAliveOrNil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v6&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v6&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;alive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v7&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gol&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IsAliveOrNil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v7&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v7&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;alive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v8&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gol&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IsAliveOrNil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v8&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v8&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;alive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+			&lt;span class=&quot;c&quot;&gt;// Essa é aplicação da regra em si. A definição dela é a clássico proposta por Conway.&lt;/span&gt;
+			&lt;span class=&quot;c&quot;&gt;// Uma célula viva morre quando possui menos de 2 vizinhos vivos&lt;/span&gt;
+			&lt;span class=&quot;c&quot;&gt;// Uma célula viva morre quando possui mais de 3 vizinhos vivos&lt;/span&gt;
+			&lt;span class=&quot;c&quot;&gt;// Uma célula morta volta a vida quando possui exatamente 3 vizinhos vivos&lt;/span&gt;
+			&lt;span class=&quot;c&quot;&gt;// Em todos os outros casos ela mantém seu estado original&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;alive&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alive&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; 
+				&lt;span class=&quot;n&quot;&gt;m0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;false&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;alive&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;m0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;gol&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m0&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Para determinar se a célula existe e qual o seu estado, existe esse método. Perceba que ele retorna um ponteiro, caso a célula não exista é retornado um ponteiro vazio(nil), do contrário é retornado o estado daquela célula.&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gol&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GameOfLife&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IsAliveOrNil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;xOut&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gol&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;yOut&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gol&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
+
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;xOut&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;yOut&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gol&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Espero que tenha gostado desse material e que tenha sido de ajuda, estou ainda trabalhando nesse site e nas demos para ajudar a quem tem interesse em programar coisas praticas e fora do mundinho web. Caso tenha alguma duvida ou sugestão, por favor entre em contato pelo &lt;a href=&quot;https://github.com/joelschutz&quot;&gt;GitHub&lt;/a&gt; ou &lt;a href=&quot;mailto:joelsschutz@yahoo.com.br&quot;&gt;e-mail&lt;/a&gt;.
+&lt;img src=&quot;https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif&quot; alt=&quot;thank you!&quot; /&gt;&lt;/p&gt;</content><author><name>Joel Schutz</name></author><category term="demo" /><category term="gamedev" /><summary type="html">Para o Game Of Life, nosso espaço será definido como um 2d array, isso equivale a uma tela ou plano cartesiano. O estado será um simples booliano, porque nesse Autômato o estado varia apenas entre dois valores. Temos assim o seguinte struct para armazenar nossos estados.</summary></entry><entry><title type="html">Devlog #1 - O Básico de Cellular Automata</title><link href="https://github.com/devlog/devlog/2023/03/14/devlog-1.html" rel="alternate" type="text/html" title="Devlog #1 - O Básico de Cellular Automata" /><published>2023-03-14T18:08:13+00:00</published><updated>2023-03-14T18:08:13+00:00</updated><id>https://github.com/devlog/devlog/2023/03/14/devlog-1</id><content type="html" xml:base="https://github.com/devlog/devlog/2023/03/14/devlog-1.html">&lt;h2 id=&quot;introdução&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Todos já tiveram essa experiência: O professor mostra um tópico novo de física ou matemática, alguém confuso pergunta. “Mas prof, onde que eu vou usar isso na minha vida”. A resposta podia variar, mas era sempre algo do tipo “vai cair na prova” ou “na engenharia vai precisar saber” e claro que ninguém se importava com nenhuma dessas coisas.&lt;/p&gt;
+
+&lt;p&gt;O que o professor esqueceu de falar é que existe uma coisa que depende de muito matemática e qualquer criança é fascinada: Video-Games. Vetores, matrizes, funções e o maldito teorema de Pitágoras, toda essa parafernália matemática que nos dão na escola é usada em todo lugar em jogos. O que me leva ao meu ponto, que outra forma melhor para praticar esses conceitos depois de anos longe de uma sala de aula?&lt;/p&gt;
+
+&lt;p&gt;Vamos tirar uma coisa do caminho, esse devlog não tem como objetivo fazer “marketing” para um jogo, talvez nunca saia um jogo pronto para o publico desse experiência, mas não faz mal o que importa aqui é aprender alguma coisa e talvez ajudar voce  o seu jogo ou prova de calculo.&lt;/p&gt;
+
+&lt;h2 id=&quot;o-jogo&quot;&gt;O jogo&lt;/h2&gt;
+
+&lt;p&gt;Mesmo sem saber onde vamos chegar, vale a pena ter pelo menos uma inspiração de por onde ir. Eu tenho vontade já a muito tempo de criar um jogo de fazenda onde o jogador precisa cuidar das culturas, mas também precisa gerenciar recursos como água, eletricidade, poluição, fertilidade do solo. Idealmente seria algo que pudesse dar a ele alguma intuição sobre agroecologia e gerenciamento de recursos naturais.&lt;/p&gt;
+
+&lt;p&gt;Essa já é uma montanha bem alta para subir e daqui de baixo eu não consigo ver exatamente por onde subir. Mas parece possível, mas com certeza vai ser bastante interessante. Mas precisamos
+começar de algum lugar, pode ser qualquer lugar, que tal começar simulando a água?&lt;/p&gt;
+
+&lt;p&gt;So uma coisa antes disso, a engine que vamos usar aqui se chama Ebiten e é escrita em Go. O único motivo de usar ela é pela simplicidade e por gostar da linguagem, mas pode ficar tranquilo que os conceitos são aplicáveis em qualquer  linguagem, engine ou aplicação.&lt;/p&gt;
+
+&lt;h2 id=&quot;a-água&quot;&gt;A água&lt;/h2&gt;
+
+&lt;p&gt;Existe bons motivos para começar criando a água do nosso jogo: Primeiramente essa vai ser a mecânica principal do nosso jogo, assim como numa fazenda de verdade; Além disso, ela é uma daquelas coisas que voce entende empiricamente como funciona, mas explicar isso para um computador é outra história.&lt;/p&gt;
+
+&lt;p&gt;No futuro essa simulação de água pode seguir os modelos mais avançados de engenharia de solos e ser tão realista que a NASA vai usar nosso jogo para treinar os futuros fazendeiros de Marte. Até lá, podemos fazer algo que na minha opinião é a essência da computação gráfica: podemos fazer um truque para enganar o jogador. Vamos começar com um Autômato Celular, no
+Grego: Cellular Automata&lt;/p&gt;
+
+&lt;h2 id=&quot;cellular-automata&quot;&gt;Cellular Automata&lt;/h2&gt;
+
+&lt;p&gt;Existem dezenas de fontes explicando o que esses algoritmos fazem, como surgiram e onde são utilizados, mas infelizmente muito pouco desse material esta disponível em português. Eu recomendo esse &lt;a href=&quot;https://www.ppgee.ufmg.br/documentos/Defesas/802/Dissertacao_Gledson_final.pdf#page=29&quot;&gt;capítulo&lt;/a&gt; de dissertação que é bastante completo, mas também bastante acadêmico. Vamos resumir dessa forma:&lt;/p&gt;
+
+&lt;div class=&quot;language-text highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Autômatos Celulares são algoritmos capazes simular sistemas complexos em larga escala a partir da definição de regras simples em pequena escala.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Entenda complexo ou simples como algo relacionado a previsibilidade do sistema, não necessariamente o quão de difícil é de modelar o sistema. O estoque de um produto em uma loja, distribuidora ou fabrica é um sistema simples, basta ver a diferença entre as entradas e saídas daquele estabelecimento. Agora o estoque desse mesmo produto em uma cidade é um sistema complexo que depende da contribuição de centenas de estabelecimentos interagindo entre si. A ideia desse tipo de autômato é simular cada estabelecimento conforme alguma regra e observar qual os efeitos na cidade como um todo.&lt;/p&gt;
+
+&lt;p&gt;Ok, agora como programamos isso$ Uma boa maneira de modelar esses sistemas é dividindo ele em 3 partes: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Espaço&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Comportamento&lt;/code&gt; e &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Estado&lt;/code&gt;. Onde a cada ciclo esse &lt;em&gt;Espaço&lt;/em&gt; é alterado de acordo com o seu &lt;em&gt;Estado&lt;/em&gt;, seguindo a lógica definida por um &lt;em&gt;Comportamento&lt;/em&gt;. Mas vamos olhar cada uma com calma.&lt;/p&gt;
+
+&lt;h3 id=&quot;espaço&quot;&gt;Espaço&lt;/h3&gt;
+
+&lt;p&gt;Esse é onde a simulação acontece, nada mais é que um conjunto discreto, ou um grupo de células. Esse nome complicado é apenas para diferenciar continuo, onde não há uma separação definida entre cada membro do conjunto. No exemplo anterior o nosso espaço seria a Cidade e as células seriam os estabelecimentos.&lt;/p&gt;
+
+&lt;p&gt;Qualquer espaço pode ser utilizado, desde que ele seja discreto. No nosso jogo, a terra onde a água vai se dispersar é continua, mas podemos facilmente representa-la de forma discreta definindo uma unidade que define e limita a minha célula. Posso determinar que cada célula no meu espaço equivale a 1m^2, assim o espaço que antes era continuo se torna discreto, podemos agora imaginar que um estado diz respeito as características de uma area especifica com essas dimensões.&lt;/p&gt;
+
+&lt;h3 id=&quot;estado&quot;&gt;Estado&lt;/h3&gt;
+
+&lt;p&gt;Esse é o que estamos simulado, é uma característica que varia a cada ciclo para cada célula, o estoque de produtos no nosso exemplo. Geralmente simulamos apenas um valor, mas nada impede que esse estado seja um conjunto de valores.&lt;/p&gt;
+
+&lt;p&gt;Uma coisa importante que precisa ser definida com clareza é quando esses estados vão ser atualizados. Isso porque, a depender da simulação, o estado de uma célula pode ser dependente de outra. É preciso observar qual o efeito desejado e agir de acordo, mas na maioria das vezes vamos trabalhar com uma ideia de &lt;em&gt;frame&lt;/em&gt;, onde os estados de cada ciclo são segregados.&lt;/p&gt;
+
+&lt;p&gt;A ideia é tratar o estado geral das células após o calculo de um ciclo como uma fotografia, assim os novos estados são calculados a partir dos estados do ciclo anterior. Dessa forma temos menos chance de criar inconsistências e instabilidades na simulação&lt;/p&gt;
+
+&lt;h3 id=&quot;comportamento&quot;&gt;Comportamento&lt;/h3&gt;
+
+&lt;p&gt;Esse é como que nossa simulação vai funcionar, pode pensar como as regras que definem de que forma um estado se transforma em outro. Essa definição vai ser muito particular para o cenário que estamos tentando simular, o importante é ter em mente que o comportamento é definido por célula, não para todo o conjunto.&lt;/p&gt;
+
+&lt;h2 id=&quot;demos&quot;&gt;Demos&lt;/h2&gt;
+
+&lt;p&gt;Pode conferir um exemplo de implementação desses Autômatos em duas demos que eu criei. Inclusive com comentários sobre o código para ajudar voce a construir o seu próprio:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://joelschutz.github.io/devlog/demo/pt-br/2023/03/15/game-of-life.html&quot;&gt;Conway’s Game Of Life&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Minha implementação do clássico Cellular Automata&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://joelschutz.github.io/devlog/demo/pt-br/2023/03/17/diffusion-automata.html&quot;&gt;WIP - Diffusion Automata&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Um protótipo do autômato implementado para simular a Água no nosso jogo(lembra que era esse o objetivo desse post?)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;conclusão&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Ainda falta muito na implementação desse nosso jogo e mais para frente vamos abordar outros temas menos técnicos e com mais específicos. Mas ainda acho importante ter posts como esse pela falta de materiais de qualidade em português. Como o objetivo aqui é aprender codando, então nada mais justo.&lt;/p&gt;
+
+&lt;p&gt;No proximo post vamos falar mais especificamente sobre a simulação da água e como ela funciona, até lá, recomendo olhar as demos e analisar o código, os princípios são os mesmos para todos os Autômatos.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Espero que tenha gostado desse material e que tenha sido de ajuda, estou ainda trabalhando nesse site e nas demos para ajudar a quem tem interesse em programar coisas praticas e fora do mundinho web. Caso tenha alguma duvida ou sugestão, por favor entre em contato pelo &lt;a href=&quot;https://github.com/joelschutz&quot;&gt;GitHub&lt;/a&gt; ou &lt;a href=&quot;mailto:joelsschutz@yahoo.com.br&quot;&gt;e-mail&lt;/a&gt;.
+&lt;img src=&quot;https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif&quot; alt=&quot;thank you!&quot; /&gt;&lt;/p&gt;</content><author><name>Joel Schutz</name></author><category term="devlog" /><category term="gamedev" /><category term="go-terrain" /><summary type="html">Introdução</summary></entry></feed>
