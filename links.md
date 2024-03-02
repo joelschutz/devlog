@@ -19,6 +19,8 @@ layout: page
 
 [Awesome Generative Art](https://github.com/kosmos/awesome-generative-art)
 
+[Introduction to Shaders](https://youtu.be/f4s1h2YETNY)
+
 ## Gamedev
 
 [Nick's Blog](https://nickmcd.me/)
@@ -60,3 +62,6 @@ layout: page
 [Tom's toys](https://toms.toys/)
 
 [Source Making](https://sourcemaking.com/)
+
+[Mental Health](https://ncase.me/mental-health/#toc_2)
+
