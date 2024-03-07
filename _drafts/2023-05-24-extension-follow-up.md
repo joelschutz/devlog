@@ -24,12 +24,27 @@ No fim das contas a parte que mais útil desse sistema todo não depende tanto d
 - Possibilidade de conjugar diferentes ferramentas em um mesmo editor(theia)
 - Vantagens de ter um ambinete de trabalho movel e customizavel
 
-No fim eu acabei percebendo que a defazagem de ferramentas para 
+No fim eu acabei percebendo que a defazagem de ferramentas para uso acadêmico é grande. Há uma grande dependência de softwares proprietários, como NVivo, MS Office e Adobe Acrobat que barram o acesso pesquisadores pobres e exclui usuários do Linux cono eu. Além disso, tal realidade gera limitações e barreiras que impedem o livre exercício do que é o objetivo central do trabalho universitário: *gerar conhecimento*
 
-# Extensões propostas
+O trabalho científico depende de um ambiente aberto, flexível e troca constante para o seu desenvolvimento pleno. A cobrança de licenças abusivas, muitas vezes atreladas a instituições inteiras, impede que pesquisadores explorem possibilidades de análise que vão além das capacidades desses softwares. A falta de transparência desses sistemas também promove uma barreira para a analise crítica dos resultados obtidos por esses softwares.
+
+A interoperabilidade entre estes sistemas também se mostra um desafio, por depender muitas vezes de padrões proprietários de arquivos e complexificar desnecessariamente representações, o transporte de dados de uma aplicação para outra é quase impossível. No mundo do desenvolvimento é inegável a versatilidade que arquivos baseados em texto plano(.md e .csv por exemplo), sendo a base de diversas tecnologias como Git, Jupyter Notebooks e os próprios códigos fonte de qualquer qualquer linguagem de programação. Essa complexidade extra acaba servindo apenas aos propósitos dos criadores das ferramentas que conseguem mais flexibilidade para armazenar dados nesses arquivos, ao mesmo tempo que impedem usuários de transportas seus dados e trabalhos para uma plataforma concorrente.
+
+# Ferramentas 
+
+Ao longo do tempo eu pude reunir algumas ferramentas abertas que atendem parte do trabalho acadêmico que preciso executar e as reuni na lista abaixo. Meu plano é atualizá-la a medida que mais necessidades e ferramentas apareçam, aconselho que retorne aqui com frequência para acompanhar essa jornada.
+
 - Gerenciador de textos e bibliografia
+  - Zotero
 - Controle de tarefas
 - Assistente de citações
+  - Zotero
+  - Quarto
 - Leitor de PDF com anotações
 - Renderização de Markdown e Latex
+  - Quarto
 - Editor de mapa mental/Conceitual
+- Ferramentas de transmissão remota
+- Gerenciador de escrita colaboratira
+  - Git
+- Ferramentas de analise quantitativa e qualitativa 
