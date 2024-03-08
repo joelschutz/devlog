@@ -3,16 +3,13 @@ title: Pontes em Jogos
 description: ""
 date: 2023-08-11T22:48:12.123Z
 preview: ""
-tags: []
-categories: []
+tags:
+    - gamedev
+categories:
+    - essay
 ---
 
-https://youtu.be/L4QbfFhejxY
-
-https://youtu.be/IeT2lRu6bpc
-
-
-**Sam Porter Bridges: O Mensageiro da Reconexão em Death Stranding**
+## Sam Porter Bridges: O Mensageiro da Reconexão em Death Stranding
 
 Em um cenário pós-apocalíptico, onde a separação e a desconexão se tornaram a norma, o protagonista de Death Stranding, Sam Porter Bridges, emerge como um símbolo marcante de esperança e reconexão. O próprio nome de Sam carrega consigo uma profunda simbologia, que se entrelaça com os temas centrais do jogo, criando um protagonista multifacetado e profundamente significativo.
 
@@ -26,7 +23,7 @@ O paralelo com a figura messiânica é inegável. Assim como Cristo é considera
 
 Em conclusão, Sam Porter Bridges transcende a moldura de um mero protagonista de um jogo. Ele personifica a busca pela reconexão, esperança e unidade em um mundo fragmentado e desolado. Seu nome carregado de significado, a metáfora constante das pontes e sua representação messiânica convergem para criar um personagem que ressoa com o público, incentivando a reflexão sobre a importância das conexões humanas e a capacidade de superar desafios aparentemente insuperáveis. Sam é muito mais do que um herói; ele é um ícone simbólico de como a determinação e a compaixão podem superar as adversidades e reconstruir o que foi perdido.
 
-**Sam Porter Bridges: A Encruzilhada Política na Teia da Reconexão em Death Stranding**
+## A Encruzilhada Política na Teia da Reconexão em Death Stranding
 
 No mundo distópico de Death Stranding, onde a sociedade humana está fragmentada e à beira do colapso, a disputa política entre a empresa Bridges e a facção Homo Demens emerge como um conflito central que ecoa temas intrinsecamente ligados ao próprio protagonista, Sam Porter Bridges. A luta entre a ordem representada por Bridges e o caos pregado pela Homo Demens proporciona uma rica tapeçaria para examinar questões políticas profundas e complexas.
 
