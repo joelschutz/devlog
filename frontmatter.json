@@ -1,0 +1,96 @@
+{
+  "$schema": "https://frontmatter.codes/frontmatter.schema.json",
+  "frontMatter.taxonomy.contentTypes": [
+    {
+      "name": "default",
+      "pageBundle": false,
+      "previewPath": null,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Publishing date",
+          "name": "date",
+          "type": "datetime",
+          "default": "{{now}}",
+          "isPublishDate": true
+        },
+        {
+          "title": "Content preview",
+          "name": "preview",
+          "type": "image"
+        },
+        {
+          "title": "Is in draft",
+          "name": "draft",
+          "type": "draft"
+        },
+        {
+          "title": "Tags",
+          "name": "tags",
+          "type": "tags"
+        },
+        {
+          "title": "Categories",
+          "name": "categories",
+          "type": "categories"
+        }
+      ]
+    }
+  ],
+  "frontMatter.framework.id": "jekyll",
+  "frontMatter.content.publicFolder": "assets",
+  "frontMatter.content.pageFolders": [
+    {
+      "title": "_posts pt-br",
+      "path": "[[workspace]]/_i18n/pt-br/_posts",
+      "filePrefix": "yyyy-MM-dd"
+    },
+    {
+      "title": "_posts en",
+      "path": "[[workspace]]/_i18n/en/_posts",
+      "filePrefix": "yyyy-MM-dd"
+    },
+    {
+      "title": "_drafts",
+      "path": "[[workspace]]/_drafts",
+      "filePrefix": "yyyy-MM-dd"
+    }
+  ],
+  "frontMatter.taxonomy.tags": [],
+  "frontMatter.taxonomy.categories": [],
+  "frontMatter.dashboard.openOnStart": true,
+  "frontMatter.content.snippets": {
+    "Agradecimento": {
+      "description": "Para encerrar posts agradecendo o leitor",
+      "body": [
+        "",
+        "---",
+        "",
+        "Espero que tenha gostado desse material e que tenha sido de ajuda, estou ainda trabalhando nesse site e nas demos para ajudar a quem tem interesse em programar coisas práticas e fora do mundinho web. Caso tenha alguma dúvida ou sugestão, por favor entre em contato pelo [GitHub](https://github.com/joelschutz) ou [e-mail](mailto:joelsschutz@yahoo.com.br).",
+        "![thank you!](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif)",
+        ""
+      ],
+      "fields": []
+    },
+    "Thanks": {
+      "description": "Thanks the reader",
+      "body": [
+        "",
+        "---",
+        "",
+        "Hope you liked this material and that it was helpful, I'm still working on this website and demos to help people that are interested in programming things beyond the web development niche. If you have any question or suggestion, please contact me through [GitHub](https://github.com/joelschutz) or [e-mail](mailto:joelsschutz@yahoo.com.br).",
+        "![thank you!](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif)"
+      ],
+      "fields": []
+    }
+  }
+}
