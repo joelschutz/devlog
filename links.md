@@ -21,6 +21,8 @@ layout: page
 
 [Introduction to Shaders](https://youtu.be/f4s1h2YETNY)
 
+[A new kind of Science](https://www.wolframscience.com/nks/)
+
 ## Gamedev
 
 [Nick's Blog](https://nickmcd.me/)
