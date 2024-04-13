@@ -11,7 +11,7 @@ type: default
 
 Esses últimos meses eu realizei um sonho, eu consegui um carro! Fiz várias viagens e descobri que a minha vontade e da minha namorada é pegar o nosso Fox vermelho e desbravar esse mundo uma estradinha de cada vez. Porém, logo na primeira parada para abastecer nós já sentimos o golpe e entramos em desespero. 5,80 O LITRO DA GASOLINA! E na nossa primeira semana na cidade em que estudamos já tínhamos gastado quase 2 tanques inteiros, nunca que íamos conseguir realizar nosso sonho assim.
 
-![VW Fox 2004](https://www.carrosnaweb.com.br/imagensbd007/fox5p2005.jpg)
+![VW Fox 2004]({{site.baseurl}}/assets/fox5p2005.jpg)
 
 No caso dessa primeira semana, o motivo desse gasto todo foi muito besta: os pneus estavam descalibrados. Parece brincadeira, mas depois de calibrar os pneus o consumo do nosso carro na cidade caiu pela metade. Isso me colocou para pensar, o que mais influencia no consumo do nosso carro? Claro bastava ler um blog sobre o assunto que eu ia descobrir que coisas como a quantidade de passageiros, a qualidade do combustível, estilo de direção, se o trecho é urbano, o desgaste do motor, tudo isso influencia no consumo do carro. Mas o que nenhum desses blogs vai ser capaz de me dizer é o quanto o MEU carro consome realmente e é isso que importa no final.
 
