@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="pt-br"><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="https://github.com/devlog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://github.com/devlog/" rel="alternate" type="text/html" hreflang="pt-br" /><updated>2024-05-13T15:47:42+00:00</updated><id>https://github.com/devlog/feed.xml</id><title type="html">Joel’s Dev Blog</title><author><name>Joel Schutz</name></author><entry><title type="html">Fontes de Dados Geográficos</title><link href="https://github.com/devlog/datascience/cartografia/2024/04/30/fontes-de-dados-geogr%C3%A1ficos.html" rel="alternate" type="text/html" title="Fontes de Dados Geográficos" /><published>2024-04-30T00:18:36+00:00</published><updated>2024-04-30T00:18:36+00:00</updated><id>https://github.com/devlog/datascience/cartografia/2024/04/30/fontes-de-dados-geogr%C3%A1ficos</id><content type="html" xml:base="https://github.com/devlog/datascience/cartografia/2024/04/30/fontes-de-dados-geogr%C3%A1ficos.html">&lt;p&gt;No nosso ultimo post começamos um projeto de DataScience para descobrir, entre outras coisas, qual o consumo real do meu carro. Hoje, menos de um mês depois, estou com o meu celular abarrotado de fotos de painel de carro e arquivos &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.gpx&lt;/code&gt;. Isso porém vai ser assunto de outro dia quando começarmos a tratar e armazenar esses dados.&lt;/p&gt;
+
+&lt;p&gt;Nesse post vou falar sobre a minha promessa de cruzar dados de outros bancos de dados para inferir algumas coisas sobre os nossos dados. Isso nada mais vai ser uma desculpa para falar sobre um dos meus interesses particulares que é a Cartografia. Desde que comecei a usar o Qgis eu me apaixonei por esses tipos de dados que meu sonho se tornou viver disso. Então sem mais enrolação, vamos direto ao assunto:&lt;/p&gt;
+
+&lt;h2 id=&quot;dados-geoespaciais&quot;&gt;Dados GeoEspaciais&lt;/h2&gt;
+
+&lt;p&gt;Um dado georeferenciado, no seu sentido mas simples, é uma informação vinculada a uma parte do globo terrestre. Como todos nós, seres humanos, ainda vivemos sobre esse planeta, essas informações visem respeito diretamente a nós e onde vivemos. Os dados de &lt;em&gt;Custo de Vida&lt;/em&gt; ou &lt;em&gt;Precipitação Média&lt;/em&gt; da sua cidade também dizem respeito a você de alguma forma porque é você que em algum momento fazer compras ou se molhar na chuva. Existe uma realidade material nessas informações que é muito pujante.&lt;/p&gt;
+
+&lt;p&gt;Nesse nosso projeto, o uso dessas informações será crucial para entender quais as variáveis ambientais do carro que interferem no consumo, sem ter coletado esses dados. Iremos inferir esses dados sobre a realidade que o carro passou usando formas indiretas.&lt;/p&gt;
+
+&lt;p&gt;A confecção de mapas vai ser para mim um dos momentos mais divertidos e o uso de dados geoespaciais foi uma grande desculpa para me permitir isso. Eles serão úteis para nós visualizarmos tanto os nosso dados, quanto as nossas descobertas.&lt;/p&gt;
+
+&lt;p&gt;Para cada seguimento de uma rota é possível associar uma informação, assim como é possível gerar novas informações a partir dela. Assim faremos nossas inferências.&lt;/p&gt;
+
+&lt;h2 id=&quot;inferências&quot;&gt;Inferências&lt;/h2&gt;
+
+&lt;p&gt;Ainda no exemplo da rota, pense que o nosso aplicativo de GPS registra de tempos em tempos um &lt;strong&gt;ponto&lt;/strong&gt; com &lt;em&gt;coordenadas geográficas&lt;/em&gt; e um &lt;em&gt;timestamp&lt;/em&gt; do momento do registro. Isso não nos diz muito para além da localização, porém em uma rota temos uma sequencia desses pontos. Ao comparar a distancia percorrida, dada pela distância em linha reta dos dois pontos, e o tempo decorrido, dado pela diferença entre os tempos registrados, podemos descobrir em que velocidade o carro se movia naquele seguimento.&lt;/p&gt;
+
+&lt;p&gt;Fazendo isso para toda a rota tempos uma nova informação sobre ela, podemos comparar essas velocidades com a de outras rotas, ou mesmo tomar uma média desses valores para classificar rotas por ele. Podemos usar essa informação e verificar se há mais correlações, mas o mais interessante ainda é cruzar esses dados com outros externos e ter ainda mais insights.&lt;/p&gt;
+
+&lt;h2 id=&quot;dados-de-terceiros&quot;&gt;Dados de terceiros&lt;/h2&gt;
+
+&lt;p&gt;Existem muitos sites que disponibilizam dados públicos para pesquisa e análise, sobre os mais diferentes assuntos. O mais popular para trabalhos de DataScience é o &lt;a href=&quot;https://www.kaggle.com/&quot;&gt;Kaggle&lt;/a&gt;, onde a comunidade pode compartilhar notebooks e datasets de forma gratuita. Esse normalmente seria o primeiro lugar a se procurar para procurar bancos de dados complementares, porém aqui vamos por outro caminho.&lt;/p&gt;
+
+&lt;p&gt;Os dados no Kaggle tem normalmente duas origens: dados originais produzidos pelos usuários; ou dados raspados da internet. A confiabilidade desses dados nem sempre é das melhores, estes dados podem estar desatualizados, incorretos e até adulterado, é preciso muita atenção as fontes desses dados. Como aqui não queremos ter o retrabalho de conferir esses dados, vamos utilizar dados das fontes mais confiáveis que podemos obter, vamos utilizar apenas dados oficiais.&lt;/p&gt;
+
+&lt;h2 id=&quot;bases-oficiais&quot;&gt;Bases Oficiais&lt;/h2&gt;
+
+&lt;p&gt;Para o nosso projeto queremos poder cruzar dados e identificar:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Qual a temperatura e umidade no dia do trajeto, assim como as condições de chuva&lt;/li&gt;
+  &lt;li&gt;Se o trajeto era em trecho urbano ou rural&lt;/li&gt;
+  &lt;li&gt;Se o trajeto foi feito em estrada ou rua e quais as condições da mesma&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Para identificar esses dados vamos pesquisar em 3 bases oficiais, uma para cada um desses tópicos.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Para obter os dados ambientais vamos utilizar a base do &lt;a href=&quot;https://portal.inmet.gov.br/&quot;&gt;INMet&lt;/a&gt;, que conta com o histórico de medições de estações meteorológicas de todo o país.&lt;/li&gt;
+  &lt;li&gt;Para saber se a localização que o carro estava era em perímetro urbano ou rural vamos utilizar a classificação do &lt;a href=&quot;https://ibge.gov.br/&quot;&gt;IBGE&lt;/a&gt; de Concentrações Urbanas.&lt;/li&gt;
+  &lt;li&gt;Por fim, para ter informações sobre as estradas optamos por usar uma base estadual, isso porque elas costumam estar mais atualizadas que as bases nacionais e como não saí do estado do RS, ela vai ser suficiente. Os dados obtidos são do &lt;a href=&quot;https://www.daer.rs.gov.br/inicial&quot;&gt;DAER&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Fico devendo ainda a explicação de como esses dados vão ser processados e como serão utilizados para a análise, mas isso fica para um próximo post. No momento estamos enfrentando fortes chuvas e a recomendação é não sair de casa. Devo ter algum tempo livre para fazer essa parte, mas sem promessas.&lt;/p&gt;</content><author><name>Joel Schutz</name></author><category term="datascience" /><category term="cartografia" /><summary type="html">No nosso ultimo post começamos um projeto de DataScience para descobrir, entre outras coisas, qual o consumo real do meu carro. Hoje, menos de um mês depois, estou com o meu celular abarrotado de fotos de painel de carro e arquivos .gpx. Isso porém vai ser assunto de outro dia quando começarmos a tratar e armazenar esses dados.</summary></entry><entry><title type="html">DIY datascience</title><link href="https://github.com/devlog/datascience/2024/04/11/diy-datascience.html" rel="alternate" type="text/html" title="DIY datascience" /><published>2024-04-11T11:08:25+00:00</published><updated>2024-04-11T11:08:25+00:00</updated><id>https://github.com/devlog/datascience/2024/04/11/diy-datascience</id><content type="html" xml:base="https://github.com/devlog/datascience/2024/04/11/diy-datascience.html">&lt;p&gt;Esses últimos meses eu realizei um sonho, eu consegui um carro! Fiz várias viagens e descobri que a minha vontade e da minha namorada é pegar o nosso Fox vermelho e desbravar esse mundo uma estradinha de cada vez. Porém, logo na primeira parada para abastecer nós já sentimos o golpe e entramos em desespero. 5,80 O LITRO DA GASOLINA! E na nossa primeira semana na cidade em que estudamos já tínhamos gastado quase 2 tanques inteiros, nunca que íamos conseguir realizar nosso sonho assim.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/devlog/assets/fox5p2005.jpg&quot; alt=&quot;VW Fox 2004&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;No caso dessa primeira semana, o motivo desse gasto todo foi muito besta: os pneus estavam descalibrados. Parece brincadeira, mas depois de calibrar os pneus o consumo do nosso carro na cidade caiu pela metade. Isso me colocou para pensar, o que mais influencia no consumo do nosso carro? Claro bastava ler um blog sobre o assunto que eu ia descobrir que coisas como a quantidade de passageiros, a qualidade do combustível, estilo de direção, se o trecho é urbano, o desgaste do motor, tudo isso influencia no consumo do carro. Mas o que nenhum desses blogs vai ser capaz de me dizer é o quanto o MEU carro consome realmente e é isso que importa no final.&lt;/p&gt;
+
+&lt;p&gt;Com o meu interesse em Datascience reestabelecido graças ao BAH(Business Analytics Hub), decidi que era hora de responder a esse meu pavor com dados. Afinal, para participar do curso eu estou tendo de dirigir quase 240km, ida e volta, todas as sextas-feiras. A ideia é coletar uma boa quantidade de dados para descobrir qual o consumo real do nosso carro e mais algumas informações úteis como: Qual posto é o melhor custo-benefício na minha região? Com que frequência devo calibrar os pneus? Quais trajetos valem mais a pena de carro ou de ônibus? Quanto devo gastar em combustível em uma viagem antes mesmo de pegar a estrada? Compensa usar uma rota alternativa para não pagar o pedágio? Vamos ao plano:&lt;/p&gt;
+
+&lt;h2 id=&quot;coleta-de-dados&quot;&gt;Coleta de dados&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://media.giphy.com/media/MYehRmhUGxmDG2JiGS/giphy.gif&quot; alt=&quot;I've collected about 3800 Lists&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;O estudo dos &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sistemas Complexos&lt;/code&gt; me ensinou que o mundo real é totalmente diferente do mundo ideal. Se o objetivo fosse estimar o consumo do meu carro, bastava marcar quanto o odômetro acusa entre visitas ao posto de gasolina. Uma álgebra simples ia me dizer teoricamente quanto meu carro faz de km/L. Mas o meu objetivo é ter um valor real, e a realidade ela é muito mais complexa que isso. Além disso eu estou muito empolgado de poder usar esse projeto para poder trabalhar com dados geoespaciais. Então a metodologia será a seguinte:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A cada trajeto eu vou:
+    &lt;ul&gt;
+      &lt;li&gt;Fotografar o painel deixando visível o odômetro e o marcador de gasolina antes e depois de dirigir&lt;/li&gt;
+      &lt;li&gt;Gravar o trajeto usando um aplicativo de GPS no meu celular&lt;/li&gt;
+      &lt;li&gt;Anotar quantos passageiros tinham no carro&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;A cada visita ao posto eu vou:
+    &lt;ul&gt;
+      &lt;li&gt;Fotografar o painel antes e depois de abastecer&lt;/li&gt;
+      &lt;li&gt;Fotografar o painel da bomba deixando visível qual o combustível abastecido(álcool, gasolina ou aditivada), o valor total pago, a quantidade de litros e valor por litro&lt;/li&gt;
+      &lt;li&gt;Registrar no aplicativo de GPS a localização do posto&lt;/li&gt;
+      &lt;li&gt;Anotar:
+        &lt;ol&gt;
+          &lt;li&gt;Se eu calibrei os pneus&lt;/li&gt;
+          &lt;li&gt;Se eu usei um aplicativo para ter desconto e quanto que foi dado de desconto&lt;/li&gt;
+          &lt;li&gt;Qual a bandeira do posto&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Com essas informações já conseguimos alguns dados, mas mais alguns vão poder ser inferidos a partir deles.&lt;/p&gt;
+
+&lt;h2 id=&quot;inferências&quot;&gt;Inferências&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;https://media.giphy.com/media/KYh1vSXtcdl0RYgLCR/giphy.gif&quot; alt=&quot;Turn data into more data&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Perceba que existem algumas informações redundantes que estão sendo coletadas e outras que parecem não ter muita relevância com o que estamos tentando medir, mas o objetivo disso é fazer algumas inferências que podem ser úteis depois na análise dos dados.&lt;/p&gt;
+
+&lt;p&gt;Comparando os dados redundantes conseguimos descobrir:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Qual o desvio da distância acusada pelo odômetro e o GPS&lt;/li&gt;
+  &lt;li&gt;Qual o desvio da litragem acusada pela bomba e o medidor do carro, e consequentemente o erro do medidor&lt;/li&gt;
+  &lt;li&gt;Se o trajeto foi feito em trânsito intenso&lt;/li&gt;
+  &lt;li&gt;Qual a proporção da mistura de cada combustível dentro do tanque&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Cruzando os dados com outras bases de dados&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Quais trajetos foram feitos em trecho urbano e estrada&lt;/li&gt;
+  &lt;li&gt;Qual a temperatura, umidade e condições de chuva no dia e local do trajeto&lt;/li&gt;
+  &lt;li&gt;Quais trechos foram realizados antes e depois de troca de óleo e outras manutenções&lt;/li&gt;
+  &lt;li&gt;Quais trechos passaram por pedágio e o valor&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;conclusões&quot;&gt;Conclusões&lt;/h2&gt;
+
+&lt;p&gt;Uma parte crucial da análise que não está nesse post é exatamente quais as questões que eu vou tentar responder com esses dados. Além das óbvias que fiz no início, muitas outras vão surgir ao longo do processo e a partir dos dados e problemas que vou acumular ao longo dos próximos meses. Por agora a maior preocupação vai ser coletar religiosamente esses dados e buscar uma formas de organizar e tratar esses dados.&lt;/p&gt;
+
+&lt;p&gt;Entendo que quem chegar a esse post deve ter muita curiosidade de ver os resultados e talvez até analisá-los por si mesmo. Porém, eu preciso ainda encontrar uma forma segura de fazer isso. Não quero que ninguém use os meus dados de GPS para descobrir onde eu moro por exemplo. Meus próximos posts sobre o assunto devem tratar disso, mas ainda não sei qual será o próximo feedback, fiquem atentos para mais novidades.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Dirijam com responsabilidade&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://media.giphy.com/media/Ts7b89eJpcyAM/giphy.gif&quot; alt=&quot;Drive Safe!&quot; /&gt;&lt;/p&gt;</content><author><name>Joel Schutz</name></author><category term="datascience" /><summary type="html">Esses últimos meses eu realizei um sonho, eu consegui um carro! Fiz várias viagens e descobri que a minha vontade e da minha namorada é pegar o nosso Fox vermelho e desbravar esse mundo uma estradinha de cada vez. Porém, logo na primeira parada para abastecer nós já sentimos o golpe e entramos em desespero. 5,80 O LITRO DA GASOLINA! E na nossa primeira semana na cidade em que estudamos já tínhamos gastado quase 2 tanques inteiros, nunca que íamos conseguir realizar nosso sonho assim.</summary></entry><entry><title type="html">Pontes em Jogos</title><link href="https://github.com/devlog/essay/2023/08/11/pontes-em-jogos.html" rel="alternate" type="text/html" title="Pontes em Jogos" /><published>2023-08-11T22:48:12+00:00</published><updated>2023-08-11T22:48:12+00:00</updated><id>https://github.com/devlog/essay/2023/08/11/pontes-em-jogos</id><content type="html" xml:base="https://github.com/devlog/essay/2023/08/11/pontes-em-jogos.html">&lt;h2 id=&quot;sam-porter-bridges-o-mensageiro-da-reconexão-em-death-stranding&quot;&gt;Sam Porter Bridges: O Mensageiro da Reconexão em Death Stranding&lt;/h2&gt;
+
+&lt;p&gt;Em um cenário pós-apocalíptico, onde a separação e a desconexão se tornaram a norma, o protagonista de Death Stranding, Sam Porter Bridges, emerge como um símbolo marcante de esperança e reconexão. O próprio nome de Sam carrega consigo uma profunda simbologia, que se entrelaça com os temas centrais do jogo, criando um protagonista multifacetado e profundamente significativo.&lt;/p&gt;
+
+&lt;p&gt;A etimologia do nome “Sam Porter Bridges” oferece uma perspectiva inicial sobre a missão e o papel desse personagem. “Sam” pode ser associado tanto à ideia de “Sol” quanto de “Filho”. Essas interpretações se alinham à figura de Cristo, que também é muitas vezes referido como o “Filho de Deus” e associado à luz e à redenção. A presença da palavra “Porter” sugere a função de carregar ou transportar, o que se encaixa de maneira coerente com a jornada de Sam em Death Stranding - a de reunir, conectar e trazer um senso de unidade a um mundo fragmentado.&lt;/p&gt;
+
+&lt;p&gt;A metáfora da ponte permeia todo o enredo do jogo e é constantemente enfatizada pelos personagens ao longo da narrativa. As “pontes” não são apenas estruturas físicas que Sam constrói para superar obstáculos geográficos, mas também representam as conexões humanas e sociais que ele trabalha arduamente para restabelecer. O próprio nome “Bridges” no sobrenome de Sam reforça essa noção, simbolizando sua missão de superar divisões e restaurar laços quebrados.&lt;/p&gt;
+
+&lt;p&gt;O paralelo com a figura messiânica é inegável. Assim como Cristo é considerado um mensageiro e um libertador, Sam também assume o papel de trazer alívio e esperança a um mundo atormentado. A sua tarefa de reconectar as cidades isoladas e trazer a paz através da morte, evoca paralelos com a missão espiritual de unir a humanidade e trazer a redenção.&lt;/p&gt;
+
+&lt;p&gt;À medida que a narrativa se desenrola, Sam é retratado como alguém que carrega o fardo de sua missão com relutância e às vezes ceticismo, mas ao mesmo tempo, ele é movido pela compaixão e a necessidade de trazer um sentido renovado à existência. Sua jornada pessoal reflete a luta interna e externa pela reconexão e pela restauração da humanidade, enquanto ele enfrenta desafios monumentais e sacrifícios pessoais.&lt;/p&gt;
+
+&lt;p&gt;Em conclusão, Sam Porter Bridges transcende a moldura de um mero protagonista de um jogo. Ele personifica a busca pela reconexão, esperança e unidade em um mundo fragmentado e desolado. Seu nome carregado de significado, a metáfora constante das pontes e sua representação messiânica convergem para criar um personagem que ressoa com o público, incentivando a reflexão sobre a importância das conexões humanas e a capacidade de superar desafios aparentemente insuperáveis. Sam é muito mais do que um herói; ele é um ícone simbólico de como a determinação e a compaixão podem superar as adversidades e reconstruir o que foi perdido.&lt;/p&gt;
+
+&lt;h2 id=&quot;a-encruzilhada-política-na-teia-da-reconexão-em-death-stranding&quot;&gt;A Encruzilhada Política na Teia da Reconexão em Death Stranding&lt;/h2&gt;
+
+&lt;p&gt;No mundo distópico de Death Stranding, onde a sociedade humana está fragmentada e à beira do colapso, a disputa política entre a empresa Bridges e a facção Homo Demens emerge como um conflito central que ecoa temas intrinsecamente ligados ao próprio protagonista, Sam Porter Bridges. A luta entre a ordem representada por Bridges e o caos pregado pela Homo Demens proporciona uma rica tapeçaria para examinar questões políticas profundas e complexas.&lt;/p&gt;
+
+&lt;p&gt;No cerne do enredo, o jogador se encontra desempenhando o papel de um entregador de pacotes em um mundo onde a conectividade é a chave para a sobrevivência. Sam, como protagonista, é encarregado de construir estruturas, transportar materiais, conectar áreas remotas e proteger suas entregas de ladrões de oportunidade. Essa dualidade reflete a complexidade das agendas políticas, uma vez que ele opera em ambas as esferas do dilema, apontando para as nuances das dinâmicas de poder e controle.&lt;/p&gt;
+
+&lt;p&gt;A representação de Bridges como uma empresa estatal e a Homo Demens como uma facção separatista não apenas espelha confrontos políticos da realidade, mas também sugere profundas implicações econômicas e de investimento humano e material. A construção e operação das redes de reconexão requerem uma teia complexa de agentes que trabalham em conjunto, mas cujas verdadeiras motivações podem se tornar obscuras. A todo momento, o verdadeiro propósito desses investimentos fica em questão, fazendo com que os próprios agentes, incluindo Sam, duvidem sobre a validade de suas conexões.&lt;/p&gt;
+
+&lt;p&gt;Essa intersecção entre os aspectos políticos e econômicos do conflito é amplificada pela própria jornada de Sam, que transcende de um mero entregador solitário para se tornar um ponto focal de uma nova rede de relações humanas. A transformação de Sam, de alguém que inicialmente se limita a operar em seus próprios termos e motivado por recompensas individuais, para alguém que compreende a importância vital das conexões humanas, reflete uma mensagem política mais ampla. A reconexão, tanto física quanto emocional, torna-se uma alegoria para a superação das divisões políticas e sociais, apontando para a necessidade de colaboração e compreensão mútua.&lt;/p&gt;
+
+&lt;p&gt;Em síntese, Death Stranding não é apenas um jogo de entregas e tecnologia futurista, mas também um estudo profundo das dinâmicas políticas e humanas que moldam as sociedades. Sam Porter Bridges personifica a ambivalência do conflito político e a necessidade crucial de reconexão, tanto a nível social quanto humano. Sua jornada evolutiva de um entregador solitário para uma âncora central em uma rede de relações humanas ecoa a importância da unidade em face das divisões e aponta para a esperança de um mundo onde a reconexão prevaleça sobre o caos.&lt;/p&gt;</content><author><name>Joel Schutz</name></author><category term="essay" /><category term="gamedev" /><summary type="html">Sam Porter Bridges: O Mensageiro da Reconexão em Death Stranding</summary></entry><entry><title type="html">Follow up da extensão</title><link href="https://github.com/devlog/devlog/study/2023/05/25/extension-follow-up.html" rel="alternate" type="text/html" title="Follow up da extensão" /><published>2023-05-25T00:17:51+00:00</published><updated>2023-05-25T00:17:51+00:00</updated><id>https://github.com/devlog/devlog/study/2023/05/25/extension-follow-up</id><content type="html" xml:base="https://github.com/devlog/devlog/study/2023/05/25/extension-follow-up.html">&lt;h2 id=&quot;introdução&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Faz quase um ano desde quando eu criei a minha extensão com o intuito de me ajudar a estudar. Obviamente muita coisa aconteceu e eu estou aqui de volta para comentar o que deu certo, o que não funcionou e quais os próximos passos dessa solução. Já digo que o fato de ter pensado nessa extensão antes de ter começado as aulas mais me atrapalhou que ajudou, já explico.&lt;/p&gt;
+
+&lt;p&gt;Logo nas primeiras vezes que tentei utilizar o software já me deparei com o problema que muitos professores não permitem que suas aulas sejam gravadas. Isso é muito efeito do “Escola sem Partido” aqui no Brasil, mesmo os que nao se preocupam com o conteúdo das aulas de divulgado resistem pois tem medo que algo que digam seja tirado de contexto. Tentar vencer essa questão é uma batalha perdida, até porque mesmo quando pude gravar, não consegui usar o software como esperava.&lt;/p&gt;
+
+&lt;p&gt;Uma crítica que eu preciso fazer a mim mesmo é que eu superestimei a minha necessidade de fazer notas durante as aulas. Foram poucos os momentos que eu quis escrever algo e quando escrevi algo sempre perdia o foco na aula. Talvez para outros s ja diferente, mas eu me senti incapaz de prestar atenção nas duas coisas ao mesmo tempo.&lt;/p&gt;
+
+&lt;p&gt;No fim das contas a parte que mais útil desse sistema todo não depende tanto da extensão em si, que é a capacidade de anotar documentos temporais, comp audios e vídeos. Isso porém ainda depende de uma implementação mais robusta e direcionada com o intuito de trabalhar com QDA(Análise de Dados Qualitativos)&lt;/p&gt;
+
+&lt;h2 id=&quot;mas-não-apenas-isso&quot;&gt;Mas não apenas isso&lt;/h2&gt;
+
+&lt;p&gt;No fim eu acabei percebendo que a defazagem de ferramentas para uso acadêmico é grande. Há uma grande dependência de softwares proprietários, como NVivo, MS Office e Adobe Acrobat que barram o acesso pesquisadores pobres e exclui usuários do Linux cono eu. Além disso, tal realidade gera limitações e barreiras que impedem o livre exercício do que é o objetivo central do trabalho universitário: &lt;em&gt;gerar conhecimento&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;O trabalho científico depende de um ambiente aberto, flexível e troca constante para o seu desenvolvimento pleno. A cobrança de licenças abusivas, muitas vezes atreladas a instituições inteiras, impede que pesquisadores explorem possibilidades de análise que vão além das capacidades desses softwares. A falta de transparência desses sistemas também promove uma barreira para a analise crítica dos resultados obtidos por esses softwares.&lt;/p&gt;
+
+&lt;p&gt;A interoperabilidade entre estes sistemas também se mostra um desafio, por depender muitas vezes de padrões proprietários de arquivos e complexificar desnecessariamente representações, o transporte de dados de uma aplicação para outra é quase impossível. No mundo do desenvolvimento é inegável a versatilidade que arquivos baseados em texto plano(.md e .csv por exemplo), sendo a base de diversas tecnologias como Git, Jupyter Notebooks e os próprios códigos fonte de qualquer qualquer linguagem de programação. Essa complexidade extra acaba servindo apenas aos propósitos dos criadores das ferramentas que conseguem mais flexibilidade para armazenar dados nesses arquivos, ao mesmo tempo que impedem usuários de transportas seus dados e trabalhos para uma plataforma concorrente.&lt;/p&gt;
+
+&lt;h2 id=&quot;ferramentas&quot;&gt;Ferramentas&lt;/h2&gt;
+
+&lt;p&gt;Ao longo do tempo eu pude reunir algumas ferramentas abertas que atendem parte do trabalho acadêmico que preciso executar e as reuni na lista abaixo. Meu plano é atualizá-la a medida que mais necessidades e ferramentas apareçam, aconselho que retorne aqui com frequência para acompanhar essa jornada.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Gerenciador de textos e bibliografia
+    &lt;ul&gt;
+      &lt;li&gt;Zotero&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Controle de tarefas&lt;/li&gt;
+  &lt;li&gt;Assistente de citações
+    &lt;ul&gt;
+      &lt;li&gt;Zotero&lt;/li&gt;
+      &lt;li&gt;Quarto&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Leitor de PDF com anotações&lt;/li&gt;
+  &lt;li&gt;Renderização de Markdown e Latex
+    &lt;ul&gt;
+      &lt;li&gt;Quarto&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Editor de mapa mental/Conceitual&lt;/li&gt;
+  &lt;li&gt;Ferramentas de transmissão remota&lt;/li&gt;
+  &lt;li&gt;Gerenciador de escrita colaboratira
+    &lt;ul&gt;
+      &lt;li&gt;Git&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Ferramentas de analise quantitativa e qualitativa&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Joel Schutz</name></author><category term="devlog" /><category term="study" /><category term="markdown" /><category term="vscode" /><category term="web" /><summary type="html">Introdução</summary></entry><entry><title type="html">Goingo Wasm Demo</title><link href="https://github.com/devlog/demo/2023/05/05/goingo-wasm-demo.html" rel="alternate" type="text/html" title="Goingo Wasm Demo" /><published>2023-05-05T10:36:14+00:00</published><updated>2023-05-05T10:36:14+00:00</updated><id>https://github.com/devlog/demo/2023/05/05/goingo-wasm-demo</id><content type="html" xml:base="https://github.com/devlog/demo/2023/05/05/goingo-wasm-demo.html">&lt;ul&gt;
+  &lt;li&gt;Botão Esquerdo do Mouse
+    &lt;ul&gt;
+      &lt;li&gt;No tabuleiro - Coloca pedra&lt;/li&gt;
+      &lt;li&gt;Na pedra - Mostrar grupo, liberdades e inimigos&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Botão Direto do Mouse - Passar o turno&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Joel Schutz</name></author><category term="demo" /><category term="gamedev" /><category term="goingo" /><summary type="html">Botão Esquerdo do Mouse No tabuleiro - Coloca pedra Na pedra - Mostrar grupo, liberdades e inimigos Botão Direto do Mouse - Passar o turno</summary></entry><entry><title type="html">Goingo: Meu primeiro jogo</title><link href="https://github.com/devlog/2023/05/02/goingo-meu-primeiro-jogo.html" rel="alternate" type="text/html" title="Goingo: Meu primeiro jogo" /><published>2023-05-02T21:08:50+00:00</published><updated>2023-05-02T21:08:50+00:00</updated><id>https://github.com/devlog/2023/05/02/goingo-meu-primeiro-jogo</id><content type="html" xml:base="https://github.com/devlog/2023/05/02/goingo-meu-primeiro-jogo.html">&lt;p&gt;Eu já perdi a conta de quantos protótipos eu já criei com Ebiten(ou Ebitengine como me pediram para chamar), muitos foram direto para a lixeira e outros estão perdidos em branches abandonadas em algum repositório. Porém tem ideias que são &lt;del&gt;bobas&lt;/del&gt; boas demais para deixar passar e precisam de um tratamento à altura. Hoje vou falar sobre o primeiro jogo que lancei: &lt;strong&gt;Goingo&lt;/strong&gt;, um uma versão do ancestral jogo de Go feito na totalmente na linguagem Go.&lt;/p&gt;
+
+&lt;h2 id=&quot;porque-go&quot;&gt;Porque Go?&lt;/h2&gt;
+
+&lt;p&gt;A confusão é totalmente intencional, tudo começou porque queria testar uma nova biblioteca e precisava de algo mais complexo que uma demo para ver ele em ação. Mas no fim eu acabei aprendendo bastante sobre ambos e decidi levar o projeto até o lançamento, muito porque já estava tudo ali, só precisava dar aquele pequeno esforço para finalizar.&lt;/p&gt;
+
+&lt;h3 id=&quot;o-jogo-de-tabuleiro&quot;&gt;O jogo de tabuleiro&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.learn-go.net/images/ko.gif&quot; alt=&quot;Ko Loop&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Go é o jogo de tabuleiro mais antigo do mundo ainda jogado segundo a &lt;a href=&quot;https://pt.wikipedia.org/wiki/Go&quot;&gt;Wikipedia&lt;/a&gt;, teria sido criado a 2500 anos atrás na China onde ainda é muito popular. Aqui no ocidente ele ficou mais conhecido depois que o &lt;a href=&quot;https://pt.wikipedia.org/wiki/AlphaGo&quot;&gt;AlphaGO&lt;/a&gt;, uma inteligencia artificial, venceu o campeão mundial em 2016.&lt;/p&gt;
+
+&lt;p&gt;Apesar de ser um jogo complexo e do desafio que é criar uma IA para jogar ele, as regras são extremamente simples. Esse foi o principal motivo de ter criado esse jogo, é um ótimo exemplo de jogo de tabuleiro que pode ser criado com algumas coisas linhas de código. Basicamente em Go:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Cada jogador se alterna colocando uma peça de sua cor no tabuleiro&lt;/li&gt;
+  &lt;li&gt;Peças adjacentes a outras da mesma cor formam grupos&lt;/li&gt;
+  &lt;li&gt;Quando um grupo é certado completamente por peças do adversário esse grupo é captura e retirado do tabuleiro.&lt;/li&gt;
+  &lt;li&gt;Vence quem cercar mais espaços no tabuleiro ao fim da partida&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Claro, a partir dessas regras nascem outras como Ko, Atari, etc, mas para criar a engine essas três são as básicas e definem o game loop. Para criar uma experiencia divertida e interessante é necessário mais funcionalidades, testes para impedir que o jogador faça movimento ilegais e uma método de contar os pontos de cada jogador.&lt;/p&gt;
+
+&lt;p&gt;Essa é uma das coisas que não tenho ainda no jogo, se quiserem saber quem venceu a partida os jogadores precisam contar seus próprios territórios. Parece preguiça da minha parte não adicionar isso ao jogo, mas depois de passar uma noite inteira tentando entender esse &lt;a href=&quot;https://www.oipaz.net/Carta.pdf&quot;&gt;artigo&lt;/a&gt;, eu preferi deixar para uma depois. Eu já comentei que desenvolvi o jogo inteiro em uma semana?&lt;/p&gt;
+
+&lt;h3 id=&quot;a-linguagem-de-programação&quot;&gt;A Linguagem de Programação&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/MariaLetta/free-gophers-pack/master/illustrations/svg/23.svg&quot; alt=&quot;Gophers playing Go&quot; style=&quot;object-fit: cover;height: 300px;&quot; width=&quot;100%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;É obvio que escolhi Go como linguagem porque é a minha favorita, mas quis dedicar essa parte do artigo para contar sobre uma situação que eu provavelmente não teria conseguido resolver se fosse em outra linguagem.&lt;/p&gt;
+
+&lt;p&gt;A biblioteca que eu queria utilizar e que deu inicio a
+esse projeto se chama &lt;a href=&quot;https://github.com/yohamta/donburi&quot;&gt;Donburi&lt;/a&gt;, é um ECS para a &lt;a href=&quot;https://ebitengine.org/&quot;&gt;Ebitengine&lt;/a&gt; que sempre uso por aqui. Eu ainda vou voltar a falar de ECS no futuro, é um tópico muito importante, mas o que me deu problemas foi um gerenciador de eventos que acompanha a biblioteca. Da forma que eu planejei o meu programa o gerenciador entrava em panico e derrubava o programa. Haviam formas de contornar isso, mas se tratava de um bug no código que precisava ser corrigido, não era para ela se comportar daquela forma.&lt;/p&gt;
+
+&lt;p&gt;Pedir uma correção em um projeto open-source é sempre uma aposta, principalmente quando você não tem familiaridade com o projeto e seus desenvolvedores. Alguns podem ser super abertos, outros podem extremamente relutantes quanto a qualquer tipo de mudança. Sem falar que nunca pode contar que alguém vai tirar parte do tempo dela para resolver um problema seu, te forçando a ter que entrar no código, achar o problema, resolver e propor uma pull-request. Ai que eu acredito que o Go entrou como um grande aliado nesse projeto, pela forma que o Go funciona e a sua sintaxe, é muito fácil entrar em um projeto e identificar como ele funciona. Não existem macros, escopos invisíveis, tipagem dinâmica, magicas de qualquer tipo, tudo em Go é explícito ao ponto que em minutos eu já sabia onde estava o problema e em poucas horas já tinha uma solução.&lt;/p&gt;
+
+&lt;p&gt;Contactar os desenvolvedores para incorporar essas mudanças é outra história, mas isso independe da linguagem. Minha pull-request para o &lt;a href=&quot;https://github.com/pkg/browser/pull/52&quot;&gt;pkg/browser&lt;/a&gt; ainda não foi vista até o momento que estou escrevendo esse artigo, por sorte &lt;a href=&quot;https://twitter.com/spaceshooting99&quot;&gt;Yohamta&lt;/a&gt; foi super rápido em aprovar e eu agradeço muito a ele.&lt;/p&gt;
+
+&lt;h2 id=&quot;o-que-fiz-de-diferente&quot;&gt;O que fiz de diferente?&lt;/h2&gt;
+
+&lt;p&gt;Algo que é um defeito meu: começar algo e abandonar no meio do caminho. Desde a escola, eu ficava muito animado com um assunto e pesquisava tudo que conseguia sobre ele mas na hora de escrever o trabalho e amarrar tudo eu ficava com preguiça e abandonava. A experiência de fazer sempre era melhor que a de terminar, hoje ainda tenho mais um agravante que é a ideia de que o resultado não vai valer a pena então porque se dedicar até o fim? Eu venho sempre me sabotando dessa forma e vivo buscando formas de superar, mas o que ainda me prende é ter dificuldade de definir onde é o ponto que posso considerar algo como pronto.&lt;/p&gt;
+
+&lt;p&gt;Finalizar algo é difícil para mim porque não consigo definir claramente o resultado esperado e como chegar nele. A forma que encontrei para lidar com isso é diminuindo o escopo do trabalho e aceitando a incompletude dele, desde que eu fizesse o mínimo para me sentir confortável em mostrar para os outros. Assim o projeto nunca está “pronto”, sempre é possível encontrar algo a melhorar, mas também está organizado a um ponto que não é um experimento pessoal que só você pode entender e aproveitar.&lt;/p&gt;
+
+&lt;p&gt;Para deixar o jogo nesse estado eu decidi que precisava de pelo menos:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Sons: Geralmente negligenciados no desenvolvimento, sons dão uma sensação táctil ao jogo que ajuda muito a polir o jogo. Demorou um pouco até encontrar o som certo, mas também no fim foi apenas 3 samples que eu usei para as movimentações das peças.&lt;/li&gt;
+  &lt;li&gt;Menu: UI é um porre de fazer, mas é totalmente necessária, eu não preciso te convencer disso. É o tipo de coisa que é preciso criar coragem e fazer mesmo que fique feio, sem ela o jogo não é acessível jogador.&lt;/li&gt;
+  &lt;li&gt;Logo: O logo tipo é o rosto do seu produto, é o que identifica ele tanto quanto o seu nome. Eu não sou designer e imagino que também não seja, mesmo assim eu me desafiei a fazer esse desenho porque com ele eu tinha tudo que precisava para mostrar o jogo para o mundo. É cruel pensar nisso, o publico vai ser muito mais impactado por esse desenho que pelas horas de pesquisa e desenvolvimento que eu passei no código.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;No fim desses três eu ainda acabei incluindo mais algumas coisinhas como alguns overlays, diferentes tamanhos de tabuleiro e a opção de jogar com uma IA usando GoGNU.&lt;/p&gt;
+
+&lt;h2 id=&quot;como-jogar&quot;&gt;Como jogar?&lt;/h2&gt;
+
+&lt;p&gt;O jogo está disponível no &lt;a href=&quot;https://kam1sama.itch.io/goingo&quot;&gt;Itch.io&lt;/a&gt; e no &lt;a href=&quot;https://github.com/joelschutz/goingo&quot;&gt;Github&lt;/a&gt;, o código é aberto e caso queira me ajudar pode pagar quanto quiser pelo jogo. Eu não vou falar muito porque acho que vale a pena entrar nas páginas e ver como ficou o resultado. É impressionante o que as IA de hoje em dia conseguem fazer, não se preocupe que aqui nesse post foi tudo escrito por mãos humanas.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusão&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Eu deveria ter escrito esse artigo antes, mas depois de voltar da minha viagem eu fiquei me coçando para escrever código e precisava codar algumas coisas, esse jogo inclusive. Além dele ainda tem uma biblioteca que eu criei e publiquei essa semana que vou escrever um artigo a respeito. Uma coisa que me ajudou bastante para produzir tanto foram algumas ferramentas de IA, eu ainda tenho alguma resistência, mas deu para perceber essa semana o potencial que elas tem. Aqui por exemplo é um espaço que eu não acho justo pedir para o ChatGPT me ajudar, demoro um tanto para escrever esses artigos, acho importante manter essa pessoalidade nesse blog. No README e descrições desses programas eu achei o maximo poder usar a IA, você explica as coisas direto ao ponto e ela enche linguiça para você.&lt;/p&gt;
+
+&lt;p&gt;Um outro ponto que quero começar a usar mais IA é na tradução dos textos desse blog. No momento, a maioria do material está apenas em português e eu gostaria muito de ter ele disponível em inglês para ajudar na divulgação. Meu plano é usar os modelos da &lt;a href=&quot;https://libretranslate.com/&quot;&gt;Libretranslate&lt;/a&gt; para ajudar no processo, se estiver lendo isso em inglês provavelmente o meu plano deu certo.&lt;/p&gt;
+
+&lt;p&gt;Em 2 semanas começam as minhas aulas da faculdade e na semana que vem eu já me mudo em definitivo. Não tenho ideia de como vai ficar meu tempo livre, mas quero continuar publicando por aqui e criando jogos e outros programas legais. Mas se tiver que codar apenas ferramentas de estudo, vou vir aqui contar tudo para vocês. Me desejem sorte nessa nova jornada.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Espero que tenha gostado desse material e que tenha sido de ajuda, estou ainda trabalhando nesse site e nas demos para ajudar a quem tem interesse em programar coisas práticas e fora do mundinho web. Caso tenha alguma dúvida ou sugestão, por favor entre em contato pelo &lt;a href=&quot;https://github.com/joelschutz&quot;&gt;GitHub&lt;/a&gt; ou &lt;a href=&quot;mailto:joelsschutz@yahoo.com.br&quot;&gt;e-mail&lt;/a&gt;.
+&lt;img src=&quot;https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif&quot; alt=&quot;thank you!&quot; /&gt;&lt;/p&gt;</content><author><name>Joel Schutz</name></author><summary type="html">Eu já perdi a conta de quantos protótipos eu já criei com Ebiten(ou Ebitengine como me pediram para chamar), muitos foram direto para a lixeira e outros estão perdidos em branches abandonadas em algum repositório. Porém tem ideias que são bobas boas demais para deixar passar e precisam de um tratamento à altura. Hoje vou falar sobre o primeiro jogo que lancei: Goingo, um uma versão do ancestral jogo de Go feito na totalmente na linguagem Go.</summary></entry><entry><title type="html">Devlog #3 - TileMaps e StateMachines</title><link href="https://github.com/devlog/devlog/2023/04/12/devlog-3.html" rel="alternate" type="text/html" title="Devlog #3 - TileMaps e StateMachines" /><published>2023-04-12T18:56:11+00:00</published><updated>2023-04-12T18:56:11+00:00</updated><id>https://github.com/devlog/devlog/2023/04/12/devlog-3</id><content type="html" xml:base="https://github.com/devlog/devlog/2023/04/12/devlog-3.html">&lt;h2 id=&quot;introdução&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Eu demorei a escrever esse post porque achei que não havia nada de interessante a comentar nas demos que criei essas últimas semanas. Pensei em escrever então sobre porque acho isso e indicar alguns caminhos mais úteis para quem está fazendo algo parecido.&lt;/p&gt;
+
+&lt;h2 id=&quot;tilemaps&quot;&gt;Tilemaps&lt;/h2&gt;
+
+&lt;p&gt;O jogo que estamos criando vai utilizar tilemaps, esse tipo de técnica é tão antiga que até o Super Nintendo já tinha hardware especializado para renderizar esses mapas. Não faltam materiais sobre esse assunto, nessa demo eu apenas fiquei na superfície, mas se quiser uma introdução bacana pode ler essa &lt;a href=&quot;https://www.domestika.org/pt/blog/6985-o-que-e-tileset-e-tilemap-no-desenvolvimento-de-games&quot;&gt;aqui&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Na &lt;a href=&quot;/devlog/demo/2023/04/07/tilemap-v0.html&quot;&gt;demo&lt;/a&gt; eu fiz duas coisas interessantes de se notar:&lt;/p&gt;
+
+&lt;p&gt;Primeiro eu mapiei as células do nosso &lt;a href=&quot;/devlog/demo/2023/03/23/diffusion-automata-v1.html&quot;&gt;Diffusion Automata&lt;/a&gt; com os espaços do tilemap, assim assim eu pude usar a simulação para alterar qual tile deve ser mostrado em cada espaço.&lt;/p&gt;
+
+&lt;p&gt;Além disso, eu utilizei um arquivo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.tmx&lt;/code&gt; do &lt;a href=&quot;https://www.mapeditor.org/&quot;&gt;Tiled&lt;/a&gt; para gerar o estado inicial da simulação. Então essa demo acaba mostrando como extrair dados de tilemaps e como utilizar dados para alterá-los também.&lt;/p&gt;
+
+&lt;h2 id=&quot;statemachines&quot;&gt;StateMachines&lt;/h2&gt;
+
+&lt;p&gt;Diferente dos Autômatos Celulares, não falta material sobre Máquinas de Estado em português. Elas são matéria obrigatória em qualquer curso de Computação, Sistemas e as vezes até Administração. Por esse motivo eu não vou indicar nenhum material, você provavelmente vai encontrar bastante coisa no Google e pode garimpar o que mais lhe faz sentido. Caso esteja com preguiça, o artigo da &lt;a href=&quot;https://pt.wikipedia.org/wiki/M%C3%A1quina_de_estados_finita&quot;&gt;Wikipedia&lt;/a&gt; é uma fonte rápida para se inteirar do assunto.&lt;/p&gt;
+
+&lt;p&gt;Na &lt;a href=&quot;/devlog/demo/2023/04/12/farm-v0.html&quot;&gt;demo&lt;/a&gt; essa máquina foi utilizada para controlar qual o estado de cada hortinha. Quando o fazendeiro cria uma nova ela começa com o estado &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SECA&lt;/code&gt;, assim que ele rega essa horta ela passa para o estado &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MOLHADA&lt;/code&gt;. Uma vez nesse novo estado o fazendeiro não precisa mais interagir com a horta, a cada ciclo de tempo ela vai automaticamente crescer, mudando do &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EM_CRESCIMENTO_1&lt;/code&gt; até &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EM_CRESCIMENTO_4&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Para demonstrar que esse tempo de crescimento é independente para cada hortinha, a cada nova criada o tempo aumenta. Caso interaja com uma horta totalmente crescida o fazendeiro pode colher, o que traz ela de volta para o estado &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SECA&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Não tenho código comentado para essa demo porque ela é baseada em uma biblioteca chamada &lt;a href=&quot;https://github.com/qmuntal/stateless&quot;&gt;stateless&lt;/a&gt;, não vale a pena explicar como ela funciona porque no seu caso pode estar utilizando uma ferramenta diferente. Existem centenas de formas de implementar essa solução, use a que faz mais sentido no seu caso.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusão&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Esse post foi rápido, não tinha muito a dizer mas queria publicar logo antes do fim da semana. Na próxima semana eu não devo trabalhar em nenhuma demo ou no jogo, vou estar viajando para resolver alguns assuntos da minha mudança. Porém assim que voltar eu devo entrar de cabeça no desenvolvimento de novas demos. Em especial quero criar uma UI para navegar pelo mapa e interagir com os sistemas, também estou lendo um pouco sobre alguns &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;design patterns&lt;/code&gt; para me ajudar a sobrepor esses sistemas, que é algo essencial para que tudo funcione em conjunto.&lt;/p&gt;
+
+&lt;p&gt;Deve demorar até meu próximo post, então não se assustem se só ouvirem falar de mim daqui um mês ou dois. Até lá, recomendo darem uma olhada na nova página de &lt;a href=&quot;/devlog/links.html&quot;&gt;links&lt;/a&gt; que adicionei ao site, assim que achar algo interessante eu devo colocar ali.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Espero que tenha gostado desse material e que tenha sido de ajuda, estou ainda trabalhando nesse site e nas demos para ajudar a quem tem interesse em programar coisas práticas e fora do mundinho web. Caso tenha alguma dúvida ou sugestão, por favor entre em contato pelo &lt;a href=&quot;https://github.com/joelschutz&quot;&gt;GitHub&lt;/a&gt; ou &lt;a href=&quot;mailto:joelsschutz@yahoo.com.br&quot;&gt;e-mail&lt;/a&gt;.
+&lt;img src=&quot;https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif&quot; alt=&quot;thank you!&quot; /&gt;&lt;/p&gt;</content><author><name>Joel Schutz</name></author><category term="devlog" /><category term="gamedev" /><category term="go-terrain" /><summary type="html">Introdução</summary></entry><entry><title type="html">Farm Demo v0</title><link href="https://github.com/devlog/demo/2023/04/12/farm-v0.html" rel="alternate" type="text/html" title="Farm Demo v0" /><published>2023-04-12T18:52:03+00:00</published><updated>2023-04-12T18:52:03+00:00</updated><id>https://github.com/devlog/demo/2023/04/12/farm-v0</id><content type="html" xml:base="https://github.com/devlog/demo/2023/04/12/farm-v0.html">&lt;ul&gt;
+  &lt;li&gt;W, A, S, D - Move&lt;/li&gt;
+  &lt;li&gt;I - Interact&lt;/li&gt;
+  &lt;li&gt;Mouse Wheel - Zoom&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Joel Schutz</name></author><category term="demo" /><category term="gamedev" /><category term="go-terrain" /><summary type="html">W, A, S, D - Move I - Interact Mouse Wheel - Zoom</summary></entry><entry><title type="html">TileMap Automata</title><link href="https://github.com/devlog/demo/2023/04/07/tilemap-v0.html" rel="alternate" type="text/html" title="TileMap Automata" /><published>2023-04-07T22:28:10+00:00</published><updated>2023-04-07T22:28:10+00:00</updated><id>https://github.com/devlog/demo/2023/04/07/tilemap-v0</id><content type="html" xml:base="https://github.com/devlog/demo/2023/04/07/tilemap-v0.html">&lt;p&gt;Nessa demo utilizamos o mesmo Automata da demo &lt;a href=&quot;/devlog/demo/2023/03/23/diffusion-automata-v1.html&quot;&gt;diffusion-automata-v1&lt;/a&gt;, mas usamos um mapa do Tiled para renderizar o quadro. Além disso usamos um esquema simples de camera para permitir zoom(mouse wheel) e pan(middle button) do mapa, assim como adicionar(left button) e remover(right button) rochas do mapa.&lt;/p&gt;
+
+&lt;p&gt;Nossa struct então vai ser bastante simples, precisamos apenas do AUtomata e do TileMap:&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TileBoard&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;tMap&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tiled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Map&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;      &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;boards&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;HumidityBoard&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cursor&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Durante o update apenas atualizamos o estado do automata e traduzimos esses estados para o TileMap. Se antes cada célula do nosso espaço correspondia a um pixel, aqui ele corresponde a um tile; uma cor corresponde a um tipo de tile e assim por diante.&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TileBoard&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;// Atualizamos o estado do Automato&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;c&quot;&gt;// Extraímos o novo estado&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;bState&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+	&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;humidity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;impermeability&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Elem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+			&lt;span class=&quot;c&quot;&gt;// Aplicamos o valor da umidade na primeira camada&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Layers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tiles&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tiled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LayerTile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tileset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tilesets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ID&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;uint32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;humidity&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)}&lt;/span&gt;
+			&lt;span class=&quot;c&quot;&gt;// Aplicamos o valor da impermeabilidade na segunda camada&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Layers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tiles&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tiled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LayerTile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tileset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tilesets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ID&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;838&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Nil&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;impermeability&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MaxFloat32&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;c&quot;&gt;// Atualizamos a posição do cursos na terceira camada&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Layers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tiles&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tiled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LayerTile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tileset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tilesets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ID&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;847&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Nil&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cursor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cursor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])}&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Joel Schutz</name></author><category term="demo" /><category term="gamedev" /><summary type="html">Nessa demo utilizamos o mesmo Automata da demo diffusion-automata-v1, mas usamos um mapa do Tiled para renderizar o quadro. Além disso usamos um esquema simples de camera para permitir zoom(mouse wheel) e pan(middle button) do mapa, assim como adicionar(left button) e remover(right button) rochas do mapa.</summary></entry><entry><title type="html">Lecture Timer - Minha primeira extensão do VSCode</title><link href="https://github.com/devlog/devlog/study/2023/04/05/a-vscode-extension.html" rel="alternate" type="text/html" title="Lecture Timer - Minha primeira extensão do VSCode" /><published>2023-04-05T18:14:02+00:00</published><updated>2023-04-05T18:14:02+00:00</updated><id>https://github.com/devlog/devlog/study/2023/04/05/a-vscode-extension</id><content type="html" xml:base="https://github.com/devlog/devlog/study/2023/04/05/a-vscode-extension.html">&lt;h2 id=&quot;introdução&quot;&gt;Introdução&lt;/h2&gt;
+
+&lt;p&gt;Depois de um tempo trabalhando com desenvolvimento web, e agora com a esfriada no mercado, eu decidi que é hora de voltar para a faculdade. Quem lê o blog percebe que o que eu mais quero é encontrar algum desafio que me deixe o mais longe possível de dessas tecnologias. Por isso criei uma extensão usando JS+HTML+CSS para o VSCode.&lt;/p&gt;
+
+&lt;p&gt;Essa ironia vai se explicar em breve, em resumo, é o jeito que a Microsoft escolheu para tornar o desenvolvimento de extensões mais “simples” no VSCode. Mas o que isso tem a ver com voltar para a faculdade? Bem deixa eu explicar o problema:&lt;/p&gt;
+
+&lt;h2 id=&quot;minhas-notas-horrendas&quot;&gt;Minhas notas horrendas&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://media.giphy.com/media/3o6MbbwX2g2GA4MUus/giphy.gif&quot; alt=&quot;I don't understand anything&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Já teve a experiencia de estudar para uma prova, voltar para as suas anotações e não fazer ideia do que se tratam? Eu tenho um pouco de dislexia, sou prolixo na hora de me expressar, e para piorar, sou a única pessoa que conheço a ter reprovado nas aulas de caligrafia. Quando me concentrava para anotar, me perdia na aula, quando fazia na pressa, não entendia nada do que escrevi. O resultado era um caderno cheio de notas confusas e feias de uma aula que eu já não lembrava sobre o que era.&lt;/p&gt;
+
+&lt;p&gt;Escutar as gravações das aulas acabava sendo a solução, ainda mais depois da pandemia, esse material virou essencial nos meus estudos já que eu poderia pausar, voltar e dar a atenção necessária para cada parte. Minhas notas ficaram muito mais organizadas e úteis, fui tão bem que consegui aprender a programar, fui empregado na área e acabei deixando a faculdade. Mas tem um aspecto desse processo que eu preciso resolver para ter alguma vida além dos estudos.&lt;/p&gt;
+
+&lt;p&gt;Gravações são ótimas, mas não são fáceis de encontrar o que está procurando. Em um texto você consegue usar o famoso &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ctrl+F&lt;/code&gt; e procurar o que precisa, mesmo em um livro é muito fácil sublinhar e marcar páginas para voltar depois. Em um arquivo de audio ou video não é possível fazer algo assim, o que eu acabava fazendo era anotar a minutagem e uma frase ao lado para tentar me achar depois, quase sempre sem sucesso.&lt;/p&gt;
+
+&lt;p&gt;O problema não era tanto o método, mas o fato de ele ser trabalhoso e ineficiente. Para anotar uma minutagem era necessário pausar e escrever o exata valor, depois para retornar era preciso encontrar o segundo exato na linha. Sem falar que era impossível fazer algo assim durante a gravação de uma aula, coisa que vai ser essencial agora com aulas presenciais. Eu precisava de alguma ferramenta que me ajudasse a usar essa técnica e é isso que a minha extensão faz.&lt;/p&gt;
+
+&lt;h2 id=&quot;anotando-em-tempo-real&quot;&gt;Anotando em tempo real&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://media.giphy.com/media/1Aj491qX7K45qZs6EP/giphy.gif&quot; alt=&quot;Typing while shit burn in front of you&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;A ideia que eu tive é de uma ferramenta que me permitisse:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Anotar minutagens com apenas um click&lt;/li&gt;
+  &lt;li&gt;Navegar rapidamente entre as anotações e o arquivo de video ou audio&lt;/li&gt;
+  &lt;li&gt;Sincronizar anotações feitas em aula com feitas posteriormente&lt;/li&gt;
+  &lt;li&gt;Permitisse marcar e encontrar facilmente os trechos da aula que mais interessam&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Em outras palavras, eu queria alguma forma de rabiscar meus arquivos de audio da mesma forma que um texto ou livro, para isso eu precisava dar uma interface visual para esse audio. Que lugar melhor para começar que pelo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Visual Studio Code&lt;/code&gt;, trocadilhos a parte o que pensei de fazer foi criar um arquivo de texto que pudesse conter toda as minhas anotações. O &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VSCode&lt;/code&gt; entra como uma boa opção de editor, não só pela capacidade de extensão, mas também porque é o editor de texto que uso diariamente e já estou acostumado.&lt;/p&gt;
+
+&lt;p&gt;Escrever a extensão não foi fácil, mas admito que depois de um pouco de esforço a coisa passa a fazer mais sentido. Eu queria poder dizer que a minha falta de experiencia e, em geral, ódio pelo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; foram as causas dos meus problemas, mas nem foi tão esse o caso. O que mais complica é o design adotado pela Microsoft, a API parece uma grande sopa de decisões impulsivas e a documentação exige que você leia tudo com muita calma para não perder nenhum detalhe. De todo o material que usei, os que eu recomendo para quem quiser tentar essa empreitada são a &lt;a href=&quot;https://code.visualstudio.com/api/get-started/your-first-extension&quot;&gt;documentação oficial&lt;/a&gt;, principalmente os exemplos, e &lt;a href=&quot;https://youtu.be/a5DX5pQ9p5M&quot;&gt;esse video&lt;/a&gt; de quase 4 horas. Não se incomode com o comprimento, a melhor parte desse tutorial é que conseguimos acompanhar ele debugando certas coisas que são importantíssimas, mas que raramente aparecem nos outros tutoriais.&lt;/p&gt;
+
+&lt;h2 id=&quot;ok-mas-o-que-essa-extensão-faz&quot;&gt;Ok, mas o que essa extensão faz?&lt;/h2&gt;
+
+&lt;p&gt;Antes de tudo, vamos precisar de um arquivo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.md&lt;/code&gt; com um &lt;a href=&quot;https://daily-dev-tips.com/posts/what-exactly-is-frontmatter/&quot;&gt;frontmatter&lt;/a&gt; preenchido com alguns dados, a extensão já vem com um snippet chamado &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lecture-timer.initTimer&lt;/code&gt; que vai criar algo assim:&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;lecture&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;My&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Title&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;example.mp3&quot;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# Opcional&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;duration&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;120&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;# Opcional&lt;/span&gt;
+&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Isso é tudo que precisamos para começar, o campo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file&lt;/code&gt; é opcional e caso fique em branco a extensão funcionará como um timer simples. Alternativamente você pode utilizar um campo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;duration&lt;/code&gt; para especificar o limite de tempo do seu timer. Clique no ícone da extensão na barra lateral para abrir o painel.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/devlog/assets/lt-0.png&quot; alt=&quot;Lecture Timer Panel&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Os controles na parte superior funcionam como você espera: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tocar&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pausar&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;parar&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;avançar&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;retroceder&lt;/code&gt;, etc. Eles servem tanto para operar os timers quanto navegar pelo audio. Na parte inferior temos os timestamps(ou minutagens) registradas no nosso arquivo, clicando em cada um ou usando as botões conseguimos navegar por eles no texto. Adicionamos novos usando os seguintes marcadores no texto:&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- Marcador vazio --&amp;gt;&lt;/span&gt;
+:lec-timer{time=&quot;3.774&quot; preview=&quot;00:00:03&quot; type=&quot;alone&quot;}
+
+&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- Marcador com conteúdo inline --&amp;gt;&lt;/span&gt;
+:lec-timer[content]{time=&quot;3.774&quot; preview=&quot;00:00:03&quot; type=&quot;inline&quot;}
+
+&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- Marcador de bloco --&amp;gt;&lt;/span&gt;
+:::lec-timer{time=&quot;3.774&quot; preview=&quot;00:00:03&quot; type=&quot;block&quot;}
+multi
+line
+content
+:::
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Não é necessário saber digitar esses marcadores inteiros, a extensão adiciona um novo comando para isso, basta utilizar &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ctrl+Shift+P&lt;/code&gt; para abrir a palheta comandos e procurar por &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lecture-timer.stampMarker&lt;/code&gt;. Com ele você consegue adicionar a minutagem e caso tenha algum texto selecionado ele já formata corretamente o seu conteúdo dentro do marcador. Uma dica que eu dou é definir um atalho do teclado para esse comando que até mais fácil de usar.&lt;/p&gt;
+
+&lt;p&gt;A syntax desses marcadores também é proposital, eles respeitam a proposta de &lt;a href=&quot;https://talk.commonmark.org/t/generic-directives-plugins-syntax/444&quot;&gt;Generic Directives&lt;/a&gt; e podem facilmente ser parceados para html utilizando um plugin como &lt;a href=&quot;https://github.com/hilookas/markdown-it-directive&quot;&gt;markdown-it-directive&lt;/a&gt;. Inclusive é esse o plugin que utilizei para renderizar os marcadores no preview do markdown:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/devlog/assets/lt-1.png&quot; alt=&quot;Lecture Timer Preview&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Essas são as funcionalidades até agora, não são muitas mas já é o suficiente para começar a utilizar.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusão&quot;&gt;Conclusão&lt;/h2&gt;
+
+&lt;p&gt;Eu devo continuar a adicionar funcionalidades e remover bugs no futuro, ainda quero dar suporte a arquivos de video e conteúdo online. Além disso ainda tem algumas coisas de qualidade de vida que eu acredito serem necessárias, mas ainda quero testar mais na prática para ter certeza.&lt;/p&gt;
+
+&lt;p&gt;Caso esteja interessado, já pode instalar a versão em &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=joelschutz.lecture-timer&quot;&gt;pre-release&lt;/a&gt; no seu VSCode. Sugestões e bugs podem ser enviados para o &lt;a href=&quot;https://github.com/joelschutz/lecture-timer&quot;&gt;repositório&lt;/a&gt;, assim como contribuições caso queira dar uma força.&lt;/p&gt;
+
+&lt;p&gt;Esse era um dos projetos que me desafiei a terminar antes do começo das aulas da UFRGS em Maio, já vou riscar esse da lista. O outro era uma ferramenta para extrair comentários do código Go, essa já existe e funciona, mas preciso fazer um post como esse aqui no blog para dar como encerrado também e o tempo está acabando.&lt;/p&gt;
+
+&lt;p&gt;Depois disso devo voltar ao regime normal de posts sobre gamedev, já tenho uma demo nova e estou animado para começar a dar forma ao nosso jogo. Porém eu tenho certeza que vamos ter um hiato em breve para eu poder dar conta da minha mudança de cidade e me aclimatar na nova rotina. Não tenho também muita certeza de quanto tempo livre vou ter para me dedicar a projetos como estes, sobre isso só o futuro dirá.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Espero que tenha gostado desse material e que tenha sido de ajuda, estou ainda trabalhando nesse site e nas demos para ajudar a quem tem interesse em programar coisas práticas e fora do mundinho web. Caso tenha alguma dúvida ou sugestão, por favor entre em contato pelo &lt;a href=&quot;https://github.com/joelschutz&quot;&gt;GitHub&lt;/a&gt; ou &lt;a href=&quot;mailto:joelsschutz@yahoo.com.br&quot;&gt;e-mail&lt;/a&gt;.
+&lt;img src=&quot;https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif&quot; alt=&quot;thank you!&quot; /&gt;&lt;/p&gt;</content><author><name>Joel Schutz</name></author><category term="devlog" /><category term="study" /><category term="markdown" /><category term="vscode" /><category term="web" /><summary type="html">Introdução</summary></entry></feed>

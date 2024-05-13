@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="https://github.com/devlog/en/feed.xml" rel="self" type="application/atom+xml" /><link href="https://github.com/devlog/en/" rel="alternate" type="text/html" hreflang="en" /><updated>2024-05-13T15:47:43+00:00</updated><id>https://github.com/devlog/en/feed.xml</id><title type="html">Joel’s Dev Blog</title><author><name>Joel Schutz</name></author><entry><title type="html">Goingo Wasm Demo</title><link href="https://github.com/devlog/en/demo/2023/05/05/goingo-wasm-demo.html" rel="alternate" type="text/html" title="Goingo Wasm Demo" /><published>2023-05-05T10:36:14+00:00</published><updated>2023-05-05T10:36:14+00:00</updated><id>https://github.com/devlog/en/demo/2023/05/05/goingo-wasm-demo</id><content type="html" xml:base="https://github.com/devlog/en/demo/2023/05/05/goingo-wasm-demo.html">&lt;ul&gt;
+  &lt;li&gt;Left-Click
+    &lt;ul&gt;
+      &lt;li&gt;On Board - Place Stone&lt;/li&gt;
+      &lt;li&gt;On Stone - Show group, liberties and enemies&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Right-Click - Pass turn&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Joel Schutz</name></author><category term="demo" /><category term="gamedev" /><category term="goingo" /><summary type="html">Left-Click On Board - Place Stone On Stone - Show group, liberties and enemies Right-Click - Pass turn</summary></entry><entry><title type="html">Devlog #3 - TileMaps and StateMachines</title><link href="https://github.com/devlog/en/devlog/2023/04/12/devlog-3.html" rel="alternate" type="text/html" title="Devlog #3 - TileMaps and StateMachines" /><published>2023-04-12T18:56:11+00:00</published><updated>2023-04-12T18:56:11+00:00</updated><id>https://github.com/devlog/en/devlog/2023/04/12/devlog-3</id><content type="html" xml:base="https://github.com/devlog/en/devlog/2023/04/12/devlog-3.html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;It took me long to write this post because I thought there was nothing interesting to comment on the demos that I created these last weeks. I thought I’d write about why I think that and indicate some more useful ways for those who are doing something similar.&lt;/p&gt;
+
+&lt;h2 id=&quot;tilemaps&quot;&gt;Tilemaps&lt;/h2&gt;
+
+&lt;p&gt;The game we are creating will use tilemaps, this kind of technique is so old that even the Super Nintendo already had specialized hardware to render these maps. There is no shortage of materials on this issue, but if you want a nice introduction you can read this &lt;a href=&quot;https://www.domestika.org/en/blog/6985-o-que-e-tileset-e-tilemap-no-development-de-games&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;At &lt;a href=&quot;/devlog/demo/2023/04/07/tilemap-v0.html&quot;&gt;demo&lt;/a&gt; I did two interesting things to note:&lt;/p&gt;
+
+&lt;p&gt;First I mapped the cells of our &lt;a href=&quot;/devlog/demo/2023/03/23/diffusion-automata-v1.html&quot;&gt;Diffusion Automata&lt;/a&gt; with the tilemap spaces, so I could use the simulation to change which tile should be shown in each space.&lt;/p&gt;
+
+&lt;p&gt;In addition, I used a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.tmx&lt;/code&gt; file from &lt;a href=&quot;https://www.mapeditor.org/&quot;&gt;Tiled&lt;/a&gt; to generate the initial state of the simulation. So this demo ends up showing how to extract tilemaps data and how to use data to change them as well.&lt;/p&gt;
+
+&lt;h2 id=&quot;statemachines&quot;&gt;StateMachines&lt;/h2&gt;
+
+&lt;p&gt;Unlike cellular automata, there is no material missing on Portuguese state machines. They are obligatory in any course of Computing, Systems and sometimes even Administration. For this reason I will not indicate any material, you will probably find a lot on Google and can garimpar what makes the most sense to you. If you are lazy, the &lt;a href=&quot;https://pt.wikipedia.org/wiki/M%C3%A1quina_de_estados_finita&quot;&gt;Wikipedia&lt;/a&gt; article  is a quick source to get to know the subject.&lt;/p&gt;
+
+&lt;p&gt;In &lt;a href=&quot;/devlog/demo/2023/04/12/farm-v0.html&quot;&gt;demo&lt;/a&gt; this machine was used to control the state of each garden. When the farmer creates a new she begins with the state &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SECA&lt;/code&gt;, so he waters that garden she passes to the state &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MOLHADA&lt;/code&gt;. Once in this new state the farmer no longer needs to interact with the garden, every time cycle it will automatically grow, changing from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EM_CRESCEMENT_1&lt;/code&gt; to ‘EM_CRESCEMENT_4`.&lt;/p&gt;
+
+&lt;p&gt;To demonstrate that this growth time is independent for each garden, every new created time increases. If you interact with a fully grown vegetable garden the farmer can harvest, which brings it back to the state &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SECA&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;I have no commented code for this demo because it is based on a library called &lt;a href=&quot;https://github. with/qmuntal/stateless&quot;&gt;stateless&lt;/a&gt;, it is not worth explaining how it works because in your case you may be using a different tool. There are hundreds of ways to implement this solution, use the one that makes the most sense in your case.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;This post was quick, I didn’t have much to say but wanted to publish right before the end of the week. In the coming week I should not work in any demo or in the game, I will be traveling to solve some issues of my change. But as soon as I come back I must head in the development of new demos. In particular I want to create a UI to navigate the map and interact with the systems, I’m also reading a little about some ‘design patterns’ to help me override these systems, which is essential for everything to work together.&lt;/p&gt;
+
+&lt;p&gt;It should take me to my next post, so don’t get scared if you just hear from me in a month or two. Until then, I recommend taking a look at the new &lt;a href=&quot;/devlog/links.html&quot;&gt;links&lt;/a&gt; page that I added to the site, so I find something interesting I should put there.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;I hope you enjoyed this material and that it was helpful, I am still working on this site and we gave it to help those who are interested in programming practical things and out of the world web. If you have any questions or suggestions, please contact &lt;a href=&quot;https://github.com/joelschutz&quot;&gt;GitHub&lt;/a&gt; or &lt;a href=&quot;mail:joelsschutz@yahoo.com.br&quot;&gt;e-mail&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif&quot; alt=&quot;thank you!&quot; /&gt;&lt;/p&gt;</content><author><name>Joel Schutz</name></author><category term="devlog" /><category term="gamedev" /><category term="go-terrain" /><summary type="html">Introduction</summary></entry><entry><title type="html">Farm Demo v0</title><link href="https://github.com/devlog/en/demo/2023/04/12/farm-v0.html" rel="alternate" type="text/html" title="Farm Demo v0" /><published>2023-04-12T18:52:03+00:00</published><updated>2023-04-12T18:52:03+00:00</updated><id>https://github.com/devlog/en/demo/2023/04/12/farm-v0</id><content type="html" xml:base="https://github.com/devlog/en/demo/2023/04/12/farm-v0.html">&lt;ul&gt;
+  &lt;li&gt;W, A, S, D - Move&lt;/li&gt;
+  &lt;li&gt;I - Interact&lt;/li&gt;
+  &lt;li&gt;ddMouse Wheel - Zoom&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Joel Schutz</name></author><category term="demo" /><category term="gamedev" /><category term="go-terrain" /><summary type="html">W, A, S, D - Move I - Interact ddMouse Wheel - Zoom</summary></entry><entry><title type="html">Diffusion Automata v1</title><link href="https://github.com/devlog/en/demo/2023/03/24/diffusion-automata-v1.html" rel="alternate" type="text/html" title="Diffusion Automata v1" /><published>2023-03-24T01:04:38+00:00</published><updated>2023-03-24T01:04:38+00:00</updated><id>https://github.com/devlog/en/demo/2023/03/24/diffusion-automata-v1</id><content type="html" xml:base="https://github.com/devlog/en/demo/2023/03/24/diffusion-automata-v1.html">&lt;p&gt;The goal for this Automata is to simulate the diffusion of
+a liquid on a solid medium, like soil, sand, etc. It was created
+as a prototype of a underground water diffusion for my game.&lt;/p&gt;
+
+&lt;p&gt;As will notice, there isn’t much complexity in this code, that’s the magic
+of this kind of algorithm, we can use simple rules to create complex
+behavior. Here, we simulate the interaction between liquids ans solids
+over time and space using basic arithmetic&lt;/p&gt;
+
+&lt;p&gt;Our board will be represented by a 2d array of vectors, this is just
+for convenience since we can easily group the two relevant values:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Humidity
+    &lt;ul&gt;
+      &lt;li&gt;The amount of liquid within the cell&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Impermeability
+    &lt;ul&gt;
+      &lt;li&gt;The resistance of the cell to the movement of liquid trough it&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The fields &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Rocks&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Rain&lt;/code&gt; just represent cells that are totally impermeable
+or sources of humidity, respectively.&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HumidityBoard&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;      &lt;span class=&quot;p&quot;&gt;[][]&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mgl32&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Vec2&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;// [humidity, impermeability]&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;Rocks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Rain&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[][]&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;hvrX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hvrY&lt;/span&gt;  &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The logic to determine the humidity of a cell is simples, since the liquid
+converges to a uniform distribution over time for all the space, we assume
+that the new value of humidity of a cell is just the mean between it and
+their neighbors values. For simplicity, we only count 4 neighbors as the
+diagram below, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v0&lt;/code&gt; is the current cell:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;v3&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;v1&lt;/td&gt;
+      &lt;td&gt;v0&lt;/td&gt;
+      &lt;td&gt;v2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;v4&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;To include permeability properties, we use a weighted mean where each
+factor is defined by that cell impermeability. The catch is that we use
+the inverse(1/value) for neighboring cells, that way we achieve the effect
+of a highly impermeable cell resisting either losing or gaining humidity.
+Then we clamp to new value to a max of 1024.&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ba&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;HumidityBoard&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;// Store the initial state as reference&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;m0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;make&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([][]&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mgl32&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Vec2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ba&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+	&lt;span class=&quot;nb&quot;&gt;copy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ba&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;range&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ba&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;range&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;c&quot;&gt;// Skip the calculations for humidity sources and impermeable cell&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ba&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Rain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MaxFloat32&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;k&quot;&gt;continue&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+			&lt;span class=&quot;c&quot;&gt;// Assume that borders are dry and impermeable&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mgl32&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Vec2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MaxFloat32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mgl32&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Vec2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MaxFloat32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;v3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mgl32&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Vec2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MaxFloat32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;v4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mgl32&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Vec2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MaxFloat32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+			&lt;span class=&quot;c&quot;&gt;// Verify if neighbor exists and use their value&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;v3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;v4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+			&lt;span class=&quot;c&quot;&gt;// Calculate the weighted mean&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+
+			&lt;span class=&quot;c&quot;&gt;// Clamp values to 1024&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1024&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1024&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+			&lt;span class=&quot;c&quot;&gt;// Updates board with new humidity value&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;ba&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The final result is not perfect, there are parameters that are not accounted like velocity
+and density of the liquid, but it’s sufficient for our porpoises. Another limitation of this
+method is lack of conservation of mass. As the simulation evolves the humidity spontaneously
+drops, which is physically impossible.&lt;/p&gt;
+
+&lt;p&gt;As stated previous, this is a prototype and limitation as this are not necessarily concerns
+for games development. Keep in mind that this algorithm is synchronous, but it’s totally
+possible to paralelize it.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Hope you liked this material and that it was helpful, I’m still working on this website and demos to help people that are interested in programming things beyond the web development niche. If you have any question or suggestion, please contact me through &lt;a href=&quot;https://github.com/joelschutz&quot;&gt;GitHub&lt;/a&gt; or &lt;a href=&quot;mailto:joelsschutz@yahoo.com.br&quot;&gt;e-mail&lt;/a&gt;.
+&lt;img src=&quot;https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif&quot; alt=&quot;thank you!&quot; /&gt;&lt;/p&gt;</content><author><name>Joel Schutz</name></author><category term="demo" /><category term="gamedev" /><category term="go-terrain" /><category term="new" /><summary type="html">The goal for this Automata is to simulate the diffusion of a liquid on a solid medium, like soil, sand, etc. It was created as a prototype of a underground water diffusion for my game.</summary></entry><entry><title type="html">Diffusion Automata v0</title><link href="https://github.com/devlog/en/demo/pt-br/2023/03/17/diffusion-automata.html" rel="alternate" type="text/html" title="Diffusion Automata v0" /><published>2023-03-17T11:20:19+00:00</published><updated>2023-03-17T11:20:19+00:00</updated><id>https://github.com/devlog/en/demo/pt-br/2023/03/17/diffusion-automata</id><content type="html" xml:base="https://github.com/devlog/en/demo/pt-br/2023/03/17/diffusion-automata.html"></content><author><name>Joel Schutz</name></author><category term="demo" /><category term="pt-br" /><category term="gamedev" /><category term="go-terrain" /><summary type="html"></summary></entry></feed>
