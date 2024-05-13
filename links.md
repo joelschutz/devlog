@@ -67,3 +67,5 @@ layout: page
 
 [Mental Health](https://ncase.me/mental-health/#toc_2)
 
+[Curso de Álgebra Linear](https://pessoal.ect.ufrn.br/~elton.carvalho/AL/index.html)
+
