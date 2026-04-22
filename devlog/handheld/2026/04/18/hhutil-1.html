@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>hhutil: Uma caixa de ferramentas para portáteis retro</title><!-- Begin Jekyll SEO tag v2.8.0 -->
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="hhutil: Uma caixa de ferramentas para portáteis retro" />
+<meta name="author" content="Joel Schutz" />
+<meta property="og:locale" content="pt_br" />
+<meta name="description" content="Minha mais nova obsessão" />
+<meta property="og:description" content="Minha mais nova obsessão" />
+<link rel="canonical" href="https://github.com/devlog/devlog/handheld/2026/04/18/hhutil-1.html" />
+<meta property="og:url" content="https://github.com/devlog/devlog/handheld/2026/04/18/hhutil-1.html" />
+<meta property="og:site_name" content="Joel’s Dev Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-04-18T23:51:53+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="hhutil: Uma caixa de ferramentas para portáteis retro" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Joel Schutz"},"dateModified":"2026-04-18T23:51:53+00:00","datePublished":"2026-04-18T23:51:53+00:00","description":"Minha mais nova obsessão","headline":"hhutil: Uma caixa de ferramentas para portáteis retro","mainEntityOfPage":{"@type":"WebPage","@id":"https://github.com/devlog/devlog/handheld/2026/04/18/hhutil-1.html"},"url":"https://github.com/devlog/devlog/handheld/2026/04/18/hhutil-1.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link type="application/atom+xml" rel="alternate" href="https://github.com/devlog/feed.xml" title="Joel's Dev Blog" /><link rel="shortcut icon" type="image/x-icon" href="/devlog/favicon.ico" />
+  <link rel="stylesheet" href="/devlog/assets/css/main.css" />
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+</head><body a="dark">
+    <main class="page-content" aria-label="Content">
+      <div class="w">
+        <a href="/devlog/">../</a><article>
+  <p class="post-meta">
+    <time datetime="2026-04-18 23:51:53 +0000">Apr-18-2026</time>
+  </p><p class="languages">
+    
+        
+    pt-br
+        
+    
+        
+            
+    <a href="/devlog/en/devlog/handheld/2026/04/18/hhutil-1.html">en</a>
+            
+        
+    
+    </p><h1>hhutil: Uma caixa de ferramentas para portáteis retro</h1>
+
+  <h2 id="minha-mais-nova-obsessão">
+  
+  
+    <a href="#minha-mais-nova-obsessão" class="h-anchor">#</a> Minha mais nova obsessão
+  
+  
+</h2>
+    
+
+<p>Recentemente eu adquiri um console portátil, desses baratinho, chamado R36S. Fazem alguns meses na realidade, mas a minha empolgação é tanta que parece que foi ontem que liguei ele pela primeira vez. A experiência me lembra quando comprei meu NDS, que ainda ainda guardo até hoje. Eu poderia ficar aqui falando de emuladores e jogos da minha infância, mas não foi isso que me empolgou, mas sim as lembranças de “hackear” o meu DS e instalar todo tipo de HomeBrew que eu encontrava nos fóruns do clássico <a href="https://gbatemp.net/">GBATemp</a>. Era como ter um computador de mão antes do smartfone, e é exatamente isso que esses portáteis retro são na realidade: Pequenos SBC baseados em ARM rodando um linux focado em jogos. E eu estou completamente obcecado.</p>
+
+<p><img src="https://handhelds.wiki/images/7/7d/R36S_Certificate_of_Conformity_source_discord.jpg" alt="The R36S family photo" /></p>
+
+<p>Existem várias opções no mercado desses dispositivos, de todos os preços e com todo tipo de opções. O que é tenho é um clone de um clone, o R36S é só o mais conhecido de uma família inteira de clones que basicamente compartilham o mesmo SoC, o Rockchip RK3326. E é uma família bem grande, existe inclusive uma <a href="https://handhelds.wiki/R36S_Handheld_Wiki">Wiki</a> inteira dedicada a documentar as diferentes versões e variações que aparecem por aí, além de auxiliar os usuários a instalar as chamadas CFWs(Custom Firmware) nos seus dispositivos. A comunidade é extremamente ativa, basta ver a quantidade de postagens feitas no <a href="https://www.reddit.com/r/R36S/">Reddit</a> todos os dias.</p>
+<h2 id="e-para-criar-jogos">
+  
+  
+    <a href="#e-para-criar-jogos" class="h-anchor">#</a> E para criar jogos?
+  
+  
+</h2>
+    
+
+<p><img src="https://i.giphy.com/P8ef3Dkynk0xLx1h1T.webp" alt="" /></p>
+
+<p>Estes consoles são bastante limitados, tanto em termos de hardware quanto em termos de software. Segundo a Wiki, a versão padrão do R36S tem as seguintes especificações:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Soc</td>
+      <td>RockChip RK3326</td>
+    </tr>
+    <tr>
+      <td>CPU</td>
+      <td>Quad-Core ARM Cortex-A35(1.5 GHz)</td>
+    </tr>
+    <tr>
+      <td>GPU</td>
+      <td>Mali-G31 MP2(650 MHz)</td>
+    </tr>
+    <tr>
+      <td>RAM</td>
+      <td>1GB DDR3L</td>
+    </tr>
+    <tr>
+      <td>Display</td>
+      <td>3.5-inch IPS, 640x480</td>
+    </tr>
+    <tr>
+      <td>Wi-Fi</td>
+      <td>Somente com Dongle Externo</td>
+    </tr>
+    <tr>
+      <td>Bluetooth</td>
+      <td>Ainda sem sucesso</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Não é nenhuma computador gamer. E em termos de software não parece grandes problemas, afinal ele roda linux e deve rodar qualquer linguagem que pode ser compilada para ARM64, porém essa GPU só tem suporte para OpenGL ES(não é a mesma coisa que OpenGL).Além disso a maioria dessas CFW não incluem Wayland ou X11, o que torna dificulta ainda mais o processo. Por sorte a equipe do <a href="https://portmaster.games/">PortMaster</a> tem feito um grande esforço para melhorar a compatibilidade destes aparelhos, mas o processo é lento e muita coisa depende de mudanças nas próprias engines para funcionar.</p>
+
+<p>É o caso da minha engine favorita, Ebitengine. Apesar de na teoria ela ser capaz de rodar sem problemas, já que suporta OpenGL ES por padrão e Go pode ser facilmente compilado para ARM64, porém minha experiência não foi tão simples. O programa reclama que não encontra o X11 e não tive muita sorte com os devs do PortMaster. Ao invés de continuar quebrando a cabeça com esse problema, preferi trocar para <a href="https://love2d.org/">LÖVE</a> e estou bastante satisfeito com essa escolha. Não só é uma engine muito mais robusta, mas também é totalmente compatível com Portmaster, sem nem precisar de compilação. Basta compactar o código fonte em um arquivo zip com a extensão <em>.love</em> e usar o script disponível no <a href="https://portmaster.games/packaging.html#love2d-example-launchscript">site</a>. Então foi isso que eu fiz, com um pouco de dedicação e a ajuda da ótima documentação foi fácil fazer tudo que eu queria usando LÖVE.</p>
+<h2 id="e-o-que-eu-fiz">
+  
+  
+    <a href="#e-o-que-eu-fiz" class="h-anchor">#</a> E o que eu fiz?
+  
+  
+</h2>
+    
+
+<p>Então, <strong>hhutil</strong> é uma coleção de aplicações criada especificamente para consoles retro. Usando joystick como controle e uma resolução de apenas 640x480, esses aplicativos buscas entregar uma experiência nativa nesses aparelhos. Procurei criar funcionalidades básicas que fazem sentido em um aparelho como este e que não exijam acessórios externos para funcionar, na maioria dos casos. O repositório com todos os aplicativos pode ser encontrado <a href="https://github.com/joelschutz/hhutil">aqui</a>, mas aqui vai uma breve apresentação de cada um.</p>
+<h3 id="calc">
+  
+  
+    <a href="#calc" class="h-anchor">#</a> Calc
+  
+  
+</h3>
+    
+
+<p><img src="/devlog/assets/screenshot-calc.png" alt="Calc Screenshot" /></p>
+
+<p>É uma calculadora com todas as funções que você espera e mais um pouco. Além das quatro operações, ela também possui funções trigonométricas, operações lógicas, diferentes bases numéricas e funciona com expressões. Eu incluí ainda um sistema de memória com diferentes variáveis, tornando esta uma calculadora bastante poderosa, até mais que algumas científicas no mercado. O algoritmo dela me deu bastante trabalho e acredito que ainda hajam alguns bugs que precisam ser corrigidos em casos mais complexos, mas no geral eu fiquei satisfeito com o resultado</p>
+<h3 id="dice">
+  
+  
+    <a href="#dice" class="h-anchor">#</a> Dice
+  
+  
+</h3>
+    
+
+<p><img src="/devlog/assets/screenshot-dice.png" alt="Dice Screenshot" /></p>
+
+<p>Eu queria fazer um aplicativo de rolagem de dados que tivesse animações, mas que ao mesmo tempo fosse minimalista e direto ao ponto. Acho que encontrei um bom meio termo com essa implementação. Eu utilizei essa estética dos displays de 7 segmentos no lugar de dados girando principalmente porque não ia precisar criar nenhuma arte do zero, mas o resultado ficou melhor do que esperava. Junto dos efeitos sonoros, acho que é uma boa adição a qualquer noite de jogos ou TTRPG.</p>
+<h3 id="metronome">
+  
+  
+    <a href="#metronome" class="h-anchor">#</a> Metronome
+  
+  
+</h3>
+    
+
+<p><img src="/devlog/assets/screenshot-metronome.png" alt="Metronome Screenshot" /></p>
+
+<p>Eu quis me arriscar criando um metrônomo, em termos de design eu gostei do resultado, mas confesso que meus ouvidos não estão treinados para perceber que a lógica está no ponto certo. Fiz questão de manter cada botão com apenas uma função, assim não precisa olhar para tela enquanto usa. Também adicionei uma variedade de sons diferentes para ter variedade, particularmente gostei bastante do resultado e se meus talentos musicais fossem mais aflorados eu com certeza usaria esse metrônomo para praticar.</p>
+<h3 id="gptester">
+  
+  
+    <a href="#gptester" class="h-anchor">#</a> GPTester
+  
+  
+</h3>
+    
+
+<p><img src="/devlog/assets/screenshot-gptester.png" alt="GPTester Screenshot" /></p>
+
+<p>Este foi o meu favorito de criar, é apenas um aplicativo para testar os botões do console, mas ele faz mais do que isso. Eu me inspirei nas demos que circulavam nos anos 90 e tentei implementar alguns efeitos. Temos plasma, scrolling text, e shaking text, só os clássicos. Infelizmente a GPU cria alguns artefatos no shader em alguns momentos, mas até que o efeito ficou legal.</p>
+<h3 id="todo">
+  
+  
+    <a href="#todo" class="h-anchor">#</a> TODO
+  
+  
+</h3>
+    
+
+<p><img src="/devlog/assets/screenshot-todo.png" alt="Todo Screenshot" /></p>
+
+<p>Agora os aplicativos começam a ficar mais sérios, este é uma lista que você marcar itens como concluídos, eu chamei de TODO. Você anotar a sua lista de compras ou os afazeres do dia, como não temos inputs de teclado, temos um teclado virtual na tela. Uma melhoria no futuro pode ser permitir que o usuário inclua itens usando o computador, mas é só uma idéia por enquanto.</p>
+<h3 id="habit">
+  
+  
+    <a href="#habit" class="h-anchor">#</a> Habit
+  
+  
+</h3>
+    
+
+<p><img src="/devlog/assets/screenshot-habit.png" alt="Habit Screenshot" /></p>
+
+<p>A primeira idéia de aplicativo que eu tive foi um tacker de hábitos, não sei se gostei muito do resultado, mas o que importa é que ele é funcional. Você pode criar hábitos e ir marcando diariamente e acompanhar seu progresso ao longo do tempo. Eu acho que é um dos mais úteis e o tipo que coisa que é legal ter em um dispositivo como esse que você carrega sempre consigo.</p>
+<h3 id="weather">
+  
+  
+    <a href="#weather" class="h-anchor">#</a> Weather
+  
+  
+</h3>
+    
+
+<p><img src="/devlog/assets/screenshot-weather.png" alt="Weather Screenshot" /></p>
+
+<p>Com certeza é o aplicativo mais complexo de todos e o único que precisa de internet para funcionar. É apenas um aplicativo de previsão do tempo, porém eu precisei conectar ele com algumas APIs para conseguir estes dados. O resultado ficou ótimo e confesso que eu tenho preferido usar ele ao invés do aplicativo no meu celular.</p>
+<h2 id="conclusão">
+  
+  
+    <a href="#conclusão" class="h-anchor">#</a> Conclusão
+  
+  
+</h2>
+    
+
+<p>Esta foi apenas uma introdução aos aplicativos que criei, tenho ainda a vontade de incluir um aplicativo de calendário, mas ainda não decidi exatamente como ele deve ser e que funcionalidades vai ter. Foram algumas boas semanas trabalhando nesse projeto e aprendi bastante sobre como desenvolver em LÖVE para estes portáteis retro, deu até vontade de criar jogos de verdade para eles. O próximo passo é aparar algumas arestas que ainda sobraram nos aplicativos e tentar incluir eles no catálogo do PortMaster, umas vez isso feito eu quero começar a trazer as algumas idéias de jogos pra estes consoles.</p>
+
+<p>Devo dizer que me surpreendi bastante com esta engine, eu tinha preconceito com Lua por ser uma linguagem tão simples, mas é inegável o quão poderosa ela é: Uma documentação impecável, física e networking buitin, shaders de verdade, várias bibliotecas da comunidade e até suporte para 3D. Não é a toa que vários jogos comerciais usam ela e continua relevante mesmo depois de tanto tempo, o fato dela funcionar tão facilmente com estes consoles também me surpreendeu positivamente. Aguardem novos projetos com ela no futuro próximo.</p>
+
+<p><img src="https://xgm.guru/files/795/105003/Love2d_animatingLogo.gif?cache-tag=1380942281" alt="Löve GIF" /></p>
+</article>
+      </div>
+    </main><script data-goatcounter="https://joelschutz.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+<noscript>
+  <img src="https://joelschutz.goatcounter.com/count?p=/test-img">
+</noscript>
+  </body>
+</html>

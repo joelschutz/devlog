@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Devlog #1 - O Básico de Cellular Automata</title><!-- Begin Jekyll SEO tag v2.8.0 -->
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Devlog #1 - O Básico de Cellular Automata" />
+<meta name="author" content="Joel Schutz" />
+<meta property="og:locale" content="pt_br" />
+<meta name="description" content="Introdução" />
+<meta property="og:description" content="Introdução" />
+<link rel="canonical" href="https://github.com/devlog/devlog/2023/03/14/devlog-1.html" />
+<meta property="og:url" content="https://github.com/devlog/devlog/2023/03/14/devlog-1.html" />
+<meta property="og:site_name" content="Joel’s Dev Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-03-14T18:08:13+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Devlog #1 - O Básico de Cellular Automata" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Joel Schutz"},"dateModified":"2023-03-14T18:08:13+00:00","datePublished":"2023-03-14T18:08:13+00:00","description":"Introdução","headline":"Devlog #1 - O Básico de Cellular Automata","mainEntityOfPage":{"@type":"WebPage","@id":"https://github.com/devlog/devlog/2023/03/14/devlog-1.html"},"url":"https://github.com/devlog/devlog/2023/03/14/devlog-1.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link type="application/atom+xml" rel="alternate" href="https://github.com/devlog/feed.xml" title="Joel's Dev Blog" /><link rel="shortcut icon" type="image/x-icon" href="/devlog/favicon.ico" />
+  <link rel="stylesheet" href="/devlog/assets/css/main.css" />
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+</head><body a="dark">
+    <main class="page-content" aria-label="Content">
+      <div class="w">
+        <a href="/devlog/">../</a><article>
+  <p class="post-meta">
+    <time datetime="2023-03-14 18:08:13 +0000">Mar-14-2023</time>
+  </p><p class="languages">
+    
+        
+    pt-br
+        
+    
+        
+            
+    <a href="/devlog/en/devlog/2023/03/14/devlog-1.html">en</a>
+            
+        
+    
+    </p><h1>Devlog #1 - O Básico de Cellular Automata</h1>
+
+  <h2 id="introdução">
+  
+  
+    <a href="#introdução" class="h-anchor">#</a> Introdução
+  
+  
+</h2>
+    
+
+<p>Todos já tiveram essa experiência: O professor mostra um tópico novo de física ou matemática, alguém confuso pergunta. “Mas prof, onde que eu vou usar isso na minha vida”. A resposta podia variar, mas era sempre algo do tipo “vai cair na prova” ou “na engenharia vai precisar saber” e claro que ninguém se importava com nenhuma dessas coisas.</p>
+
+<p>O que o professor esqueceu de falar é que existe uma coisa que depende de muito matemática e qualquer criança é fascinada: Video-Games. Vetores, matrizes, funções e o maldito teorema de Pitágoras, toda essa parafernália matemática que nos dão na escola é usada em todo lugar em jogos. O que me leva ao meu ponto, que outra forma melhor para praticar esses conceitos depois de anos longe de uma sala de aula?</p>
+
+<p>Vamos tirar uma coisa do caminho, esse devlog não tem como objetivo fazer “marketing” para um jogo, talvez nunca saia um jogo pronto para o publico desse experiência, mas não faz mal o que importa aqui é aprender alguma coisa e talvez ajudar voce  o seu jogo ou prova de calculo.</p>
+<h2 id="o-jogo">
+  
+  
+    <a href="#o-jogo" class="h-anchor">#</a> O jogo
+  
+  
+</h2>
+    
+
+<p>Mesmo sem saber onde vamos chegar, vale a pena ter pelo menos uma inspiração de por onde ir. Eu tenho vontade já a muito tempo de criar um jogo de fazenda onde o jogador precisa cuidar das culturas, mas também precisa gerenciar recursos como água, eletricidade, poluição, fertilidade do solo. Idealmente seria algo que pudesse dar a ele alguma intuição sobre agroecologia e gerenciamento de recursos naturais.</p>
+
+<p>Essa já é uma montanha bem alta para subir e daqui de baixo eu não consigo ver exatamente por onde subir. Mas parece possível, mas com certeza vai ser bastante interessante. Mas precisamos
+começar de algum lugar, pode ser qualquer lugar, que tal começar simulando a água?</p>
+
+<p>So uma coisa antes disso, a engine que vamos usar aqui se chama Ebiten e é escrita em Go. O único motivo de usar ela é pela simplicidade e por gostar da linguagem, mas pode ficar tranquilo que os conceitos são aplicáveis em qualquer  linguagem, engine ou aplicação.</p>
+<h2 id="a-água">
+  
+  
+    <a href="#a-água" class="h-anchor">#</a> A água
+  
+  
+</h2>
+    
+
+<p>Existe bons motivos para começar criando a água do nosso jogo: Primeiramente essa vai ser a mecânica principal do nosso jogo, assim como numa fazenda de verdade; Além disso, ela é uma daquelas coisas que voce entende empiricamente como funciona, mas explicar isso para um computador é outra história.</p>
+
+<p>No futuro essa simulação de água pode seguir os modelos mais avançados de engenharia de solos e ser tão realista que a NASA vai usar nosso jogo para treinar os futuros fazendeiros de Marte. Até lá, podemos fazer algo que na minha opinião é a essência da computação gráfica: podemos fazer um truque para enganar o jogador. Vamos começar com um Autômato Celular, no
+Grego: Cellular Automata</p>
+<h2 id="cellular-automata">
+  
+  
+    <a href="#cellular-automata" class="h-anchor">#</a> Cellular Automata
+  
+  
+</h2>
+    
+
+<p>Existem dezenas de fontes explicando o que esses algoritmos fazem, como surgiram e onde são utilizados, mas infelizmente muito pouco desse material esta disponível em português. Eu recomendo esse <a href="https://www.ppgee.ufmg.br/documentos/Defesas/802/Dissertacao_Gledson_final.pdf#page=29">capítulo</a> de dissertação que é bastante completo, mas também bastante acadêmico. Vamos resumir dessa forma:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Autômatos Celulares são algoritmos capazes simular sistemas complexos em larga escala a partir da definição de regras simples em pequena escala.
+</code></pre></div></div>
+
+<p>Entenda complexo ou simples como algo relacionado a previsibilidade do sistema, não necessariamente o quão de difícil é de modelar o sistema. O estoque de um produto em uma loja, distribuidora ou fabrica é um sistema simples, basta ver a diferença entre as entradas e saídas daquele estabelecimento. Agora o estoque desse mesmo produto em uma cidade é um sistema complexo que depende da contribuição de centenas de estabelecimentos interagindo entre si. A ideia desse tipo de autômato é simular cada estabelecimento conforme alguma regra e observar qual os efeitos na cidade como um todo.</p>
+
+<p>Ok, agora como programamos isso$ Uma boa maneira de modelar esses sistemas é dividindo ele em 3 partes: <code class="language-plaintext highlighter-rouge">Espaço</code>, <code class="language-plaintext highlighter-rouge">Comportamento</code> e <code class="language-plaintext highlighter-rouge">Estado</code>. Onde a cada ciclo esse <em>Espaço</em> é alterado de acordo com o seu <em>Estado</em>, seguindo a lógica definida por um <em>Comportamento</em>. Mas vamos olhar cada uma com calma.</p>
+<h3 id="espaço">
+  
+  
+    <a href="#espaço" class="h-anchor">#</a> Espaço
+  
+  
+</h3>
+    
+
+<p>Esse é onde a simulação acontece, nada mais é que um conjunto discreto, ou um grupo de células. Esse nome complicado é apenas para diferenciar continuo, onde não há uma separação definida entre cada membro do conjunto. No exemplo anterior o nosso espaço seria a Cidade e as células seriam os estabelecimentos.</p>
+
+<p>Qualquer espaço pode ser utilizado, desde que ele seja discreto. No nosso jogo, a terra onde a água vai se dispersar é continua, mas podemos facilmente representa-la de forma discreta definindo uma unidade que define e limita a minha célula. Posso determinar que cada célula no meu espaço equivale a 1m^2, assim o espaço que antes era continuo se torna discreto, podemos agora imaginar que um estado diz respeito as características de uma area especifica com essas dimensões.</p>
+<h3 id="estado">
+  
+  
+    <a href="#estado" class="h-anchor">#</a> Estado
+  
+  
+</h3>
+    
+
+<p>Esse é o que estamos simulado, é uma característica que varia a cada ciclo para cada célula, o estoque de produtos no nosso exemplo. Geralmente simulamos apenas um valor, mas nada impede que esse estado seja um conjunto de valores.</p>
+
+<p>Uma coisa importante que precisa ser definida com clareza é quando esses estados vão ser atualizados. Isso porque, a depender da simulação, o estado de uma célula pode ser dependente de outra. É preciso observar qual o efeito desejado e agir de acordo, mas na maioria das vezes vamos trabalhar com uma ideia de <em>frame</em>, onde os estados de cada ciclo são segregados.</p>
+
+<p>A ideia é tratar o estado geral das células após o calculo de um ciclo como uma fotografia, assim os novos estados são calculados a partir dos estados do ciclo anterior. Dessa forma temos menos chance de criar inconsistências e instabilidades na simulação</p>
+<h3 id="comportamento">
+  
+  
+    <a href="#comportamento" class="h-anchor">#</a> Comportamento
+  
+  
+</h3>
+    
+
+<p>Esse é como que nossa simulação vai funcionar, pode pensar como as regras que definem de que forma um estado se transforma em outro. Essa definição vai ser muito particular para o cenário que estamos tentando simular, o importante é ter em mente que o comportamento é definido por célula, não para todo o conjunto.</p>
+<h2 id="demos">
+  
+  
+    <a href="#demos" class="h-anchor">#</a> Demos
+  
+  
+</h2>
+    
+
+<p>Pode conferir um exemplo de implementação desses Autômatos em duas demos que eu criei. Inclusive com comentários sobre o código para ajudar voce a construir o seu próprio:</p>
+
+<ul>
+  <li><a href="https://joelschutz.github.io/devlog/demo/pt-br/2023/03/15/game-of-life.html">Conway’s Game Of Life</a>
+    <ul>
+      <li>Minha implementação do clássico Cellular Automata</li>
+    </ul>
+  </li>
+  <li><a href="https://joelschutz.github.io/devlog/demo/pt-br/2023/03/17/diffusion-automata.html">WIP - Diffusion Automata</a>
+    <ul>
+      <li>Um protótipo do autômato implementado para simular a Água no nosso jogo(lembra que era esse o objetivo desse post?)</li>
+    </ul>
+  </li>
+</ul>
+<h2 id="conclusão">
+  
+  
+    <a href="#conclusão" class="h-anchor">#</a> Conclusão
+  
+  
+</h2>
+    
+
+<p>Ainda falta muito na implementação desse nosso jogo e mais para frente vamos abordar outros temas menos técnicos e com mais específicos. Mas ainda acho importante ter posts como esse pela falta de materiais de qualidade em português. Como o objetivo aqui é aprender codando, então nada mais justo.</p>
+
+<p>No proximo post vamos falar mais especificamente sobre a simulação da água e como ela funciona, até lá, recomendo olhar as demos e analisar o código, os princípios são os mesmos para todos os Autômatos.</p><hr />
+
+<p>Espero que tenha gostado desse material e que tenha sido de ajuda, estou ainda trabalhando nesse site e nas demos para ajudar a quem tem interesse em programar coisas praticas e fora do mundinho web. Caso tenha alguma duvida ou sugestão, por favor entre em contato pelo <a href="https://github.com/joelschutz">GitHub</a> ou <a href="mailto:joelsschutz@yahoo.com.br">e-mail</a>.
+<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif" alt="thank you!" /></p>
+</article>
+      </div>
+    </main><script data-goatcounter="https://joelschutz.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+<noscript>
+  <img src="https://joelschutz.goatcounter.com/count?p=/test-img">
+</noscript>
+  </body>
+</html>

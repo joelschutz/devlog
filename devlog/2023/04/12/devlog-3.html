@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Devlog #3 - TileMaps e StateMachines</title><!-- Begin Jekyll SEO tag v2.8.0 -->
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Devlog #3 - TileMaps e StateMachines" />
+<meta name="author" content="Joel Schutz" />
+<meta property="og:locale" content="pt_br" />
+<meta name="description" content="Introdução" />
+<meta property="og:description" content="Introdução" />
+<link rel="canonical" href="https://github.com/devlog/devlog/2023/04/12/devlog-3.html" />
+<meta property="og:url" content="https://github.com/devlog/devlog/2023/04/12/devlog-3.html" />
+<meta property="og:site_name" content="Joel’s Dev Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-04-12T18:56:11+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Devlog #3 - TileMaps e StateMachines" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Joel Schutz"},"dateModified":"2023-04-12T18:56:11+00:00","datePublished":"2023-04-12T18:56:11+00:00","description":"Introdução","headline":"Devlog #3 - TileMaps e StateMachines","mainEntityOfPage":{"@type":"WebPage","@id":"https://github.com/devlog/devlog/2023/04/12/devlog-3.html"},"url":"https://github.com/devlog/devlog/2023/04/12/devlog-3.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link type="application/atom+xml" rel="alternate" href="https://github.com/devlog/feed.xml" title="Joel's Dev Blog" /><link rel="shortcut icon" type="image/x-icon" href="/devlog/favicon.ico" />
+  <link rel="stylesheet" href="/devlog/assets/css/main.css" />
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+</head><body a="dark">
+    <main class="page-content" aria-label="Content">
+      <div class="w">
+        <a href="/devlog/">../</a><article>
+  <p class="post-meta">
+    <time datetime="2023-04-12 18:56:11 +0000">Apr-12-2023</time>
+  </p><p class="languages">
+    
+        
+    pt-br
+        
+    
+        
+            
+    <a href="/devlog/en/devlog/2023/04/12/devlog-3.html">en</a>
+            
+        
+    
+    </p><h1>Devlog #3 - TileMaps e StateMachines</h1>
+
+  <h2 id="introdução">
+  
+  
+    <a href="#introdução" class="h-anchor">#</a> Introdução
+  
+  
+</h2>
+    
+
+<p>Eu demorei a escrever esse post porque achei que não havia nada de interessante a comentar nas demos que criei essas últimas semanas. Pensei em escrever então sobre porque acho isso e indicar alguns caminhos mais úteis para quem está fazendo algo parecido.</p>
+<h2 id="tilemaps">
+  
+  
+    <a href="#tilemaps" class="h-anchor">#</a> Tilemaps
+  
+  
+</h2>
+    
+
+<p>O jogo que estamos criando vai utilizar tilemaps, esse tipo de técnica é tão antiga que até o Super Nintendo já tinha hardware especializado para renderizar esses mapas. Não faltam materiais sobre esse assunto, nessa demo eu apenas fiquei na superfície, mas se quiser uma introdução bacana pode ler essa <a href="https://www.domestika.org/pt/blog/6985-o-que-e-tileset-e-tilemap-no-desenvolvimento-de-games">aqui</a>.</p>
+
+<p>Na <a href="/devlog/demo/2023/04/07/tilemap-v0.html">demo</a> eu fiz duas coisas interessantes de se notar:</p>
+
+<p>Primeiro eu mapiei as células do nosso <a href="/devlog/demo/2023/03/23/diffusion-automata-v1.html">Diffusion Automata</a> com os espaços do tilemap, assim assim eu pude usar a simulação para alterar qual tile deve ser mostrado em cada espaço.</p>
+
+<p>Além disso, eu utilizei um arquivo <code class="language-plaintext highlighter-rouge">.tmx</code> do <a href="https://www.mapeditor.org/">Tiled</a> para gerar o estado inicial da simulação. Então essa demo acaba mostrando como extrair dados de tilemaps e como utilizar dados para alterá-los também.</p>
+<h2 id="statemachines">
+  
+  
+    <a href="#statemachines" class="h-anchor">#</a> StateMachines
+  
+  
+</h2>
+    
+
+<p>Diferente dos Autômatos Celulares, não falta material sobre Máquinas de Estado em português. Elas são matéria obrigatória em qualquer curso de Computação, Sistemas e as vezes até Administração. Por esse motivo eu não vou indicar nenhum material, você provavelmente vai encontrar bastante coisa no Google e pode garimpar o que mais lhe faz sentido. Caso esteja com preguiça, o artigo da <a href="https://pt.wikipedia.org/wiki/M%C3%A1quina_de_estados_finita">Wikipedia</a> é uma fonte rápida para se inteirar do assunto.</p>
+
+<p>Na <a href="/devlog/demo/2023/04/12/farm-v0.html">demo</a> essa máquina foi utilizada para controlar qual o estado de cada hortinha. Quando o fazendeiro cria uma nova ela começa com o estado <code class="language-plaintext highlighter-rouge">SECA</code>, assim que ele rega essa horta ela passa para o estado <code class="language-plaintext highlighter-rouge">MOLHADA</code>. Uma vez nesse novo estado o fazendeiro não precisa mais interagir com a horta, a cada ciclo de tempo ela vai automaticamente crescer, mudando do <code class="language-plaintext highlighter-rouge">EM_CRESCIMENTO_1</code> até <code class="language-plaintext highlighter-rouge">EM_CRESCIMENTO_4</code>.</p>
+
+<p>Para demonstrar que esse tempo de crescimento é independente para cada hortinha, a cada nova criada o tempo aumenta. Caso interaja com uma horta totalmente crescida o fazendeiro pode colher, o que traz ela de volta para o estado <code class="language-plaintext highlighter-rouge">SECA</code>.</p>
+
+<p>Não tenho código comentado para essa demo porque ela é baseada em uma biblioteca chamada <a href="https://github.com/qmuntal/stateless">stateless</a>, não vale a pena explicar como ela funciona porque no seu caso pode estar utilizando uma ferramenta diferente. Existem centenas de formas de implementar essa solução, use a que faz mais sentido no seu caso.</p>
+<h2 id="conclusão">
+  
+  
+    <a href="#conclusão" class="h-anchor">#</a> Conclusão
+  
+  
+</h2>
+    
+
+<p>Esse post foi rápido, não tinha muito a dizer mas queria publicar logo antes do fim da semana. Na próxima semana eu não devo trabalhar em nenhuma demo ou no jogo, vou estar viajando para resolver alguns assuntos da minha mudança. Porém assim que voltar eu devo entrar de cabeça no desenvolvimento de novas demos. Em especial quero criar uma UI para navegar pelo mapa e interagir com os sistemas, também estou lendo um pouco sobre alguns <code class="language-plaintext highlighter-rouge">design patterns</code> para me ajudar a sobrepor esses sistemas, que é algo essencial para que tudo funcione em conjunto.</p>
+
+<p>Deve demorar até meu próximo post, então não se assustem se só ouvirem falar de mim daqui um mês ou dois. Até lá, recomendo darem uma olhada na nova página de <a href="/devlog/links.html">links</a> que adicionei ao site, assim que achar algo interessante eu devo colocar ali.</p><hr />
+
+<p>Espero que tenha gostado desse material e que tenha sido de ajuda, estou ainda trabalhando nesse site e nas demos para ajudar a quem tem interesse em programar coisas práticas e fora do mundinho web. Caso tenha alguma dúvida ou sugestão, por favor entre em contato pelo <a href="https://github.com/joelschutz">GitHub</a> ou <a href="mailto:joelsschutz@yahoo.com.br">e-mail</a>.
+<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif" alt="thank you!" /></p>
+</article>
+      </div>
+    </main><script data-goatcounter="https://joelschutz.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+<noscript>
+  <img src="https://joelschutz.goatcounter.com/count?p=/test-img">
+</noscript>
+  </body>
+</html>

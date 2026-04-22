@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Lecture Timer - Minha primeira extensão do VSCode</title><!-- Begin Jekyll SEO tag v2.8.0 -->
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Lecture Timer - Minha primeira extensão do VSCode" />
+<meta name="author" content="Joel Schutz" />
+<meta property="og:locale" content="pt_br" />
+<link rel="canonical" href="https://github.com/devlog/devlog/study/2023/04/05/a-vscode-extension.html" />
+<meta property="og:url" content="https://github.com/devlog/devlog/study/2023/04/05/a-vscode-extension.html" />
+<meta property="og:site_name" content="Joel’s Dev Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-04-05T18:14:02+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Lecture Timer - Minha primeira extensão do VSCode" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Joel Schutz"},"dateModified":"2023-04-05T18:14:02+00:00","datePublished":"2023-04-05T18:14:02+00:00","headline":"Lecture Timer - Minha primeira extensão do VSCode","mainEntityOfPage":{"@type":"WebPage","@id":"https://github.com/devlog/devlog/study/2023/04/05/a-vscode-extension.html"},"url":"https://github.com/devlog/devlog/study/2023/04/05/a-vscode-extension.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link type="application/atom+xml" rel="alternate" href="https://github.com/devlog/feed.xml" title="Joel's Dev Blog" /><link rel="shortcut icon" type="image/x-icon" href="/devlog/favicon.ico" />
+  <link rel="stylesheet" href="/devlog/assets/css/main.css" />
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+</head><body a="dark">
+    <main class="page-content" aria-label="Content">
+      <div class="w">
+        <a href="/devlog/">../</a><article>
+  <p class="post-meta">
+    <time datetime="2023-04-05 18:14:02 +0000">Apr-05-2023</time>
+  </p><p class="languages">
+    
+        
+    pt-br
+        
+    
+        
+            
+    <a href="/devlog/en/devlog/study/2023/04/05/a-vscode-extension.html">en</a>
+            
+        
+    
+    </p><h1>Lecture Timer - Minha primeira extensão do VSCode</h1>
+
+  <h2 id="introdução">
+  
+  
+    <a href="#introdução" class="h-anchor">#</a> Introdução
+  
+  
+</h2>
+    
+
+<p>Depois de um tempo trabalhando com desenvolvimento web, e agora com a esfriada no mercado, eu decidi que é hora de voltar para a faculdade. Quem lê o blog percebe que o que eu mais quero é encontrar algum desafio que me deixe o mais longe possível de dessas tecnologias. Por isso criei uma extensão usando JS+HTML+CSS para o VSCode.</p>
+
+<p>Essa ironia vai se explicar em breve, em resumo, é o jeito que a Microsoft escolheu para tornar o desenvolvimento de extensões mais “simples” no VSCode. Mas o que isso tem a ver com voltar para a faculdade? Bem deixa eu explicar o problema:</p>
+<h2 id="minhas-notas-horrendas">
+  
+  
+    <a href="#minhas-notas-horrendas" class="h-anchor">#</a> Minhas notas horrendas
+  
+  
+</h2>
+    
+
+<p><img src="https://media.giphy.com/media/3o6MbbwX2g2GA4MUus/giphy.gif" alt="I don't understand anything" /></p>
+
+<p>Já teve a experiencia de estudar para uma prova, voltar para as suas anotações e não fazer ideia do que se tratam? Eu tenho um pouco de dislexia, sou prolixo na hora de me expressar, e para piorar, sou a única pessoa que conheço a ter reprovado nas aulas de caligrafia. Quando me concentrava para anotar, me perdia na aula, quando fazia na pressa, não entendia nada do que escrevi. O resultado era um caderno cheio de notas confusas e feias de uma aula que eu já não lembrava sobre o que era.</p>
+
+<p>Escutar as gravações das aulas acabava sendo a solução, ainda mais depois da pandemia, esse material virou essencial nos meus estudos já que eu poderia pausar, voltar e dar a atenção necessária para cada parte. Minhas notas ficaram muito mais organizadas e úteis, fui tão bem que consegui aprender a programar, fui empregado na área e acabei deixando a faculdade. Mas tem um aspecto desse processo que eu preciso resolver para ter alguma vida além dos estudos.</p>
+
+<p>Gravações são ótimas, mas não são fáceis de encontrar o que está procurando. Em um texto você consegue usar o famoso <code class="language-plaintext highlighter-rouge">Ctrl+F</code> e procurar o que precisa, mesmo em um livro é muito fácil sublinhar e marcar páginas para voltar depois. Em um arquivo de audio ou video não é possível fazer algo assim, o que eu acabava fazendo era anotar a minutagem e uma frase ao lado para tentar me achar depois, quase sempre sem sucesso.</p>
+
+<p>O problema não era tanto o método, mas o fato de ele ser trabalhoso e ineficiente. Para anotar uma minutagem era necessário pausar e escrever o exata valor, depois para retornar era preciso encontrar o segundo exato na linha. Sem falar que era impossível fazer algo assim durante a gravação de uma aula, coisa que vai ser essencial agora com aulas presenciais. Eu precisava de alguma ferramenta que me ajudasse a usar essa técnica e é isso que a minha extensão faz.</p>
+<h2 id="anotando-em-tempo-real">
+  
+  
+    <a href="#anotando-em-tempo-real" class="h-anchor">#</a> Anotando em tempo real
+  
+  
+</h2>
+    
+
+<p><img src="https://media.giphy.com/media/1Aj491qX7K45qZs6EP/giphy.gif" alt="Typing while shit burn in front of you" /></p>
+
+<p>A ideia que eu tive é de uma ferramenta que me permitisse:</p>
+
+<ol>
+  <li>Anotar minutagens com apenas um click</li>
+  <li>Navegar rapidamente entre as anotações e o arquivo de video ou audio</li>
+  <li>Sincronizar anotações feitas em aula com feitas posteriormente</li>
+  <li>Permitisse marcar e encontrar facilmente os trechos da aula que mais interessam</li>
+</ol>
+
+<p>Em outras palavras, eu queria alguma forma de rabiscar meus arquivos de audio da mesma forma que um texto ou livro, para isso eu precisava dar uma interface visual para esse audio. Que lugar melhor para começar que pelo <code class="language-plaintext highlighter-rouge">Visual Studio Code</code>, trocadilhos a parte o que pensei de fazer foi criar um arquivo de texto que pudesse conter toda as minhas anotações. O <code class="language-plaintext highlighter-rouge">VSCode</code> entra como uma boa opção de editor, não só pela capacidade de extensão, mas também porque é o editor de texto que uso diariamente e já estou acostumado.</p>
+
+<p>Escrever a extensão não foi fácil, mas admito que depois de um pouco de esforço a coisa passa a fazer mais sentido. Eu queria poder dizer que a minha falta de experiencia e, em geral, ódio pelo <code class="language-plaintext highlighter-rouge">JavaScript</code> foram as causas dos meus problemas, mas nem foi tão esse o caso. O que mais complica é o design adotado pela Microsoft, a API parece uma grande sopa de decisões impulsivas e a documentação exige que você leia tudo com muita calma para não perder nenhum detalhe. De todo o material que usei, os que eu recomendo para quem quiser tentar essa empreitada são a <a href="https://code.visualstudio.com/api/get-started/your-first-extension">documentação oficial</a>, principalmente os exemplos, e <a href="https://youtu.be/a5DX5pQ9p5M">esse video</a> de quase 4 horas. Não se incomode com o comprimento, a melhor parte desse tutorial é que conseguimos acompanhar ele debugando certas coisas que são importantíssimas, mas que raramente aparecem nos outros tutoriais.</p>
+<h2 id="ok-mas-o-que-essa-extensão-faz">
+  
+  
+    <a href="#ok-mas-o-que-essa-extensão-faz" class="h-anchor">#</a> Ok, mas o que essa extensão faz?
+  
+  
+</h2>
+    
+
+<p>Antes de tudo, vamos precisar de um arquivo <code class="language-plaintext highlighter-rouge">.md</code> com um <a href="https://daily-dev-tips.com/posts/what-exactly-is-frontmatter/">frontmatter</a> preenchido com alguns dados, a extensão já vem com um snippet chamado <code class="language-plaintext highlighter-rouge">lecture-timer.initTimer</code> que vai criar algo assim:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">lecture</span><span class="pi">:</span>
+  <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">My</span><span class="nv"> </span><span class="s">Title"</span>
+  <span class="na">file</span><span class="pi">:</span> <span class="s2">"</span><span class="s">example.mp3"</span> <span class="c1"># Opcional</span>
+  <span class="na">duration</span><span class="pi">:</span> <span class="m">120</span>       <span class="c1"># Opcional</span>
+<span class="nn">---</span>
+</code></pre></div></div>
+
+<p>Isso é tudo que precisamos para começar, o campo <code class="language-plaintext highlighter-rouge">file</code> é opcional e caso fique em branco a extensão funcionará como um timer simples. Alternativamente você pode utilizar um campo <code class="language-plaintext highlighter-rouge">duration</code> para especificar o limite de tempo do seu timer. Clique no ícone da extensão na barra lateral para abrir o painel.</p>
+
+<p><img src="/devlog/assets/lt-0.png" alt="Lecture Timer Panel" /></p>
+
+<p>Os controles na parte superior funcionam como você espera: <code class="language-plaintext highlighter-rouge">tocar</code>, <code class="language-plaintext highlighter-rouge">pausar</code>, <code class="language-plaintext highlighter-rouge">parar</code>, <code class="language-plaintext highlighter-rouge">avançar</code>, <code class="language-plaintext highlighter-rouge">retroceder</code>, etc. Eles servem tanto para operar os timers quanto navegar pelo audio. Na parte inferior temos os timestamps(ou minutagens) registradas no nosso arquivo, clicando em cada um ou usando as botões conseguimos navegar por eles no texto. Adicionamos novos usando os seguintes marcadores no texto:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- Marcador vazio --&gt;</span>
+:lec-timer{time="3.774" preview="00:00:03" type="alone"}
+
+<span class="c">&lt;!-- Marcador com conteúdo inline --&gt;</span>
+:lec-timer[content]{time="3.774" preview="00:00:03" type="inline"}
+
+<span class="c">&lt;!-- Marcador de bloco --&gt;</span>
+:::lec-timer{time="3.774" preview="00:00:03" type="block"}
+multi
+line
+content
+:::
+</code></pre></div></div>
+
+<p>Não é necessário saber digitar esses marcadores inteiros, a extensão adiciona um novo comando para isso, basta utilizar <code class="language-plaintext highlighter-rouge">Ctrl+Shift+P</code> para abrir a palheta comandos e procurar por <code class="language-plaintext highlighter-rouge">lecture-timer.stampMarker</code>. Com ele você consegue adicionar a minutagem e caso tenha algum texto selecionado ele já formata corretamente o seu conteúdo dentro do marcador. Uma dica que eu dou é definir um atalho do teclado para esse comando que até mais fácil de usar.</p>
+
+<p>A syntax desses marcadores também é proposital, eles respeitam a proposta de <a href="https://talk.commonmark.org/t/generic-directives-plugins-syntax/444">Generic Directives</a> e podem facilmente ser parceados para html utilizando um plugin como <a href="https://github.com/hilookas/markdown-it-directive">markdown-it-directive</a>. Inclusive é esse o plugin que utilizei para renderizar os marcadores no preview do markdown:</p>
+
+<p><img src="/devlog/assets/lt-1.png" alt="Lecture Timer Preview" /></p>
+
+<p>Essas são as funcionalidades até agora, não são muitas mas já é o suficiente para começar a utilizar.</p>
+<h2 id="conclusão">
+  
+  
+    <a href="#conclusão" class="h-anchor">#</a> Conclusão
+  
+  
+</h2>
+    
+
+<p>Eu devo continuar a adicionar funcionalidades e remover bugs no futuro, ainda quero dar suporte a arquivos de video e conteúdo online. Além disso ainda tem algumas coisas de qualidade de vida que eu acredito serem necessárias, mas ainda quero testar mais na prática para ter certeza.</p>
+
+<p>Caso esteja interessado, já pode instalar a versão em <a href="https://marketplace.visualstudio.com/items?itemName=joelschutz.lecture-timer">pre-release</a> no seu VSCode. Sugestões e bugs podem ser enviados para o <a href="https://github.com/joelschutz/lecture-timer">repositório</a>, assim como contribuições caso queira dar uma força.</p>
+
+<p>Esse era um dos projetos que me desafiei a terminar antes do começo das aulas da UFRGS em Maio, já vou riscar esse da lista. O outro era uma ferramenta para extrair comentários do código Go, essa já existe e funciona, mas preciso fazer um post como esse aqui no blog para dar como encerrado também e o tempo está acabando.</p>
+
+<p>Depois disso devo voltar ao regime normal de posts sobre gamedev, já tenho uma demo nova e estou animado para começar a dar forma ao nosso jogo. Porém eu tenho certeza que vamos ter um hiato em breve para eu poder dar conta da minha mudança de cidade e me aclimatar na nova rotina. Não tenho também muita certeza de quanto tempo livre vou ter para me dedicar a projetos como estes, sobre isso só o futuro dirá.</p><hr />
+
+<p>Espero que tenha gostado desse material e que tenha sido de ajuda, estou ainda trabalhando nesse site e nas demos para ajudar a quem tem interesse em programar coisas práticas e fora do mundinho web. Caso tenha alguma dúvida ou sugestão, por favor entre em contato pelo <a href="https://github.com/joelschutz">GitHub</a> ou <a href="mailto:joelsschutz@yahoo.com.br">e-mail</a>.
+<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif" alt="thank you!" /></p>
+</article>
+      </div>
+    </main><script data-goatcounter="https://joelschutz.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+<noscript>
+  <img src="https://joelschutz.goatcounter.com/count?p=/test-img">
+</noscript>
+  </body>
+</html>
