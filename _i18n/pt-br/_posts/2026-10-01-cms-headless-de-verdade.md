@@ -18,4 +18,4 @@ Meu plano era desenvolver algo do zero que pudesse servir como CMS, imaginava qu
 
 Se estiver lendo isto é porque funcionou e estou livre das amarras no meu computador de desenvolvimento para escrever aqui. Aguardem que talvez dessa vez meu hiato seja um pouco mais curto.
 
-![Yeah.](https://giphy.com/embed/i17zHLTMt1SmJMv6Aw)
+![Yeah.](https://media.giphy.com/media/i17zHLTMt1SmJMv6Aw/giphy.gif)
