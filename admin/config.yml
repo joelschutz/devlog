@@ -1,7 +1,7 @@
 backend:
   name: github
   repo: joelschutz/devlog
-  branch: main
+  branch: devlog
 
 # Imagens enviadas pelo CMS vão para a raiz de assets/.
 # O site usa baseurl /devlog, então o caminho público inclui esse prefixo.
@@ -9,10 +9,10 @@ media_folder: assets
 public_folder: /devlog/assets
 
 collections:
-  # Uma coleção por idioma: cada uma aponta direto para a pasta de posts.
+  # ---------- Posts publicados ----------
   - name: posts_pt
     label: Posts (pt-br)
-    label_singular: Post
+    label_singular: Post em português
     folder: _i18n/pt-br/_posts
     extension: md
     format: frontmatter
@@ -33,10 +33,45 @@ collections:
 
   - name: posts_en
     label: Posts (en)
-    label_singular: Post
+    label_singular: Post in English
     folder: _i18n/en/_posts
     extension: md
     format: frontmatter
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields: *campos_post
+
+  # ---------- Rascunhos (_drafts) ----------
+  # Rascunhos do Jekyll não levam data no nome do arquivo.
+  # Ajuste o caminho se os seus ficarem em outra pasta.
+  - name: drafts_pt
+    label: Rascunhos (pt-br)
+    label_singular: Rascunho em português
+    folder: _i18n/pt-br/_drafts
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{slug}}"
+    fields: &campos_rascunho
+      - { label: Título, name: title, widget: string }
+      - { label: Layout, name: layout, widget: hidden, default: post }
+      - label: Data
+        name: date
+        widget: datetime
+        format: "YYYY-MM-DD HH:mm:ss [UTC]"
+        picker_utc: true
+        required: false
+      - { label: Tags, name: tags, widget: list, default: [] }
+      - { label: Categorias, name: categories, widget: list, default: [devlog] }
+      - { label: Tipo, name: type, widget: hidden, default: default }
+      - { label: Conteúdo, name: body, widget: markdown }
+
+  - name: drafts_en
+    label: Rascunhos (en)
+    label_singular: Draft in English
+    folder: _i18n/en/_drafts
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{slug}}"
+    fields: *campos_rascunho
