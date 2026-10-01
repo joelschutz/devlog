@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Devlog #3 - TileMaps and StateMachines</title><!-- Begin Jekyll SEO tag v2.8.0 -->
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Devlog #3 - TileMaps and StateMachines" />
+<meta name="author" content="Joel Schutz" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Introduction" />
+<meta property="og:description" content="Introduction" />
+<link rel="canonical" href="https://github.com/devlog/en/devlog/2023/04/12/devlog-3.html" />
+<meta property="og:url" content="https://github.com/devlog/en/devlog/2023/04/12/devlog-3.html" />
+<meta property="og:site_name" content="Joel’s Dev Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-04-12T18:56:11+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Devlog #3 - TileMaps and StateMachines" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Joel Schutz"},"dateModified":"2023-04-12T18:56:11+00:00","datePublished":"2023-04-12T18:56:11+00:00","description":"Introduction","headline":"Devlog #3 - TileMaps and StateMachines","mainEntityOfPage":{"@type":"WebPage","@id":"https://github.com/devlog/en/devlog/2023/04/12/devlog-3.html"},"url":"https://github.com/devlog/en/devlog/2023/04/12/devlog-3.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link type="application/atom+xml" rel="alternate" href="https://github.com/devlog/en/feed.xml" title="Joel's Dev Blog" /><link rel="shortcut icon" type="image/x-icon" href="/devlog/en/favicon.ico" />
+  <link rel="stylesheet" href="/devlog/en/assets/css/main.css" />
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+</head><body a="dark">
+    <main class="page-content" aria-label="Content">
+      <div class="w">
+        <a href="/devlog/en/">../</a><article>
+  <p class="post-meta">
+    <time datetime="2023-04-12 18:56:11 +0000">Apr-12-2023</time>
+  </p><p class="languages">
+    
+        
+            
+    <a href="/devlog/devlog/2023/04/12/devlog-3.html">pt-br</a>
+            
+        
+    
+        
+    en
+        
+    
+    </p><h1>Devlog #3 - TileMaps and StateMachines</h1>
+
+  <h2 id="introduction">
+  
+  
+    <a href="#introduction" class="h-anchor">#</a> Introduction
+  
+  
+</h2>
+    
+
+<p>It took me long to write this post because I thought there was nothing interesting to comment on the demos that I created these last weeks. I thought I’d write about why I think that and indicate some more useful ways for those who are doing something similar.</p>
+<h2 id="tilemaps">
+  
+  
+    <a href="#tilemaps" class="h-anchor">#</a> Tilemaps
+  
+  
+</h2>
+    
+
+<p>The game we are creating will use tilemaps, this kind of technique is so old that even the Super Nintendo already had specialized hardware to render these maps. There is no shortage of materials on this issue, but if you want a nice introduction you can read this <a href="https://www.domestika.org/en/blog/6985-o-que-e-tileset-e-tilemap-no-development-de-games">here</a>.</p>
+
+<p>At <a href="/devlog/demo/2023/04/07/tilemap-v0.html">demo</a> I did two interesting things to note:</p>
+
+<p>First I mapped the cells of our <a href="/devlog/demo/2023/03/23/diffusion-automata-v1.html">Diffusion Automata</a> with the tilemap spaces, so I could use the simulation to change which tile should be shown in each space.</p>
+
+<p>In addition, I used a <code class="language-plaintext highlighter-rouge">.tmx</code> file from <a href="https://www.mapeditor.org/">Tiled</a> to generate the initial state of the simulation. So this demo ends up showing how to extract tilemaps data and how to use data to change them as well.</p>
+<h2 id="statemachines">
+  
+  
+    <a href="#statemachines" class="h-anchor">#</a> StateMachines
+  
+  
+</h2>
+    
+
+<p>Unlike cellular automata, there is no material missing on Portuguese state machines. They are obligatory in any course of Computing, Systems and sometimes even Administration. For this reason I will not indicate any material, you will probably find a lot on Google and can garimpar what makes the most sense to you. If you are lazy, the <a href="https://pt.wikipedia.org/wiki/M%C3%A1quina_de_estados_finita">Wikipedia</a> article  is a quick source to get to know the subject.</p>
+
+<p>In <a href="/devlog/demo/2023/04/12/farm-v0.html">demo</a> this machine was used to control the state of each garden. When the farmer creates a new she begins with the state <code class="language-plaintext highlighter-rouge">SECA</code>, so he waters that garden she passes to the state <code class="language-plaintext highlighter-rouge">MOLHADA</code>. Once in this new state the farmer no longer needs to interact with the garden, every time cycle it will automatically grow, changing from <code class="language-plaintext highlighter-rouge">EM_CRESCEMENT_1</code> to ‘EM_CRESCEMENT_4`.</p>
+
+<p>To demonstrate that this growth time is independent for each garden, every new created time increases. If you interact with a fully grown vegetable garden the farmer can harvest, which brings it back to the state <code class="language-plaintext highlighter-rouge">SECA</code>.</p>
+
+<p>I have no commented code for this demo because it is based on a library called <a href="https://github. with/qmuntal/stateless">stateless</a>, it is not worth explaining how it works because in your case you may be using a different tool. There are hundreds of ways to implement this solution, use the one that makes the most sense in your case.</p>
+<h2 id="conclusion">
+  
+  
+    <a href="#conclusion" class="h-anchor">#</a> Conclusion
+  
+  
+</h2>
+    
+
+<p>This post was quick, I didn’t have much to say but wanted to publish right before the end of the week. In the coming week I should not work in any demo or in the game, I will be traveling to solve some issues of my change. But as soon as I come back I must head in the development of new demos. In particular I want to create a UI to navigate the map and interact with the systems, I’m also reading a little about some ‘design patterns’ to help me override these systems, which is essential for everything to work together.</p>
+
+<p>It should take me to my next post, so don’t get scared if you just hear from me in a month or two. Until then, I recommend taking a look at the new <a href="/devlog/links.html">links</a> page that I added to the site, so I find something interesting I should put there.</p><hr />
+
+<p>I hope you enjoyed this material and that it was helpful, I am still working on this site and we gave it to help those who are interested in programming practical things and out of the world web. If you have any questions or suggestions, please contact <a href="https://github.com/joelschutz">GitHub</a> or <a href="mail:joelsschutz@yahoo.com.br">e-mail</a>.</p>
+
+<p><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif" alt="thank you!" /></p>
+</article>
+      </div>
+    </main><script data-goatcounter="https://joelschutz.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+<noscript>
+  <img src="https://joelschutz.goatcounter.com/count?p=/test-img">
+</noscript>
+  </body>
+</html>

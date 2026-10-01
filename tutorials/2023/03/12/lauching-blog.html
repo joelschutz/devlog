@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Criando um blog de desenvolvimento</title><!-- Begin Jekyll SEO tag v2.8.0 -->
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Criando um blog de desenvolvimento" />
+<meta name="author" content="Joel Schutz" />
+<meta property="og:locale" content="pt_br" />
+<meta name="description" content="Eu sou da época que quando para criar um blog bastava entrar no Blogger, Wordpress ou Tumblr e criar uma conta. Em minutos você escolhia um tema, configurava tudo e jã estava online e pronto para publicar para o mundo inteiro." />
+<meta property="og:description" content="Eu sou da época que quando para criar um blog bastava entrar no Blogger, Wordpress ou Tumblr e criar uma conta. Em minutos você escolhia um tema, configurava tudo e jã estava online e pronto para publicar para o mundo inteiro." />
+<link rel="canonical" href="https://github.com/devlog/tutorials/2023/03/12/lauching-blog.html" />
+<meta property="og:url" content="https://github.com/devlog/tutorials/2023/03/12/lauching-blog.html" />
+<meta property="og:site_name" content="Joel’s Dev Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-03-12T23:10:41+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Criando um blog de desenvolvimento" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Joel Schutz"},"dateModified":"2023-03-12T23:10:41+00:00","datePublished":"2023-03-12T23:10:41+00:00","description":"Eu sou da época que quando para criar um blog bastava entrar no Blogger, Wordpress ou Tumblr e criar uma conta. Em minutos você escolhia um tema, configurava tudo e jã estava online e pronto para publicar para o mundo inteiro.","headline":"Criando um blog de desenvolvimento","mainEntityOfPage":{"@type":"WebPage","@id":"https://github.com/devlog/tutorials/2023/03/12/lauching-blog.html"},"url":"https://github.com/devlog/tutorials/2023/03/12/lauching-blog.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link type="application/atom+xml" rel="alternate" href="https://github.com/devlog/feed.xml" title="Joel's Dev Blog" /><link rel="shortcut icon" type="image/x-icon" href="/devlog/favicon.ico" />
+  <link rel="stylesheet" href="/devlog/assets/css/main.css" />
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+</head><body a="dark">
+    <main class="page-content" aria-label="Content">
+      <div class="w">
+        <a href="/devlog/">../</a><article>
+  <p class="post-meta">
+    <time datetime="2023-03-12 23:10:41 +0000">Mar-12-2023</time>
+  </p><p class="languages">
+    
+        
+    pt-br
+        
+    
+        
+            
+    <a href="/devlog/en/tutorials/2023/03/12/lauching-blog.html">en</a>
+            
+        
+    
+    </p><h1>Criando um blog de desenvolvimento</h1>
+
+  <p>Eu sou da época que quando para criar um blog bastava entrar no <a href="https://www.blogger.com/">Blogger</a>, <a href="https://wordpress.com/">Wordpress</a> ou <a href="https://www.tumblr.com/">Tumblr</a> e criar uma conta. Em minutos você escolhia um tema, configurava tudo e jã estava online e pronto para publicar para o mundo inteiro.</p>
+
+<p>Claro que todos esses sites ainda existem e funcionam muito bem. Mas além de serem bastante limitados, qualquer um que entrar no seu blog vai ficar com a impressão que seu post foi escrito em 1997 em um i386.</p>
+<h2 id="github-pages">
+  
+  
+    <a href="#github-pages" class="h-anchor">#</a> Github Pages
+  
+  
+</h2>
+    
+
+<p><img src="/devlog/assets/7e8xd3.jpg" alt="they don't know my development blog is hosted for free on github pages" /></p>
+
+<p>Hoje em dia a galera da moda tem um novo jeito de hospedar um blog sem pagar nada por isso. Envolve um pouco mais de trabalho, mais o resultado e um site estático, completamente customizável e que talvez te renda até um emprego numa startup por ai.</p>
+
+<p>Eu não vou explicar aqui como criar tudo do zero porque <a href="https://github.com/skills/github-pages">esse tutorial</a> do Github vai guiar você a cada passo. O que eu vou mostrar aqui são algumas dicas para deixar seu blog ainda melhor de usar e de olhar.</p>
+<h2 id="jekyll">
+  
+  
+    <a href="#jekyll" class="h-anchor">#</a> Jekyll
+  
+  
+</h2>
+    
+
+<p><img src="/devlog/assets/7e90ar.jpg" alt="Jekyll X GH Pages: They're the same picture" /></p>
+
+<p>Por baixo dos panos o Github usa o <a href="https://jekyllrb.com/">Jekyll</a> para gerar esse site estático, é possível hospedar qualquer repositório com páginas HTML, porém usando essa ferramenta conseguimos criar as páginas em Markdown e deixar o Jekyll fazer o trabalho sujo.</p>
+
+<p>Claro que não é nenhuma mágica e ai que entra a primeira dica:</p>
+<h3 id="themes-e-remote-themes">
+  
+  
+    <a href="#themes-e-remote-themes" class="h-anchor">#</a> Themes e Remote Themes
+  
+  
+</h3>
+    
+
+<p>No arquivo <code class="language-plaintext highlighter-rouge">_config.yml</code> que está na raiz do repositório, você pode inserir um tema usando a chave <code class="language-plaintext highlighter-rouge">theme</code>. O que não te contaram á que você pode usar qualquer tema hospedado no Github com a chave <code class="language-plaintext highlighter-rouge">remote_theme</code>. Fica algo assim:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">title</span><span class="pi">:</span> <span class="s">My Blog</span>
+<span class="na">author</span><span class="pi">:</span> <span class="s">My Name</span>
+<span class="na">remote_theme</span><span class="pi">:</span> <span class="s">daattali/beautiful-jekyll</span>
+</code></pre></div></div>
+
+<p>Fazendo isso o tema vai ser automaticamente baixado na hora do build e não precisa incluir nada novo no seu repositório. Basta apenas encontrar um tema que te agrade.</p>
+
+<p>Agora é só escrever o conteúdo, e para ajudar nessa parte vem a segunda dica:</p>
+<h3 id="frontmatter">
+  
+  
+    <a href="#frontmatter" class="h-anchor">#</a> Frontmatter
+  
+  
+</h3>
+    
+
+<p><img src="/devlog/assets/7e96di.jpg" alt="Frontmatter + Jekyll = CMS Local" /></p>
+
+<p>Na hora de administrar os seus posts, editar tags, adicionar categorias, visualizar histórico, etc, o nosso esquema de editar o Markdown e subir para o repositório não é o mais prática. Para isso existe o <a href="https://frontmatter.codes/">Frontmatter</a>, se você usa um editor compatível.</p>
+
+<p>A ideia desse plugin é trazer as funcionalidades de um CMS como o Wordpress para o editor. Assim você consegue facilmente administrar os seus posts, imagens e um monte de outras coisas que você vai descobrir lendo na <a href="https://frontmatter.codes/docs">doc deles</a>.</p>
+
+<p>Só uma coisa antes de começar. A configuração padrão deles não trabalha muito bem com o Jekyll, pelo menos na minha experiência, então eu recomendo copiar o <a href="https://github.com/joelschutz/devlog/blob/main/frontmatter.json">frontmatter.json</a> que criei para esse blog. Assim a maioria das funcionalidades vão funcionar corretamente.</p>
+<h2 id="concluindo">
+  
+  
+    <a href="#concluindo" class="h-anchor">#</a> Concluindo
+  
+  
+</h2>
+    
+
+<p>Seu blog esta no ar, bonitão, com todas as mordomias que pode querer, tudo direto no seu editor favorito. Agora não tem  mais desculpa.</p>
+
+<p>Já sabe o que vai publicar, certo?</p>
+
+<p><img src="https://media.giphy.com/media/wlObAWD80Ukfe/giphy.gif" alt="Oh" /></p><hr />
+</article>
+      </div>
+    </main><script data-goatcounter="https://joelschutz.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+<noscript>
+  <img src="https://joelschutz.goatcounter.com/count?p=/test-img">
+</noscript>
+  </body>
+</html>

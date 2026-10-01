@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Devlog #2 - Uma simples simulação de fluidos</title><!-- Begin Jekyll SEO tag v2.8.0 -->
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Devlog #2 - Uma simples simulação de fluidos" />
+<meta name="author" content="Joel Schutz" />
+<meta property="og:locale" content="pt_br" />
+<meta name="description" content="Introdução" />
+<meta property="og:description" content="Introdução" />
+<link rel="canonical" href="https://github.com/devlog/devlog/2023/03/28/devlog-2.html" />
+<meta property="og:url" content="https://github.com/devlog/devlog/2023/03/28/devlog-2.html" />
+<meta property="og:site_name" content="Joel’s Dev Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-03-28T11:31:05+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Devlog #2 - Uma simples simulação de fluidos" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Joel Schutz"},"dateModified":"2023-03-28T11:31:05+00:00","datePublished":"2023-03-28T11:31:05+00:00","description":"Introdução","headline":"Devlog #2 - Uma simples simulação de fluidos","mainEntityOfPage":{"@type":"WebPage","@id":"https://github.com/devlog/devlog/2023/03/28/devlog-2.html"},"url":"https://github.com/devlog/devlog/2023/03/28/devlog-2.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link type="application/atom+xml" rel="alternate" href="https://github.com/devlog/feed.xml" title="Joel's Dev Blog" /><link rel="shortcut icon" type="image/x-icon" href="/devlog/favicon.ico" />
+  <link rel="stylesheet" href="/devlog/assets/css/main.css" />
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+</head><body a="dark">
+    <main class="page-content" aria-label="Content">
+      <div class="w">
+        <a href="/devlog/">../</a><article>
+  <p class="post-meta">
+    <time datetime="2023-03-28 11:31:05 +0000">Mar-28-2023</time>
+  </p><p class="languages">
+    
+        
+    pt-br
+        
+    
+        
+            
+    <a href="/devlog/en/devlog/2023/03/28/devlog-2.html">en</a>
+            
+        
+    
+    </p><h1>Devlog #2 - Uma simples simulação de fluidos</h1>
+
+  <h2 id="introdução">
+  
+  
+    <a href="#introdução" class="h-anchor">#</a> Introdução
+  
+  
+</h2>
+    
+
+<p>No último devlog eu expliquei o que era um Cellular Automata e os seus princípios básicos, hoje vamos falar especificamente do autômato que criei para o jogo. Seria bom que tivesse lido o artigo anterior, mas se estiver com pressa, um pequeno resumo das 3 partes de um autômato celular:</p>
+
+<ul>
+  <li>Espaço: Onde a simulação acontece</li>
+  <li>Estado: A propriedade do espaço que varia muda a cada ciclo</li>
+  <li>Comportamento: O conjunto de regras que define como o estado muda a cada ciclo</li>
+</ul>
+
+<p>Feito a revisão, vamos ao problema.</p>
+<h2 id="o-problema">
+  
+  
+    <a href="#o-problema" class="h-anchor">#</a> O problema
+  
+  
+</h2>
+    
+
+<p><img src="/devlog/assets/river-0.png" alt="tilemap" /></p>
+
+<p>Na imagem acima temos um exemplo de onde queremos chegar. No centro temos uma fonte de água, um rio nesse caso, e ao redor um terreno com vegetação, animais e a fazenda do jogador. Na imagem, cada tom de verde corresponde a um nível de umidade diferente, quando mais escuro, maior a umidade e vice versa.</p>
+
+<p>Se olharmos o lado direito da imagem conseguimos perceber um claro gradiente de umidade entre o terreno mais próximo da fonte e o mais afastado. Já o lado esquerdo possui uma barreira de rochas que impede que a difusão da água de forma livre. Assim, vemos que a barreira mantém parte do terreno sem contato com a umidade e a outra fica mais úmida, pois a água não foi conseguiu transpor a barreira se acumula ali.</p>
+
+<p>Outro aspecto que a imagem não mostra e que será essencial no nosso jogo é que essa umidade precisa ser determinada de forma dinâmica, ao longo da partida o estado do mapa muda e isso precisa ser refletido na cor e também nas propriedades daquele espaço.</p>
+
+<p>No fim das contas o que queremos é simular o comportamento de um fluido, a água, se deslocando por um meio, o solo, e queremos que o resultado seja realista de alguma forma. Não é nenhuma tarefa impossível, mas é uma que com certeza é mais complicada do que parece.</p>
+<h2 id="o-jeito-certo">
+  
+  
+    <a href="#o-jeito-certo" class="h-anchor">#</a> O jeito certo
+  
+  
+</h2>
+    
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Heat.gif/604px-Heat.gif" alt="Demonstração da Equação de Calor" /></p>
+
+<p>O estado da arte em se tratado de simulações de dinâmicas de fluidos são as <a href="https://pt.wikipedia.org/wiki/Equa%C3%A7%C3%B5es_de_Navier-Stokes">equações de Navier-Strokes</a>, eu não vou nem começar a tentar explicar elas aqui, pois são um dos tópicos mais complexos que existe em simulações computadorizadas. Não só esse é um sistema não linear de derivadas parciais, mas matematicamente ainda não foi provado se essas equações são de fato contínuas em todos os casos. Eu não entendo exatamente o que essas coisas querem dizer, apenas repeti o que li para mostrar que não é um trabalho fácil lidar com esse método, por isso, não vamos usar ele.</p>
+
+<p>Outro método que poderia ser usado para calcular essa dinâmica seria <a href="https://pt.wikipedia.org/wiki/Equa%C3%A7%C3%A3o_do_calor">a equação do calor</a>, que apesar do nome é capaz de expressar qualquer fenômeno que varie no espaço ao longo do tempo. Essa também é uma derivada parcial e mesmo sendo menos complexa não é um tópico simples, é o tipo de coisa que se aprende numa disciplina de cálculo, não num blog da internet.</p>
+<h2 id="o-jeito-fácil">
+  
+  
+    <a href="#o-jeito-fácil" class="h-anchor">#</a> O jeito fácil
+  
+  
+</h2>
+    
+
+<p><img src="https://media.giphy.com/media/l4Epj0q0uHxkCH3b2/giphy.gif" alt="Now, Just pretend you're in the water" /></p>
+
+<p>Aqui que o nosso automato se torna útil, lembram que o grande poder dessa técnica é ser capaz de criar sistemas complexos a partir de regras simples? É exatamente que vamos tentar fazer aqui, ao invés de utilizar essas equações complexas, vamos quebrar o problema em partes menores e assumir que nessa escala o comportamento é algo simples.</p>
+
+<p>Se olharmos a figura da animação da equação do calor, o que acontece a groso modo é que as areas mais altas tendem a cair e as mais baixas a descer. Na realidade, o que acontece é que ao longo go tempo esse espaço tende a entrar em um estado de equilíbrio, onde o valor é o mesmo em todos os pontos. A água se move pelo meio até que a quantidade seja igual em cada ponto, mas a quantidade total de água continua sempre a mesma, ela apenas se redistribui. Se ignorarmos essa característica de conservação, podemos encontrar a um comportamento parecido apenas calculando a média aritmética entre um pontoe os seus vizinhos.</p>
+
+<p>Só essa logica já é suficiente para modelar o lado direito do nosso mapa, assumindo que o rio tem uma umidade constante e que a grama subtrai uma quantidade específica de umidade a cada ciclo, o resultado é um gradiente como aquele que parte do rio e fica mais seco a medida que se afasta.</p>
+
+<p>O lado esquerdo é um pouco mais complexo, mas também podemos utilizar a mesma média arimética, mas dessa vez utilizando a média ponderada, onde cada elemento tem um peso diferente no resultado final. A ideia é que possamos atribuir pesos diferentes de acordo com a permeabilidade do material, dando uma contribuição menor para pontos impermeáveis é equivalente a assumir que o material resiste a passagem da água.</p>
+
+<p>Para completar, devemos diferenciar entre a permeabilidade do ponto de vista da própria célula ou de uma vizinha. Quando a célula que estamos calculando tem uma permeabilidade baixa, então o peso do seu estado atual será maior, visto que a célula tende a resistir a saída de água. Mas se essa mesma célula for observada para calcular uma vizinha, então o efeito é inverso, o peso será menor, pois nesse caso a tendência é que a vizinha não consiga absorver umidade dessa célula impermeável.</p>
+
+<p>Podemos pensar nessa fórmula:</p>
+
+\[H = \frac{H_{0}*I_{0} + \sum_{i=1}^{n}\frac{H_{i}}{I_{i}}}{I_{0}+\sum_{i=1}^{n}\frac{1}{I_{i}}}\]
+
+<p>Onde:</p>
+
+\[H \Rightarrow \text{Umidade}\\
+I \Rightarrow \text{Impermeabilidade}\\
+n \Rightarrow \text{Quantidade de Vizinhos}\\\]
+<h2 id="demo">
+  
+  
+    <a href="#demo" class="h-anchor">#</a> Demo
+  
+  
+</h2>
+    
+
+<p>Já existe uma demo desse novo autômato no site, como da última vez eu deixei comentários sobre o código explicando os detalhes da implementação:</p>
+
+<ul>
+  <li><a href="/devlog/demo/2023/03/23/diffusion-automata-v1.html">Diffusion Automata v1</a>
+    <ul>
+      <li>Essa versão já inclui a lógica de impermeabilidade descrita nesse artigo. Ao clicar com o botão esquerdo é possível criar células impermeáveis e removê-las com o botão direito.</li>
+    </ul>
+  </li>
+  <li><a href="/devlog/demo/2023/03/17/diffusion-automata.html">Diffusion Automata v0</a>
+  -Essa é uma versão antiga que usa apenas média aritmética simples e não considera a permeabilidade, não há comentários sobre o código, mas ela existe mais a título de demonstração.</li>
+</ul>
+<h2 id="conclusão">
+  
+  
+    <a href="#conclusão" class="h-anchor">#</a> Conclusão
+  
+  
+</h2>
+    
+
+<p>Eu já tinha essa demo pronta há algum tempo e estava ansioso por escrever esse post, eu acho que ele é bastante simplório quanto ao potencial desse algoritmo, mas não sei como mostrar(e testar também) melhor essa funcionalidade sem ter um mapa de verdade para aplicar essas regras e ver os efeitos. O proximo post com certeza vai ser sobre tilemaps e tilesets, vai ser uma boa mudança de ritmo e será um material interessante para trabalhar com esses recursos tão úteis em gamedev.</p>
+
+<p>Outra coisa que me deixou bastante ansioso essa semana era esse site em si. Eu fiz uma série de mudanças no layout e adicionei novas funcionalidades como internacionalização, LaTex e outras customizações. Para mim isso foi exaustante, frontend é a área que menos domino e tive bastante dificuldade com algumas coisas. Ainda não está perfeito, mas essa é a realidade desse tipo de coisa, sempre tem algo para se mudar. Dessa vez eu vou dar um tempo e dar mais atenção ao conteúdo em si, espere novidades a respeito em breve.</p><hr />
+
+<p>Espero que tenha gostado desse material e que tenha sido de ajuda, estou ainda trabalhando nesse site e nas demos para ajudar a quem tem interesse em programar coisas práticas e fora do mundinho web. Caso tenha alguma dúvida ou sugestão, por favor entre em contato pelo <a href="https://github.com/joelschutz">GitHub</a> ou <a href="mailto:joelsschutz@yahoo.com.br">e-mail</a>.</p>
+
+<p><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif" alt="thank you!" /></p>
+</article>
+      </div>
+    </main><script data-goatcounter="https://joelschutz.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+<noscript>
+  <img src="https://joelschutz.goatcounter.com/count?p=/test-img">
+</noscript>
+  </body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Goingo: Meu primeiro jogo</title><!-- Begin Jekyll SEO tag v2.8.0 -->
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Goingo: Meu primeiro jogo" />
+<meta name="author" content="Joel Schutz" />
+<meta property="og:locale" content="pt_br" />
+<link rel="canonical" href="https://github.com/devlog/2023/05/02/goingo-meu-primeiro-jogo.html" />
+<meta property="og:url" content="https://github.com/devlog/2023/05/02/goingo-meu-primeiro-jogo.html" />
+<meta property="og:site_name" content="Joel’s Dev Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-05-02T21:08:50+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Goingo: Meu primeiro jogo" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Joel Schutz"},"dateModified":"2023-05-02T21:08:50+00:00","datePublished":"2023-05-02T21:08:50+00:00","headline":"Goingo: Meu primeiro jogo","mainEntityOfPage":{"@type":"WebPage","@id":"https://github.com/devlog/2023/05/02/goingo-meu-primeiro-jogo.html"},"url":"https://github.com/devlog/2023/05/02/goingo-meu-primeiro-jogo.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link type="application/atom+xml" rel="alternate" href="https://github.com/devlog/feed.xml" title="Joel's Dev Blog" /><link rel="shortcut icon" type="image/x-icon" href="/devlog/favicon.ico" />
+  <link rel="stylesheet" href="/devlog/assets/css/main.css" />
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+</head><body a="dark">
+    <main class="page-content" aria-label="Content">
+      <div class="w">
+        <a href="/devlog/">../</a><article>
+  <p class="post-meta">
+    <time datetime="2023-05-02 21:08:50 +0000">May-02-2023</time>
+  </p><p class="languages">
+    
+        
+    pt-br
+        
+    
+        
+            
+    <a href="/devlog/en/2023/05/02/goingo-meu-primeiro-jogo.html">en</a>
+            
+        
+    
+    </p><h1>Goingo: Meu primeiro jogo</h1>
+
+  <p>Eu já perdi a conta de quantos protótipos eu já criei com Ebiten(ou Ebitengine como me pediram para chamar), muitos foram direto para a lixeira e outros estão perdidos em branches abandonadas em algum repositório. Porém tem ideias que são <del>bobas</del> boas demais para deixar passar e precisam de um tratamento à altura. Hoje vou falar sobre o primeiro jogo que lancei: <strong>Goingo</strong>, um uma versão do ancestral jogo de Go feito na totalmente na linguagem Go.</p>
+<h2 id="porque-go">
+  
+  
+    <a href="#porque-go" class="h-anchor">#</a> Porque Go?
+  
+  
+</h2>
+    
+
+<p>A confusão é totalmente intencional, tudo começou porque queria testar uma nova biblioteca e precisava de algo mais complexo que uma demo para ver ele em ação. Mas no fim eu acabei aprendendo bastante sobre ambos e decidi levar o projeto até o lançamento, muito porque já estava tudo ali, só precisava dar aquele pequeno esforço para finalizar.</p>
+<h3 id="o-jogo-de-tabuleiro">
+  
+  
+    <a href="#o-jogo-de-tabuleiro" class="h-anchor">#</a> O jogo de tabuleiro
+  
+  
+</h3>
+    
+
+<p><img src="https://www.learn-go.net/images/ko.gif" alt="Ko Loop" /></p>
+
+<p>Go é o jogo de tabuleiro mais antigo do mundo ainda jogado segundo a <a href="https://pt.wikipedia.org/wiki/Go">Wikipedia</a>, teria sido criado a 2500 anos atrás na China onde ainda é muito popular. Aqui no ocidente ele ficou mais conhecido depois que o <a href="https://pt.wikipedia.org/wiki/AlphaGo">AlphaGO</a>, uma inteligencia artificial, venceu o campeão mundial em 2016.</p>
+
+<p>Apesar de ser um jogo complexo e do desafio que é criar uma IA para jogar ele, as regras são extremamente simples. Esse foi o principal motivo de ter criado esse jogo, é um ótimo exemplo de jogo de tabuleiro que pode ser criado com algumas coisas linhas de código. Basicamente em Go:</p>
+
+<ul>
+  <li>Cada jogador se alterna colocando uma peça de sua cor no tabuleiro</li>
+  <li>Peças adjacentes a outras da mesma cor formam grupos</li>
+  <li>Quando um grupo é certado completamente por peças do adversário esse grupo é captura e retirado do tabuleiro.</li>
+  <li>Vence quem cercar mais espaços no tabuleiro ao fim da partida</li>
+</ul>
+
+<p>Claro, a partir dessas regras nascem outras como Ko, Atari, etc, mas para criar a engine essas três são as básicas e definem o game loop. Para criar uma experiencia divertida e interessante é necessário mais funcionalidades, testes para impedir que o jogador faça movimento ilegais e uma método de contar os pontos de cada jogador.</p>
+
+<p>Essa é uma das coisas que não tenho ainda no jogo, se quiserem saber quem venceu a partida os jogadores precisam contar seus próprios territórios. Parece preguiça da minha parte não adicionar isso ao jogo, mas depois de passar uma noite inteira tentando entender esse <a href="https://www.oipaz.net/Carta.pdf">artigo</a>, eu preferi deixar para uma depois. Eu já comentei que desenvolvi o jogo inteiro em uma semana?</p>
+<h3 id="a-linguagem-de-programação">
+  
+  
+    <a href="#a-linguagem-de-programação" class="h-anchor">#</a> A Linguagem de Programação
+  
+  
+</h3>
+    
+
+<p><img src="https://raw.githubusercontent.com/MariaLetta/free-gophers-pack/master/illustrations/svg/23.svg" alt="Gophers playing Go" style="object-fit: cover;height: 300px;" width="100%" /></p>
+
+<p>É obvio que escolhi Go como linguagem porque é a minha favorita, mas quis dedicar essa parte do artigo para contar sobre uma situação que eu provavelmente não teria conseguido resolver se fosse em outra linguagem.</p>
+
+<p>A biblioteca que eu queria utilizar e que deu inicio a
+esse projeto se chama <a href="https://github.com/yohamta/donburi">Donburi</a>, é um ECS para a <a href="https://ebitengine.org/">Ebitengine</a> que sempre uso por aqui. Eu ainda vou voltar a falar de ECS no futuro, é um tópico muito importante, mas o que me deu problemas foi um gerenciador de eventos que acompanha a biblioteca. Da forma que eu planejei o meu programa o gerenciador entrava em panico e derrubava o programa. Haviam formas de contornar isso, mas se tratava de um bug no código que precisava ser corrigido, não era para ela se comportar daquela forma.</p>
+
+<p>Pedir uma correção em um projeto open-source é sempre uma aposta, principalmente quando você não tem familiaridade com o projeto e seus desenvolvedores. Alguns podem ser super abertos, outros podem extremamente relutantes quanto a qualquer tipo de mudança. Sem falar que nunca pode contar que alguém vai tirar parte do tempo dela para resolver um problema seu, te forçando a ter que entrar no código, achar o problema, resolver e propor uma pull-request. Ai que eu acredito que o Go entrou como um grande aliado nesse projeto, pela forma que o Go funciona e a sua sintaxe, é muito fácil entrar em um projeto e identificar como ele funciona. Não existem macros, escopos invisíveis, tipagem dinâmica, magicas de qualquer tipo, tudo em Go é explícito ao ponto que em minutos eu já sabia onde estava o problema e em poucas horas já tinha uma solução.</p>
+
+<p>Contactar os desenvolvedores para incorporar essas mudanças é outra história, mas isso independe da linguagem. Minha pull-request para o <a href="https://github.com/pkg/browser/pull/52">pkg/browser</a> ainda não foi vista até o momento que estou escrevendo esse artigo, por sorte <a href="https://twitter.com/spaceshooting99">Yohamta</a> foi super rápido em aprovar e eu agradeço muito a ele.</p>
+<h2 id="o-que-fiz-de-diferente">
+  
+  
+    <a href="#o-que-fiz-de-diferente" class="h-anchor">#</a> O que fiz de diferente?
+  
+  
+</h2>
+    
+
+<p>Algo que é um defeito meu: começar algo e abandonar no meio do caminho. Desde a escola, eu ficava muito animado com um assunto e pesquisava tudo que conseguia sobre ele mas na hora de escrever o trabalho e amarrar tudo eu ficava com preguiça e abandonava. A experiência de fazer sempre era melhor que a de terminar, hoje ainda tenho mais um agravante que é a ideia de que o resultado não vai valer a pena então porque se dedicar até o fim? Eu venho sempre me sabotando dessa forma e vivo buscando formas de superar, mas o que ainda me prende é ter dificuldade de definir onde é o ponto que posso considerar algo como pronto.</p>
+
+<p>Finalizar algo é difícil para mim porque não consigo definir claramente o resultado esperado e como chegar nele. A forma que encontrei para lidar com isso é diminuindo o escopo do trabalho e aceitando a incompletude dele, desde que eu fizesse o mínimo para me sentir confortável em mostrar para os outros. Assim o projeto nunca está “pronto”, sempre é possível encontrar algo a melhorar, mas também está organizado a um ponto que não é um experimento pessoal que só você pode entender e aproveitar.</p>
+
+<p>Para deixar o jogo nesse estado eu decidi que precisava de pelo menos:</p>
+
+<ul>
+  <li>Sons: Geralmente negligenciados no desenvolvimento, sons dão uma sensação táctil ao jogo que ajuda muito a polir o jogo. Demorou um pouco até encontrar o som certo, mas também no fim foi apenas 3 samples que eu usei para as movimentações das peças.</li>
+  <li>Menu: UI é um porre de fazer, mas é totalmente necessária, eu não preciso te convencer disso. É o tipo de coisa que é preciso criar coragem e fazer mesmo que fique feio, sem ela o jogo não é acessível jogador.</li>
+  <li>Logo: O logo tipo é o rosto do seu produto, é o que identifica ele tanto quanto o seu nome. Eu não sou designer e imagino que também não seja, mesmo assim eu me desafiei a fazer esse desenho porque com ele eu tinha tudo que precisava para mostrar o jogo para o mundo. É cruel pensar nisso, o publico vai ser muito mais impactado por esse desenho que pelas horas de pesquisa e desenvolvimento que eu passei no código.</li>
+</ul>
+
+<p>No fim desses três eu ainda acabei incluindo mais algumas coisinhas como alguns overlays, diferentes tamanhos de tabuleiro e a opção de jogar com uma IA usando GoGNU.</p>
+<h2 id="como-jogar">
+  
+  
+    <a href="#como-jogar" class="h-anchor">#</a> Como jogar?
+  
+  
+</h2>
+    
+
+<p>O jogo está disponível no <a href="https://kam1sama.itch.io/goingo">Itch.io</a> e no <a href="https://github.com/joelschutz/goingo">Github</a>, o código é aberto e caso queira me ajudar pode pagar quanto quiser pelo jogo. Eu não vou falar muito porque acho que vale a pena entrar nas páginas e ver como ficou o resultado. É impressionante o que as IA de hoje em dia conseguem fazer, não se preocupe que aqui nesse post foi tudo escrito por mãos humanas.</p>
+<h2 id="conclusão">
+  
+  
+    <a href="#conclusão" class="h-anchor">#</a> Conclusão
+  
+  
+</h2>
+    
+
+<p>Eu deveria ter escrito esse artigo antes, mas depois de voltar da minha viagem eu fiquei me coçando para escrever código e precisava codar algumas coisas, esse jogo inclusive. Além dele ainda tem uma biblioteca que eu criei e publiquei essa semana que vou escrever um artigo a respeito. Uma coisa que me ajudou bastante para produzir tanto foram algumas ferramentas de IA, eu ainda tenho alguma resistência, mas deu para perceber essa semana o potencial que elas tem. Aqui por exemplo é um espaço que eu não acho justo pedir para o ChatGPT me ajudar, demoro um tanto para escrever esses artigos, acho importante manter essa pessoalidade nesse blog. No README e descrições desses programas eu achei o maximo poder usar a IA, você explica as coisas direto ao ponto e ela enche linguiça para você.</p>
+
+<p>Um outro ponto que quero começar a usar mais IA é na tradução dos textos desse blog. No momento, a maioria do material está apenas em português e eu gostaria muito de ter ele disponível em inglês para ajudar na divulgação. Meu plano é usar os modelos da <a href="https://libretranslate.com/">Libretranslate</a> para ajudar no processo, se estiver lendo isso em inglês provavelmente o meu plano deu certo.</p>
+
+<p>Em 2 semanas começam as minhas aulas da faculdade e na semana que vem eu já me mudo em definitivo. Não tenho ideia de como vai ficar meu tempo livre, mas quero continuar publicando por aqui e criando jogos e outros programas legais. Mas se tiver que codar apenas ferramentas de estudo, vou vir aqui contar tudo para vocês. Me desejem sorte nessa nova jornada.</p><hr />
+
+<p>Espero que tenha gostado desse material e que tenha sido de ajuda, estou ainda trabalhando nesse site e nas demos para ajudar a quem tem interesse em programar coisas práticas e fora do mundinho web. Caso tenha alguma dúvida ou sugestão, por favor entre em contato pelo <a href="https://github.com/joelschutz">GitHub</a> ou <a href="mailto:joelsschutz@yahoo.com.br">e-mail</a>.
+<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDU3M2ZhZmUxZDQ4NGM3NGY1YjJlMzFkZmNkYTA2NmFhZGExNGFiNCZjdD1n/htebeL9yH0ZI9K47Jo/giphy.gif" alt="thank you!" /></p>
+</article>
+      </div>
+    </main><script data-goatcounter="https://joelschutz.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+<noscript>
+  <img src="https://joelschutz.goatcounter.com/count?p=/test-img">
+</noscript>
+  </body>
+</html>
