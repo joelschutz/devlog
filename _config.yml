@@ -7,7 +7,7 @@ post_search: true
 goat_counter: "joelschutz"
 favicon: "favicon.ico"
 languages: ["pt-br", "en"]
-exclude_from_localizations: ["assets"]
+exclude_from_localizations: ["assets", "admin"]
 
 theme_config:
   appearance: "dark" # can be "light", "dark" or "auto"
